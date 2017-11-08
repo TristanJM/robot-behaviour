@@ -10,15 +10,15 @@
 
 void run_fear(){
 
-	int i;								// Used in loops.
-	int leftwheel;						// Speed we'll set our left wheel to.
-	int rightwheel;						// Wpeed we'll set our right wheel to.
-	int prox[8] = {0,0,0,0,0,0,0,0};	// Holds the values of all the proximity sensors.
-	int randomNumber;					// Will hold a random number at one point.
+	int i;                              // Used in loops.
+	int leftwheel;                      // Speed we'll set our left wheel to.
+	int rightwheel;                     // Wpeed we'll set our right wheel to.
+	int prox[8] = {0,0,0,0,0,0,0,0};    // Holds the values of all the proximity sensors.
+	int randomNumber;                   // Will hold a random number at one point.
 
 	/* Settings */
-	int motor_intensity = 100;	//Increase or decrease this to make the robot move & turn quicker.
-	int wait_time = 1000;		//Decrease this to update quicker / move smaller amounts between checks.
+	int motor_intensity = 100;  //Increase or decrease this to make the robot move & turn quicker.
+	int wait_time = 1000;       //Decrease this to update quicker / move smaller amounts between checks.
 
 	/* Initialise the library stuff */
 	e_init_port();
@@ -55,9 +55,9 @@ void run_fear(){
 		 * block if there's actually something on the sensors.
 		 * tl;dr: default to a random number
 		 */
-		 randomNumber = (rand() % 20) - 10;	//Get a random number between -10 and 10
-		 leftwheel =    randomNumber;		// Set left wheel to whatever we just got
-		 rightwheel =  -randomNumber;		//Set right wheel to opposite of whatever left is
+		 randomNumber = (rand() % 20) - 10; //Get a random number between -10 and 10
+		 leftwheel =    randomNumber;       // Set left wheel to whatever we just got
+		 rightwheel =  -randomNumber;       //Set right wheel to opposite of whatever left is
 
 
 
