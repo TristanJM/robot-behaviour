@@ -1,0 +1,1 @@
+void run_fear();	// Runs away from things
