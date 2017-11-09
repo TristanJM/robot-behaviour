@@ -38,6 +38,7 @@
 #include "runwallfollow.h"
 #include "runfollowball.h"
 #include "runfftlistener.h"
+#include "cwk_fear.h"
 #include "rungrounddirection.h"
 #include "utility.h"
 
@@ -83,7 +84,7 @@ int main() {
 	} else if (selector==5) {
 		run_breitenberg_shocker();
 	} else if (selector==6) {
-		run_follow_ball();
+		run_fear();
 	} else if (selector==7) {
 		run_follow_ball_red();
 	} else if (selector==8) {
