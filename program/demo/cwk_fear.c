@@ -113,7 +113,7 @@ void run_fear(){
 		/* Now actually set the motor speeds */
 		e_set_speed_left(leftwheel);
 		e_set_speed_right(rightwheel);
-		wait(wait_time);
+		usleep(wait_time);
 
 
 	}
