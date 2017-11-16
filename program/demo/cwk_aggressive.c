@@ -2,3 +2,43 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
+//globalint prox[8] = {0,0,0,0,0,0,0,0};    // Holds the values of all the proximity sensors.
+/*helper functions*/
+int searchTarget(int* tarX, int* tarY){
+//look at follow ball code
+ *tarX = 1; //will be changed 
+ *tarY = 1;
+}
+
+void setRobotSpeed(LeftSpeed, RightSpeed){
+//move the robot 
+  e_set_speed_left(LeftSpeed); 
+  e_set_speed_right(RightSpeed);
+}
+/**
+- Search for target
+- turn on red LEDs when target found
+- speed towards target
+- when target out of range, leds turn off and robot wanders
+*/
+void run_aggressive(){
+ int lMotor, rMotor; 
+ int maxSpeed = 800; 
+ int initialSpeed = 300;
+ int lSpeed, rSpeed;
+ int tarX, tarY;
+
+ e_init_port();
+ e_init_ad_scan(ALL_ADC);
+ e_init_motors();
+ e_start_agendas_processing();
+ e_poxxxx_init_cam(); select_cam_mode(RGB_565_MODE);//used to search for green
+ while (1){
+  //turns on a front red LED 1 = on, 0 = off  e_set_front_led(1);
+  searchTarget(&tarX, &tarY);
+  lSpeed = lMotor * maxSpeed;  rSpeed = rMotor * maxSpeed
+  setRobotSpeed(lSpeed, rSpeed);
+  /**  //code to follow green ball
+  e_poxxxx_launch_capture((char *)tab_start);  while(!e_poxxxx_is_img_ready());   follow_green(tab_start, NB_VAL);  execute(tab_start, &epuck);  */
+ } 
+}
