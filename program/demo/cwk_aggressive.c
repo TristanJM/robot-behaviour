@@ -2,7 +2,21 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
+#include "motor_led/e_epuck_ports.h"
+#include "motor_led/e_init_port.h"
+#include "uart/e_uart_char.h"
+#include "motor_led/advance_one_timer/e_agenda.h"
+#include "motor_led/advance_one_timer/e_motors.h"
+#include "camera/fast_2_timer/e_poxxxx.h"
+
+#include "search_ball.h"
 //globalint prox[8] = {0,0,0,0,0,0,0,0};    // Holds the values of all the proximity sensors.
+#define NB_VAL 240
+
+unsigned char buffer[NB_VAL];
+
+
+
 /*helper functions*/
 int searchTarget(int* tarX, int* tarY){
 //look at follow ball code
@@ -32,9 +46,18 @@ void run_aggressive(){
  e_init_ad_scan(ALL_ADC);
  e_init_motors();
  e_start_agendas_processing();
- e_poxxxx_init_cam(); select_cam_mode(RGB_565_MODE);//used to search for green
+ e_poxxxx_init_cam();
+ select_cam_mode(RGB_565_MODE);//used to search for green
+  
+  unsigned char *tab_start = buffer;
+  
  while (1){
   //turns on a front red LED 1 = on, 0 = off  e_set_front_led(1);
+  e_poxxxx_launch_capture((char *)tab_start);
+	while(!e_poxxxx_is_img_ready());  //wait for img
+   
+  follow_red(tab_start, NB_VAL);
+   
   searchTarget(&tarX, &tarY);
   lSpeed = lMotor * maxSpeed;  rSpeed = rMotor * maxSpeed
   setRobotSpeed(lSpeed, rSpeed);
