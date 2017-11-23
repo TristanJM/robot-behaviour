@@ -30,12 +30,12 @@
 #define MAXSPEED 			800		// maximum robot speed
 
 
-int follow_sensorzero[8];
-int follow_weightleft[8] = {-10,-10,-5,0,0,5,10,10};
-int follow_weightright[8] = {10,10,5,0,0,-5,-10,-10};
+int follow_sensorzeroGS[8];
+int follow_weightleftGS[8] = {-10,-10,-5,0,0,5,10,10};
+int follow_weightrightGS[8] = {10,10,5,0,0,-5,-10,-10};
 
 
-int followgetSelectorValue() {
+int followgetSelectorValueGS() {
 	return SELECTOR0 + 2*SELECTOR1 + 4*SELECTOR2 + 8*SELECTOR3;
 }
 
@@ -43,15 +43,15 @@ int followgetSelectorValue() {
 /*! \breif Read the sensors proxymities
  * \param sensorTable Where the value must be stocked
  */
-void followGetSensorValues(int *sensorTable) {
+void followGetSensorValuesGS(int *sensorTable) {
 	unsigned int i;
 	for (i=0; i < NB_SENSORS; i++) {
-		sensorTable[i] = e_get_calibrated_prox(i); //e_get_prox(i) - follow_sensorzero[i];
+		sensorTable[i] = e_get_calibrated_prox(i); //e_get_prox(i) - follow_sensorzeroGS[i];
 	}		
 }
 
 /*! \brief Set robot speed */
-void followsetSpeed(int LeftSpeed, int RightSpeed) {
+void followsetSpeedGS(int LeftSpeed, int RightSpeed) {
 	if (LeftSpeed < -MAXSPEED) {LeftSpeed = -MAXSPEED;}
 	if (LeftSpeed >  MAXSPEED) {LeftSpeed =  MAXSPEED;}
 	if (RightSpeed < -MAXSPEED) {RightSpeed = -MAXSPEED;}
@@ -83,13 +83,13 @@ void run_goal_seek() {
 	
 	e_calibrate_ir();
 	loopcount=0;
-	selector_change = !(followgetSelectorValue() & 0x0001);
+	selector_change = !(followgetSelectorValueGS() & 0x0001);
 
 	while (1) {
-		followGetSensorValues(distances); // read sensor values
+		followGetSensorValuesGS(distances); // read sensor values
 
 		gostraight=0;
-		if ((followgetSelectorValue() & 0x0001) == RIGHT_FOLLOW) {
+		if ((followgetSelectorValueGS() & 0x0001) == RIGHT_FOLLOW) {
 			if(selector_change == LEFT_FOLLOW) {
 				selector_change = RIGHT_FOLLOW;
 				e_led_clear();
@@ -102,10 +102,10 @@ void run_goal_seek() {
 			if (i==8) {
 				gostraight=1;
 			} else {
-				follow_weightleft[0]=-10;
-				follow_weightleft[7]=-10;
-				follow_weightright[0]=10;
-				follow_weightright[7]=10;
+				follow_weightleftGS[0]=-10;
+				follow_weightleftGS[7]=-10;
+				follow_weightrightGS[0]=10;
+				follow_weightrightGS[7]=10;
 				if (distances[2]>300) {
 					distances[1]-=200;
 					distances[2]-=600;
@@ -125,10 +125,10 @@ void run_goal_seek() {
 			if (i==8) {
 				gostraight=1;
 			} else {
-				follow_weightleft[0]=10;
-				follow_weightleft[7]=10;
-				follow_weightright[0]=-10;
-				follow_weightright[7]=-10;
+				follow_weightleftGS[0]=10;
+				follow_weightleftGS[7]=10;
+				follow_weightrightGS[0]=-10;
+				follow_weightrightGS[7]=-10;
 				if (distances[5]>300) {
 					distances[4]-=100;
 					distances[5]-=600;
@@ -141,13 +141,13 @@ void run_goal_seek() {
 		rightwheel=BIAS_SPEED;
 		if (gostraight==0) {
 			for (i=0; i<8; i++) {
-				leftwheel+=follow_weightleft[i]*(distances[i]>>4);
-				rightwheel+=follow_weightright[i]*(distances[i]>>4);
+				leftwheel+=follow_weightleftGS[i]*(distances[i]>>4);
+				rightwheel+=follow_weightrightGS[i]*(distances[i]>>4);
 			}
 		}
 
 		// set robot speed
-		followsetSpeed(leftwheel, rightwheel);
+		followsetSpeedGS(leftwheel, rightwheel);
 
 		wait(15000);
 	}	
