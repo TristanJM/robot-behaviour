@@ -32,7 +32,13 @@ if (dist < 350){
 }
 	
 movetotarget(){
-	   }*tarX = 1; //will be changed 
+ int linear_speed, angle_speed;
+	int distance, gain = 35;
+	linear_speed = calc_lin_speed(distance, gain); //functions from search ball
+	angle_speed = calc_angle_speed(pos, gain); 
+	e_set_speed(linear_speed, angle_speed);
+}
+*tarX = 1; //will be changed 
  *tarY = 1;
 
 
