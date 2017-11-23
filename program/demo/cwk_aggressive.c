@@ -12,7 +12,7 @@
 #include "search_ball.h"
 //globalint prox[8] = {0,0,0,0,0,0,0,0};    // Holds the values of all the proximity sensors.
 #define NB_VAL 240
-
+#define NUMSensors 7
 unsigned char buffer[NB_VAL];
 
 
@@ -20,7 +20,19 @@ unsigned char buffer[NB_VAL];
 /*helper functions*/
 int searchTarget(int* tarX, int* tarY){
 //look at follow ball code
- *tarX = 1; //will be changed 
+
+for (int i = 0; i < NUMSensors; i++){
+int dist = e.get_prox(i);	//found obstacle	
+if (dist < 350){
+//check if obj is target
+	
+}
+
+}
+	
+	
+movetotarget(){
+	   }*tarX = 1; //will be changed 
  *tarY = 1;
 }
 
