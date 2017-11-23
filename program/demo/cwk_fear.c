@@ -3,10 +3,12 @@
 #include "stdlib.h"
 #include "string.h"
 #include "math.h"
-#include "../../../library/motor_led/e_init_port.h"
-#include "../../../library/motor_led/e_motors.h"
-#include "../../../library/motor_led/e_led.h"
-#include "../../../library/a_d/e_prox.h"
+#include "uart/e_uart_char.h"
+#include "motor_led/e_init_port.h"
+#include "motor_led/e_motors.h"
+#include "motor_led/e_led.h"
+#include "a_d/e_prox.h"
+#include "utility.h"
 
 void run_fear(){
 
@@ -15,6 +17,7 @@ void run_fear(){
 	int rightwheel;                     // Wpeed we'll set our right wheel to.
 	int prox[8] = {0,0,0,0,0,0,0,0};    // Holds the values of all the proximity sensors.
 	int randomNumber;                   // Will hold a random number at one point.
+	char buffer[80];					// For uart debug
 
 	/* Settings */
 	int motor_intensity = 100;  //Increase or decrease this to make the robot move & turn quicker.
@@ -22,12 +25,24 @@ void run_fear(){
 
 	/* Initialise the library stuff */
 	e_init_port();
+	e_init_port();
+	e_init_uart1();
 	e_init_motors();
-	e_init_prox();
+	//e_calibrate_ir();
+
+	sprintf(buffer, "Starting run_fear\r\n");
+	e_send_uart1_char(buffer, strlen(buffer));
+
+
+    // vvv  For debug only   vvv
+	e_set_speed_left(100);
+	sprintf(buffer, "Left wheel 100\r\n");
+
+
 
 
 	/* Set up a rng, seed it with the time */
-	srand(time(NULL));
+	//srand(time(NULL));
 
 	
 
@@ -40,6 +55,7 @@ void run_fear(){
 			prox[i] = e_get_prox(i);
 			if(prox[i] > 1000){
 				e_set_led(i, 1);
+				sprintf(buffer, "Prox $i = $i\r\n", i, prox[i] );
 			} else {
 				e_set_led(i, 0);
 			}
@@ -55,7 +71,8 @@ void run_fear(){
 		 * block if there's actually something on the sensors.
 		 * tl;dr: default to a random number
 		 */
-		 randomNumber = (rand() % 20) - 10; //Get a random number between -10 and 10
+		 //randomNumber = (rand() % 20) - 10; //Get a random number between -10 and 10
+		 randomNumber = 5; //Chose this randomly
 		 leftwheel =    randomNumber;       // Set left wheel to whatever we just got
 		 rightwheel =  -randomNumber;       //Set right wheel to opposite of whatever left is
 
@@ -113,7 +130,7 @@ void run_fear(){
 		/* Now actually set the motor speeds */
 		e_set_speed_left(leftwheel);
 		e_set_speed_right(rightwheel);
-		usleep(wait_time);
+		wait(wait_time);
 
 
 	}
