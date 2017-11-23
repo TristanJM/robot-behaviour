@@ -29,12 +29,12 @@ if (dist < 350){
 }
 
 }
-	
+}
 	
 movetotarget(){
 	   }*tarX = 1; //will be changed 
  *tarY = 1;
-}
+
 
 void setRobotSpeed(LeftSpeed, RightSpeed){
 //move the robot 
