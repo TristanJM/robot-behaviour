@@ -10,7 +10,7 @@
 #include "string.h"
 #include "stdlib.h"
 
-#include "./findRed.h"
+#include "findRed.h"
 
 char gbuffer[160];
 int gnumbuffer[80];
@@ -76,7 +76,7 @@ void forward(void){
 	e_set_speed_right(500);
 }
 //Main function of follower
-void followGreen(void){
+void followGreen(void) {
 	//basic set up for the camera and 
 	e_poxxxx_init_cam();
 	e_poxxxx_config_cam(0,(ARRAY_HEIGHT - 4)/2,640,4,8,4,RGB_565_MODE);

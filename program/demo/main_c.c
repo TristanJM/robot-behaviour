@@ -30,6 +30,10 @@
 #include "uart/e_uart_char.h"
 #include "motor_led/e_init_port.h"
 
+#include "cwk_goal_seek.h"
+#include "followGreen.h"
+#include "findRed.h"
+
 #include "ComModule.h"
 #include "runcollaboration.h"
 #include "runaccelerometer.h"
@@ -40,8 +44,6 @@
 #include "runfftlistener.h"
 #include "rungrounddirection.h"
 #include "utility.h"
-
-#include "cwk_goal_seek.h"
 
 #define PI 3.14159265358979
 
@@ -88,7 +90,8 @@ int main() {
 	} else if (selector==6) {
 		run_follow_ball();
 	} else if (selector==7) {
-		run_follow_ball_red();
+//		run_follow_ball_red();
+        findRed();
 	} else if (selector==8) {
 		run_follow_ball_green();
 	} else

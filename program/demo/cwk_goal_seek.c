@@ -10,11 +10,11 @@
 #include "../../library/uart/e_uart_char.h"
 #include "../../library/a_d/advance_ad_scan/e_ad_conv.h"
 #include "../../library/a_d/advance_ad_scan/e_prox.h"
+#include "../../library/camera/fast_2_timer/e_poxxxx.h"
 
 #include "utility.h"
 #include "runwallfollow.h"
 #include "runfollowball.h"
-#include "camera/fast_2_timer/e_poxxxx.h"
 
 /*
  * Goal: Cross green finish line, directly in front of the start point (eg. start y=0, end y=1000).
@@ -30,6 +30,11 @@
 #define BIAS_SPEED      	350		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
+
+// colour detection
+char fbwbufferGS[160];
+int numbufferGS[80];
+long isRedVisible;
 
 int follow_sensorzeroGS[8];
 int follow_weightleftGS[8] = {-10,-10,-5,0,0,5,10,10};
@@ -154,6 +159,30 @@ void run_goal_seek() {
 	}	
 }
 
+// Image processing removes useless information
+void ImageGS(){	
+	long i;
+	int green, red, vis;
+	for(i=0; i<80; i++){
+		//RGB turned into an integer value for comparison
+		red = (fbwbufferGS[2*i] & 0xF8);
+		green = (((fbwbufferGS[2*i] & 0x07) << 5) | ((fbwbufferGS[2*i+1] & 0xE0) >> 3));
+		//blue = ((fbwbufferGS[2*i+1] & 0x1F) << 3); we don't need blue for looking for red.
+		if(red > green + 20){ // green will be less then red when red is strong.
+			numbufferGS[i] = 1;
+			vis++;
+		}else{
+			numbufferGS[i] = 0;
+		}
+	}	
+    if(vis > 0) {
+        isRedVisible = 1;
+    } else {
+        isRedVisible = 0;
+    }
+}
+
+// Should go straight and stop when detecting a red object
 void run_goal_seek_basic() {
 	int leftwheel, rightwheel;		// motor speed left and right
 	int distances[NB_SENSORS];		// array keeping the distance sensor readings
@@ -161,34 +190,54 @@ void run_goal_seek_basic() {
 	int gostraight;
 	int loopcount;
 	unsigned char selector_change;
+    
+    // col at center of image
+    int centreValue;
 	 
 	e_init_port();
 	e_init_ad_scan(ALL_ADC);
 	e_init_motors();
+    
+    // camera set up
+	e_poxxxx_init_cam();
+	e_poxxxx_config_cam(0,(ARRAY_HEIGHT - 4)/2,640,4,8,4,RGB_565_MODE);
+	e_poxxxx_write_cam_registers(); 
+    
 	e_start_agendas_processing();
 	
-//	e_activate_agenda(left_led, 2500);
-//	e_activate_agenda(right_led, 2500);
-//	e_pause_agenda(left_led);
-//	e_pause_agenda(right_led);
-    
-    e_poxxxx_init_cam();
-	select_cam_mode(RGB_565_MODE);
-	
-	e_calibrate_ir();
-	loopcount=0;
-	selector_change = !(followgetSelectorValueGS() & 0x0001);
+//	e_calibrate_ir();
+//	loopcount=0;
+//	selector_change = !(followgetSelectorValueGS() & 0x0001);
 
 	while (1) {
         // front torch
-        e_set_front_led(1);
+        //e_set_front_led(1);
+        
         
         // start camera to find the "success" colour wall
-        e_poxxxx_launch_capture((char *)tab_start);
-		while(!e_poxxxx_is_img_ready());
+		e_poxxxx_launch_capture((char *)fbwbufferGS);
+        while(!e_poxxxx_is_img_ready()){};              // THIS IS CURRENTLY CAUSING ISSUES
+        
+		ImageGS();
+//		e_led_clear();
+        
+		if (isRedVisible) {         // If red, turn on torch and stop
+            // e_activate_agenda(turn, 650);
+            e_set_front_led(1);
+            gostraight=0;
+            leftwheel=0;
+            rightwheel=0;
+		} else {                    // If red isn't visible, continue straight ahead
+            // e_destroy_agenda(turn);
+            e_set_front_led(0);
+            gostraight=1;
+            leftwheel=BIAS_SPEED;
+            rightwheel=BIAS_SPEED;
+		}
         
 		followGetSensorValuesGS(distances); // read sensor values
-
+        /*
+        // This code stopped the bot if it detected an object in any of the 8 sensors
 		gostraight=0;
         
         for (i=0; i<8; i++) {
@@ -202,29 +251,10 @@ void run_goal_seek_basic() {
             gostraight=0;
             leftwheel=0;
             rightwheel=0;
-        }
-        
-        
-        /*else {
-            follow_weightleftGS[0]=-10;
-            follow_weightleftGS[7]=-10;
-            follow_weightrightGS[0]=10;
-            follow_weightrightGS[7]=10;
-            if (distances[2]>300) {
-                distances[1]-=200;
-                distances[2]-=600;
-                distances[3]-=100;
-            }
-        }
+        }*/
 
 		leftwheel=BIAS_SPEED;
 		rightwheel=BIAS_SPEED;
-		if (gostraight==0) {
-			for (i=0; i<8; i++) {
-				leftwheel+=follow_weightleftGS[i]*(distances[i]>>4);
-				rightwheel+=follow_weightrightGS[i]*(distances[i]>>4);
-			}
-		}*/
 
 		// set robot speed
 		followsetSpeedGS(leftwheel, rightwheel);

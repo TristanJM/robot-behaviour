@@ -1,10 +1,16 @@
-#include "motor_led/e_init_port.h"
-#include "motor_led/e_epuck_ports.h"
-#include "motor_led/advance_one_timer/e_motors.h"
-#include "motor_led/advance_one_timer/e_agenda.h"
-#include "uart/e_uart_char.h"
-#include "camera/fast_2_timer/e_poxxxx.h"
-#include "motor_led/advance_one_timer/e_led.h"
+#include "p30f6014A.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
+#include "../../library/motor_led/e_epuck_ports.h"
+#include "../../library/motor_led/e_init_port.h"
+#include "../../library/motor_led/advance_one_timer/e_agenda.h"
+#include "../../library/motor_led/advance_one_timer/e_led.h"
+#include "../../library/motor_led/advance_one_timer/e_motors.h"
+#include "../../library/uart/e_uart_char.h"
+#include "../../library/a_d/advance_ad_scan/e_ad_conv.h"
+#include "../../library/a_d/advance_ad_scan/e_prox.h"
+#include "../../library/camera/fast_2_timer/e_poxxxx.h"
 
 #include "stdio.h"
 #include "string.h"
@@ -72,7 +78,7 @@ void turn(void) {
 	}
 }
 //Main function of follower
-void findRed(void){
+void findRed(){
 	//basic set up for camera
 	e_poxxxx_init_cam();
 	e_poxxxx_config_cam(0,(ARRAY_HEIGHT - 4)/2,640,4,8,4,RGB_565_MODE);
