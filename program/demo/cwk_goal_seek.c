@@ -14,6 +14,7 @@
 #include "utility.h"
 #include "runwallfollow.h"
 #include "runfollowball.h"
+#include "camera/fast_2_timer/e_poxxxx.h"
 
 /*
  * Goal: Cross green finish line, directly in front of the start point (eg. start y=0, end y=1000).
@@ -29,7 +30,6 @@
 #define BIAS_SPEED      	350		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
-
 
 int follow_sensorzeroGS[8];
 int follow_weightleftGS[8] = {-10,-10,-5,0,0,5,10,10};
@@ -171,13 +171,21 @@ void run_goal_seek_basic() {
 //	e_activate_agenda(right_led, 2500);
 //	e_pause_agenda(left_led);
 //	e_pause_agenda(right_led);
+    
+    e_poxxxx_init_cam();
+	select_cam_mode(RGB_565_MODE);
 	
 	e_calibrate_ir();
 	loopcount=0;
 	selector_change = !(followgetSelectorValueGS() & 0x0001);
 
 	while (1) {
+        // front torch
         e_set_front_led(1);
+        
+        // start camera to find the "success" colour wall
+        e_poxxxx_launch_capture((char *)tab_start);
+		while(!e_poxxxx_is_img_ready());
         
 		followGetSensorValuesGS(distances); // read sensor values
 
