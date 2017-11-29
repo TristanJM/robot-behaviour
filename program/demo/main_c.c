@@ -41,6 +41,8 @@
 #include "rungrounddirection.h"
 #include "utility.h"
 
+#include "cwk_goal_seek.h"
+
 #define PI 3.14159265358979
 
 /*! \brief The main function of the application
@@ -77,7 +79,8 @@ int main() {
 	} else if (selector==2) {
 		run_locatesound();
 	} else if (selector==3) {
-		run_wallfollow();
+//		run_wallfollow();
+        run_goal_seek_basic();
 	} else if (selector==4) {
 		run_breitenberg_follower();
 	} else if (selector==5) {

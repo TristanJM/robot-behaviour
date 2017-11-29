@@ -13,6 +13,7 @@
 
 #include "utility.h"
 #include "runwallfollow.h"
+#include "runfollowball.h"
 
 /*
  * Goal: Cross green finish line, directly in front of the start point (eg. start y=0, end y=1000).
@@ -145,6 +146,77 @@ void run_goal_seek() {
 				rightwheel+=follow_weightrightGS[i]*(distances[i]>>4);
 			}
 		}
+
+		// set robot speed
+		followsetSpeedGS(leftwheel, rightwheel);
+
+		wait(15000);
+	}	
+}
+
+void run_goal_seek_basic() {
+	int leftwheel, rightwheel;		// motor speed left and right
+	int distances[NB_SENSORS];		// array keeping the distance sensor readings
+	int i;							// FOR-loop counters
+	int gostraight;
+	int loopcount;
+	unsigned char selector_change;
+	 
+	e_init_port();
+	e_init_ad_scan(ALL_ADC);
+	e_init_motors();
+	e_start_agendas_processing();
+	
+//	e_activate_agenda(left_led, 2500);
+//	e_activate_agenda(right_led, 2500);
+//	e_pause_agenda(left_led);
+//	e_pause_agenda(right_led);
+	
+	e_calibrate_ir();
+	loopcount=0;
+	selector_change = !(followgetSelectorValueGS() & 0x0001);
+
+	while (1) {
+        e_set_front_led(1);
+        
+		followGetSensorValuesGS(distances); // read sensor values
+
+		gostraight=0;
+        
+        for (i=0; i<8; i++) {
+            if (distances[i]>50) {break;}
+        }
+        if (i==8) {
+            gostraight=1;
+            leftwheel=BIAS_SPEED;
+            rightwheel=BIAS_SPEED;
+        } else {
+            gostraight=0;
+            leftwheel=0;
+            rightwheel=0;
+        }
+        
+        
+        /*else {
+            follow_weightleftGS[0]=-10;
+            follow_weightleftGS[7]=-10;
+            follow_weightrightGS[0]=10;
+            follow_weightrightGS[7]=10;
+            if (distances[2]>300) {
+                distances[1]-=200;
+                distances[2]-=600;
+                distances[3]-=100;
+            }
+        }
+
+		leftwheel=BIAS_SPEED;
+		rightwheel=BIAS_SPEED;
+		if (gostraight==0) {
+			for (i=0; i<8; i++) {
+				leftwheel+=follow_weightleftGS[i]*(distances[i]>>4);
+				rightwheel+=follow_weightrightGS[i]*(distances[i]>>4);
+			}
+		}*/
 
 		// set robot speed
 		followsetSpeedGS(leftwheel, rightwheel);
