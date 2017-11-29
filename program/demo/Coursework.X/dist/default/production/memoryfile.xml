@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <executable name="dist/default/production/Coursework.X.production.cof">
+    <memory name="data">
+      <units>bytes</units>
+      <length>8192</length>
+      <used>5982</used>
+      <free>2210</free>
+    </memory>
+    <memory name="program">
+      <units>bytes</units>
+      <length>147072</length>
+      <used>95694</used>
+      <free>51378</free>
+    </memory>
+  </executable>
+</project>
