@@ -60,4 +60,8 @@ void e_po6030k_set_sketch_mode(int mode);
 
 void e_po6030k_set_mirror(int vertical, int horizontal);
 
+void e_po6030k_set_awb_ae(int awb, int ae);
+void e_po6030k_set_rgb_gain(unsigned char r, unsigned char g, unsigned char b);
+void e_po6030k_set_exposure(unsigned long exp);
+
 #endif

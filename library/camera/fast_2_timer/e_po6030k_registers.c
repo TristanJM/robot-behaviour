@@ -271,3 +271,39 @@ void e_po6030k_set_mirror(int vertical, int horizontal) {
 	e_po6030k_write_register(BANK_A, 0x90, bc);
 }
 
+/*! Enable/Disable AWB and AE 
+ * \param awb 1 mean AWB enabled, 0 mean disabled
+ * \param ae 1 mean AE enabled, 0 mean disabled
+ */
+void e_po6030k_set_awb_ae(int awb, int ae) {
+	unsigned char reg = 0x98;
+	if(!awb)
+		reg |= 1 << 2;
+	if(!ae) {
+		reg |= 1;
+		e_po6030k_write_register(BANK_C, 0x55, 0);
+		e_po6030k_write_register(BANK_C, 0x56, 0);
+	} else {
+		e_po6030k_write_register(BANK_C, 0x55, 0x8);
+		e_po6030k_write_register(BANK_C, 0x56, 0xc);
+	}
+
+	e_po6030k_write_register(BANK_C, 0x4, reg);
+}
+
+// 0x40 == gain: 1x, 0x80 == gain: 2x
+void e_po6030k_set_rgb_gain(unsigned char r, unsigned char g, unsigned char b) {
+	e_po6030k_write_register(BANK_C, 0xa4, r);
+	e_po6030k_write_register(BANK_C, 0xa5, g);
+	e_po6030k_write_register(BANK_C, 0xa6, b);
+}
+
+/*! Set exposure time 
+ * \param t Exposure time, LSB is in 1/64 line time
+ */
+void e_po6030k_set_exposure(unsigned long exp) {
+	e_po6030k_write_register(BANK_C, 0x2c, exp >> 24);
+	e_po6030k_write_register(BANK_C, 0x2d, (exp >> 16) & 0xFF);
+	e_po6030k_write_register(BANK_C, 0x2e, (exp >> 8) & 0xFF);
+	e_po6030k_write_register(BANK_C, 0x2f, exp & 0xFF);
+}

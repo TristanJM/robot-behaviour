@@ -13,7 +13,7 @@
 ;    The low frequency omponent has a signal strength 8 dB higher than the
 ;    high frequency component
 
-.include "p30f6014A.inc"
+.include "p30F6014A.inc"
 .include "e_common.inc"
 
 

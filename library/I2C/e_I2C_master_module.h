@@ -162,7 +162,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 #ifndef _I2C_MASTER_MODULE
 #define _I2C_MASTER_MODULE
 
-#include "p30f6014A.h"
+#include "p30F6014A.h"
 
 
 #define START			1
@@ -183,6 +183,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 // if there is no result, switch of evrything and beginn from the beginning.. :-) 
 
 char e_i2c_init(void);
+char e_i2c_deinit(void);
 char e_i2c_start(void);
 char e_i2c_restart(void);
 char e_i2c_ack(void);

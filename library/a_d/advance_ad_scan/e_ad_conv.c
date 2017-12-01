@@ -28,19 +28,25 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 #include "./../../motor_led/e_epuck_ports.h"
 #include "e_ad_conv.h"
 //#include "./../../fft/e_fft.h"
+#include "../../utility/utility.h"
+#include "../../motor_led/e_init_port.h"
 
 int e_mic_scan[3][MIC_SAMP_NB];			/*!< Array to store the mic values */
 int e_acc_scan[3][ACC_SAMP_NB];			/*!< Array to store the acc values */
 unsigned int e_last_mic_scan_id = 0;	//ID of the last scan in the mic array (must be int else probleme of overchange)
 unsigned int e_last_acc_scan_id = 0;	//ID of the last scan in the acc array
 
-int e_ambient_ir[8];					/*!< Array to store the ambient light measurement */
-int e_ambient_and_reflected_ir[8];		/*!< Array to store the light when IR led is on */
+int e_ambient_ir[10];					/*!< Array to store the ambient light measurement */
+int e_ambient_and_reflected_ir[10];		/*!< Array to store the light when IR led is on */
 
 static unsigned char is_ad_acquisition_completed = 0;
 static unsigned char is_ad_array_filled = 0;
 static unsigned char micro_only = 0;
+int selector;
 
+unsigned char updateAccI2CCounter = 0;
+extern int centre_z;
+unsigned int tickAdcIsr = 0;    // tick resolution = ADC_ISR_PERIOD = 1/16384 = about 61 us
 
 /*! \brief Initialize all the A/D register needed
  *
@@ -53,6 +59,8 @@ static unsigned char micro_only = 0;
  */
 void e_init_ad_scan(unsigned char only_micro)
 {
+	selector = getselector();
+
 	if(only_micro == MICRO_ONLY)
 		micro_only = MICRO_ONLY;
 	else
@@ -66,8 +74,17 @@ void e_init_ad_scan(unsigned char only_micro)
 	// ADPCFGbits.PCFGx 
 	// = 0 for Analog input mode, 
 	// = 1 for digital input mode (default)
-	ADPCFGbits.PCFG0 = 1;   // Debugger 
-	ADPCFGbits.PCFG1 = 1;   // Debugger 
+	if(selector == 10) {	// gumstix extension
+        IPC2bits.ADIP = 6;  // Give high priority to the ADC interrupt in order to be able to correctly read the sampled values of the 
+                            // additionals proximities, otherwise their values could be overwritten (before actually be read) if another
+                            // higher priority interrupt is raised, since in the meanwhile the ADC continues sampling/converting and filling 
+                            // the buffer starting from the locations related to the additionals proximities.
+		ADPCFGbits.PCFG0 = 0;   // ir9, right
+		ADPCFGbits.PCFG1 = 0;   // ir8, left
+	} else {
+		ADPCFGbits.PCFG0 = 1;   // PGD
+		ADPCFGbits.PCFG1 = 1;   // PGC
+	}
 	ADPCFGbits.PCFG2 = 0;   // micro 0
 	ADPCFGbits.PCFG3 = 0;   // micro 1
 	ADPCFGbits.PCFG4 = 0;   // micro 2
@@ -84,8 +101,8 @@ void e_init_ad_scan(unsigned char only_micro)
 	ADPCFGbits.PCFG15 = 0;  // ir7
 
 	//specifie the channels to be scanned
-	ADCSSLbits.CSSL0 = 0;   // Debugger
-	ADCSSLbits.CSSL1 = 0;   // Debugger
+	ADCSSLbits.CSSL0 = 0;   // Debugger or ir9 on gumstix ext.
+	ADCSSLbits.CSSL1 = 0;   // Debugger or ir8 on gumstix ext.
 	ADCSSLbits.CSSL2 = 1;   // micro 0
 	ADCSSLbits.CSSL3 = 1;   // micro 1
 	ADCSSLbits.CSSL4 = 1;   // micro 2
@@ -105,7 +122,7 @@ void e_init_ad_scan(unsigned char only_micro)
 	ADCON1bits.ASAM = 1;	//automatic sampling on
 	ADCON1bits.SSRC = 7;	//automatic convertion mode
 
-	ADCON2bits.SMPI = 3-1;	//interupt on 14th sample
+	ADCON2bits.SMPI = 3-1;	//interupt on 3rd sample
 	ADCON2bits.CSCNA = 1;	//scan channel input mode on
 	
 	ADCON3bits.SAMC = 1;	//number of cycle between acquisition and conversion (need 2 for the prox)
@@ -127,6 +144,11 @@ void e_init_ad_scan(unsigned char only_micro)
 			NOP();
 		}
 		while (e_last_acc_scan_id < ACC_SAMP_NB-1);	
+
+	if(isEpuckVersion1_3()) {
+		centre_z = 0;
+	}
+
 }
 
 
@@ -143,7 +165,15 @@ void __attribute__((__interrupt__, auto_psv)) _ADCInterrupt(void)
 	//Clear the A/D Interrupt flag bit or else the CPU will
 	//keep vectoring back to the ISR
 	IFS0bits.ADIF = 0;
+
+	if(updateAccI2CCounter < 64) {  // 64*1/16384 = about 3.9 ms (256 Hz)
+		updateAccI2CCounter++;      // tell when the i2c accelerometer (e-puck rev 1.3) need an update
+	}
 	
+	if(tickAdcIsr < 65535) {
+		tickAdcIsr++;   // max measurable time is 1/16384*65536 = 4 seconds
+	}
+    
 	if(micro_only)
 	{
 		//////////////////////////////////////
@@ -163,9 +193,9 @@ void __attribute__((__interrupt__, auto_psv)) _ADCInterrupt(void)
 	}
 	else
 	{
-		// Normally disable the AD converter in order to be able to modify
-		//its behevior, but no difference seen. If unable AD, take more time
-		
+		//Disable the AD converter in order to be able to modify its behevior.        
+		ADCON1bits.ADON = 0;
+
 		////////////////////////////////////
 		// Configure AD reg for next scan //
 		////////////////////////////////////
@@ -177,17 +207,18 @@ void __attribute__((__interrupt__, auto_psv)) _ADCInterrupt(void)
 		
 		// mic + acc
 		if (period_counter == ACC_PROX_PERIOD-3) // cycle before last cycle of the periode
-		{	
+		{                    
 		// acc channels selection
 			ADCSSL=0x00FC;	// mic + acc selected
-			ADCON2bits.SMPI = 6-1;	//interupt on 8th sample
+			ADCON2bits.SMPI = 6-1;	//interupt on 6th sample
 			ADCON3bits.ADCS = ADCS_6_CHAN;
 		}	
 		// mic + prox
 		else if (period_counter == ACC_PROX_PERIOD-2) // cycle before last cycle of the periode
 		{	
-			ADCON2bits.SMPI = 5-1;	//interupt on 8th sample
+			ADCON2bits.SMPI = 5-1;	//interupt on 5th sample
 			ADCON3bits.ADCS = ADCS_5_CHAN;// prox channels selection
+
 			switch (prox_number)
 			{	
 				// ir sensors 0 and 4
@@ -197,22 +228,24 @@ void __attribute__((__interrupt__, auto_psv)) _ADCInterrupt(void)
 				case 1:	ADCSSL=0x221C;	
 						break;
 				// ir sensors 2 and 6
-				case 2:	ADCSSL=0x441C;	
+				case 2:	ADCSSL=0x441C;
 						break;
 				// ir sensors 3 and 7
 				case 3:	ADCSSL=0x881C;
 						break;
-			}		
+				// gumstix additional ir sensors 8 and 9
+				case 4: ADCSSL=0x001F;
+						break;
+			}
 		}
-		
 		// micro + prox
 		else if (period_counter == PULSE_PERIOD-2) // cycle before last cycle of the periode
 		{	
 			ADCON2bits.SMPI = 5-1;	//interupt on 5th sample
-			ADCON3bits.ADCS = ADCS_5_CHAN;
+			ADCON3bits.ADCS = ADCS_5_CHAN;// prox channels selection
+
 			switch (prox_number)
 			{	
-				// ir sensors 0 and 4
 				// ir sensors 0 and 4
 				case 0:	ADCSSL=0x111C;
 						break;
@@ -220,16 +253,19 @@ void __attribute__((__interrupt__, auto_psv)) _ADCInterrupt(void)
 				case 1:	ADCSSL=0x221C;	
 						break;
 				// ir sensors 2 and 6
-				case 2:	ADCSSL=0x441C;	
+				case 2:	ADCSSL=0x441C;
 						break;
 				// ir sensors 3 and 7
 				case 3:	ADCSSL=0x881C;
 						break;
+				// gumstix additional ir sensors 8 and 9
+				case 4: ADCSSL=0x001F;
+						break;
 			}
 		}
-			
-		//reenable the AD converter
-		//ADCON1bits.ADON = 1; 
+		
+		//reenable the AD converter        
+		ADCON1bits.ADON = 1; 
 	
 		//////////////////////////////////////
 		//  Copy of the buffer regs in the  //
@@ -237,13 +273,18 @@ void __attribute__((__interrupt__, auto_psv)) _ADCInterrupt(void)
 		//////////////////////////////////////
 		adc_ptr = &ADCBUF0;
 
-		//mic channels are always copied
-		e_mic_scan[0][e_last_mic_scan_id] = *adc_ptr++;
-		e_mic_scan[1][e_last_mic_scan_id] = *adc_ptr++;
-		e_mic_scan[2][e_last_mic_scan_id] = *adc_ptr++;
-					
-		if(++e_last_mic_scan_id>MIC_SAMP_NB-1)
-			e_last_mic_scan_id=0;
+        if(	!((period_counter==ACC_PROX_PERIOD-1) && (prox_number==4)) &&
+            !((period_counter==PULSE_PERIOD-1) && (prox_number==4))) { // the 2 gumstix ir sensors are sampled before the mic, so in that case the mic will be saved later.
+            //mic channels are always copied
+            e_mic_scan[0][e_last_mic_scan_id] = *adc_ptr++;
+            e_mic_scan[1][e_last_mic_scan_id] = *adc_ptr++;
+            e_mic_scan[2][e_last_mic_scan_id] = *adc_ptr++;
+
+            if(++e_last_mic_scan_id>=MIC_SAMP_NB) {
+                e_last_mic_scan_id=0;
+                is_ad_array_filled = 1; 	 // indicate that the array is filled
+            }
+        }
 
 		if (period_counter == ACC_PROX_PERIOD-2)
 		{
@@ -254,33 +295,46 @@ void __attribute__((__interrupt__, auto_psv)) _ADCInterrupt(void)
 			e_acc_scan[0][e_last_acc_scan_id] = *adc_ptr++;
 			e_acc_scan[1][e_last_acc_scan_id] = *adc_ptr++;
 			e_acc_scan[2][e_last_acc_scan_id] = *adc_ptr;
-			
+		
 		}
 		else if(period_counter == ACC_PROX_PERIOD-1)
 		{
 			//prox channels copy (ambient)
 			switch (prox_number)
 			{
-			// prox 0 and 4
-			case 0: e_ambient_ir[0] = *adc_ptr++;
-					e_ambient_ir[4] = *adc_ptr;
-					PULSE_IR0 = 1;
-					break;
-			// prox 1 and 5	
-			case 1: e_ambient_ir[1] = *adc_ptr++;
-					e_ambient_ir[5] = *adc_ptr;
-					PULSE_IR1 = 1;
-					break;
-			// prox 2 and 6
-			case 2: e_ambient_ir[2] = *adc_ptr++;
-					e_ambient_ir[6] = *adc_ptr;
-					PULSE_IR2 = 1;
-					break;
-			// prox 3 and 7
-			case 3: e_ambient_ir[3] = *adc_ptr++;
-					e_ambient_ir[7] = *adc_ptr;
+				// prox 0 and 4
+				case 0: e_ambient_ir[0] = *adc_ptr++;
+						e_ambient_ir[4] = *adc_ptr;
+						PULSE_IR0 = 1;
+						break;
+				// prox 1 and 5	
+				case 1: e_ambient_ir[1] = *adc_ptr++;
+						e_ambient_ir[5] = *adc_ptr;
+						PULSE_IR1 = 1;
+						break;
+				// prox 2 and 6
+				case 2: e_ambient_ir[2] = *adc_ptr++;
+						e_ambient_ir[6] = *adc_ptr;
+						PULSE_IR2 = 1;
+						break;
+				// prox 3 and 7
+				case 3: e_ambient_ir[3] = *adc_ptr++;
+						e_ambient_ir[7] = *adc_ptr;
 						PULSE_IR3 = 1;
-				break;
+						break;
+				// Additional prox 8 and 9 of the gumstix extension.
+				case 4: e_ambient_ir[9] = *adc_ptr++;
+						e_ambient_ir[8] = *adc_ptr++;
+						e_mic_scan[0][e_last_mic_scan_id] = *adc_ptr++;
+						e_mic_scan[1][e_last_mic_scan_id] = *adc_ptr++;
+						e_mic_scan[2][e_last_mic_scan_id] = *adc_ptr;
+						if(++e_last_mic_scan_id>=MIC_SAMP_NB) {
+							e_last_mic_scan_id=0;
+							is_ad_array_filled = 1; 	 // indicate that the array is filled
+						}
+						BODY_LED = 1;
+						FRONT_LED = 1; 
+						break;
 			}
 		}
 		//prox channels copy (ambient and reflected)
@@ -288,30 +342,48 @@ void __attribute__((__interrupt__, auto_psv)) _ADCInterrupt(void)
 		{
 			switch (prox_number)
 			{
-			// prox 0 and 4
-			case 0: e_ambient_and_reflected_ir[0] = *adc_ptr++;
-					e_ambient_and_reflected_ir[4] = *adc_ptr;
-					PULSE_IR0 = 0;
-					prox_number = 1;
-					break;
-			// prox 1 and 5
-			case 1: e_ambient_and_reflected_ir[1] = *adc_ptr++;
-					e_ambient_and_reflected_ir[5] = *adc_ptr;
-					PULSE_IR1 = 0;
-					prox_number = 2;
-					break;
-			// prox 2 and 6
+				// prox 0 and 4
+				case 0: e_ambient_and_reflected_ir[0] = *adc_ptr++;
+						e_ambient_and_reflected_ir[4] = *adc_ptr;
+						PULSE_IR0 = 0;
+						prox_number = 1;
+						break;
+				// prox 1 and 5
+				case 1: e_ambient_and_reflected_ir[1] = *adc_ptr++;
+						e_ambient_and_reflected_ir[5] = *adc_ptr;
+						PULSE_IR1 = 0;
+						prox_number = 2;
+						break;
+				// prox 2 and 6
 				case 2: e_ambient_and_reflected_ir[2] = *adc_ptr++;
-					e_ambient_and_reflected_ir[6] = *adc_ptr;
-					PULSE_IR2 = 0;
-					prox_number = 3;
-					break;
-			// prox 3 and 7
-			case 3: e_ambient_and_reflected_ir[3] = *adc_ptr++;
-					e_ambient_and_reflected_ir[7] = *adc_ptr;
-					PULSE_IR3 = 0;
-					prox_number = 0;
-					break;	
+                        e_ambient_and_reflected_ir[6] = *adc_ptr;
+                        PULSE_IR2 = 0;
+						prox_number = 3;
+						break;
+				// prox 3 and 7
+				case 3: e_ambient_and_reflected_ir[3] = *adc_ptr++;
+						e_ambient_and_reflected_ir[7] = *adc_ptr;
+						PULSE_IR3 = 0;
+						if(selector==10) {
+							prox_number = 4;
+						} else {
+                            prox_number = 0;
+						}
+						break;
+				// Additional prox 8 and 9 of the gumstix extension.
+				case 4: e_ambient_and_reflected_ir[9] = *adc_ptr++;
+						e_ambient_and_reflected_ir[8] = *adc_ptr++;
+						BODY_LED = 0;
+						FRONT_LED = 0;
+						prox_number = 0;
+						e_mic_scan[0][e_last_mic_scan_id] = *adc_ptr++;
+						e_mic_scan[1][e_last_mic_scan_id] = *adc_ptr++;
+						e_mic_scan[2][e_last_mic_scan_id] = *adc_ptr;
+						if(++e_last_mic_scan_id>=MIC_SAMP_NB) {
+							e_last_mic_scan_id=0;
+							is_ad_array_filled = 1; 	 // indicate that the array is filled
+						}	
+						break;
 			}
 		}
 		
@@ -319,6 +391,7 @@ void __attribute__((__interrupt__, auto_psv)) _ADCInterrupt(void)
 			period_counter=0;	
 	}
 	is_ad_acquisition_completed = 1; // indicate a new sample taken
+
 }
 
 /*! \brief To know if the ADC acquisitionn is completed

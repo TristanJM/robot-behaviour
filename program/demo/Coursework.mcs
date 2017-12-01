@@ -535,6 +535,617 @@ ToolArgsString=-g -Wall
 TraceCmdString=
 DebugOptions=-D__DEBUG
 [File041]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\main_c.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File042]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\runaccelerometer.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File043]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\runlocatesound.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File044]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\runwallfollow.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File045]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\utility.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File046]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_sound.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File047]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_init_port.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File048]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_init_uart1.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File049]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_uart1_rx_char.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File050]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_uart1_tx_char.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File051]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_sub_dci_kickoff.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File052]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_const_sound.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File053]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_init_codec_slave.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File054]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_init_dci_master.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File055]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_isr_dci.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File056]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_I2C_protocol.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File057]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_I2C_master_module.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File058]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\rungrounddirection.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File059]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_acc.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File060]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_ad_conv.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File061]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_prox.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File062]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_micro.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File063]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_agenda.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File064]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_motors.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File065]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_led.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File066]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\runbreitenberg_adv.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File067]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\runfollowball.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File068]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\search_ball.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File069]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_timers.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File070]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_interrupt.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File071]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\runfftlistener.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File072]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_twiddle_factors.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File073]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_input_signal.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File074]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_fft.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File075]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_subtract_mean.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File076]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_fast_copy.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={DE18EB1A-B46B-486B-B96F-A811A635DFAC}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-as.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g
+TraceCmdString=
+DebugOptions=--defsym=__DEBUG=1
+[File077]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_calc_po3030k.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File078]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_calc_po6030k.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File079]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_common.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File080]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_po3030k_registers.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File081]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\e_po6030k_registers.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File082]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\cwk_aggressive.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File083]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\cwk_curious.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File084]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\cwk_custom_behaviour.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File085]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\cwk_fear.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File086]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\cwk_goal_seek.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File087]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\obj\cwk_love.o
+Folder=Intermediary
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={069BD372-6CA0-40D4-BF2F-5DC806D05083}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-gcc.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=-g -Wall
+TraceCmdString=
+DebugOptions=-D__DEBUG
+[File088]
 Location=C:\Users\cotjm\Robotics C\program\program\demo\Demo.cof
 Folder=Output
 DeviceName=dsPIC30F6014A
@@ -547,7 +1158,7 @@ SuiteArgsString=
 ToolArgsString=--heap=512 -o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)"
 TraceCmdString=
 DebugOptions=
-[File042]
+[File089]
 Location=C:\Users\cotjm\Robotics C\program\program\demo\Demo.hex
 Folder=Output
 DeviceName=dsPIC30F6014A
@@ -560,7 +1171,7 @@ SuiteArgsString=
 ToolArgsString=--heap=512 -o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)"
 TraceCmdString=
 DebugOptions=
-[File043]
+[File090]
 Location=C:\Users\cotjm\Robotics C\program\program\demo\Coursework.cof
 Folder=Output
 DeviceName=dsPIC30F6014A
@@ -573,7 +1184,7 @@ SuiteArgsString=
 ToolArgsString=--heap=512 -o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)"
 TraceCmdString=
 DebugOptions=--defsym=__MPLAB_DEBUG=1
-[File044]
+[File091]
 Location=C:\Users\cotjm\Robotics C\program\program\demo\Coursework.hex
 Folder=Output
 DeviceName=dsPIC30F6014A
@@ -582,6 +1193,32 @@ LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
 LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-ld.exe
 PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
 SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=--heap=512 -o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)"
+TraceCmdString=
+DebugOptions=--defsym=__MPLAB_DEBUG=1
+[File092]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\Coursework.cof
+Folder=Output
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-ld.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
+SuiteArgsString=
+ToolArgsString=--heap=512 -o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)"
+TraceCmdString=
+DebugOptions=--defsym=__MPLAB_DEBUG=1
+[File093]
+Location=C:\Users\cotjm\Robotics C\github\robot-behaviour\program\demo\Coursework.hex
+Folder=Output
+DeviceName=dsPIC30F6014A
+LanguageToolSuiteID={479DDE59-4D56-455E-855E-FFF59A3DB57E}
+LanguageToolID={433C3D55-811D-409D-A6BF-159CF9355B42}
+LanguageToolLocation=C:\Program Files (x86)\Microchip\MPLAB C30\bin\pic30-ld.exe
+PPAD=$(BINDIR)||$(TMPDIR)|.\obj||$(AINDIR)|.\..\..\library\codec;.\..\..\library\uart||$(INCDIR)|.\..\..\library||$(LIBDIR)|C:\Program Files\Microchip\MPLAB C30\lib||$(LKRDIR)||
+SOLK=<src>|main_c.c|runaccelerometer.c|runlocatesound.c|runwallfollow.c|utility.c|.\..\..\library\codec\e_sound.c|.\..\..\library\motor_led\e_init_port.c|.\..\..\library\uart\e_init_uart1.s|.\..\..\library\uart\e_uart1_rx_char.s|.\..\..\library\uart\e_uart1_tx_char.s|.\..\..\library\codec\e_sub_dci_kickoff.s|.\..\..\library\codec\e_const_sound.s|.\..\..\library\codec\e_init_codec_slave.s|.\..\..\library\codec\e_init_dci_master.s|.\..\..\library\codec\e_isr_dci.s|.\..\..\library\I2C\e_I2C_protocol.c|.\..\..\library\I2C\e_I2C_master_module.c|rungrounddirection.c|..\..\library\a_d\advance_ad_scan\e_acc.c|..\..\library\a_d\advance_ad_scan\e_ad_conv.c|..\..\library\a_d\advance_ad_scan\e_prox.c|..\..\library\a_d\advance_ad_scan\e_micro.c|..\..\library\motor_led\advance_one_timer\e_agenda.c|..\..\library\motor_led\advance_one_timer\e_motors.c|..\..\library\motor_led\advance_one_timer\e_led.c|runbreitenberg_adv.c|runfollowball.c|search_ball.c|..\..\library\camera\fast_2_timer\e_timers.c|..\..\library\camera\fast_2_timer\e_interrupt.s|runfftlistener.c|..\..\library\fft\e_twiddle_factors.c|..\..\library\fft\e_input_signal.c|..\..\library\fft\e_fft.c|..\..\library\fft\e_subtract_mean.s|..\..\library\fft\e_fast_copy.s|..\..\library\camera\fast_2_timer\e_calc_po3030k.c|..\..\library\camera\fast_2_timer\e_calc_po6030k.c|..\..\library\camera\fast_2_timer\e_common.c|..\..\library\camera\fast_2_timer\e_po3030k_registers.c|..\..\library\camera\fast_2_timer\e_po6030k_registers.c|cwk_aggressive.c|cwk_curious.c|cwk_custom_behaviour.c|cwk_fear.c|cwk_goal_seek.c|cwk_love.c||<obj>||<lib>|..\..\library\fft\libdsp-coff.a|..\..\library\fft\libdsp-elf.a||<lkr>|C:\Program Files (x86)\Microchip\MPLAB C30\support\gld\p30f6014A.gld||
 SuiteArgsString=
 ToolArgsString=--heap=512 -o"$(BINDIR_)$(TARGETBASE).$(TARGETSUFFIX)"
 TraceCmdString=
