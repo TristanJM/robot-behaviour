@@ -187,12 +187,8 @@ void run_goal_seek_basic() {
 	int leftwheel, rightwheel;		// motor speed left and right
 	int distances[NB_SENSORS];		// array keeping the distance sensor readings
 	int i;							// FOR-loop counters
-	int gostraight;
 	int loopcount;
 	unsigned char selector_change;
-    
-    // col at center of image
-    int centreValue;
 	 
 	e_init_port();
 	e_init_ad_scan(ALL_ADC);
@@ -211,44 +207,46 @@ void run_goal_seek_basic() {
 
 	while (1) {
         // front torch
-        //e_set_front_led(1);
-        
+        e_set_front_led(1);
         
         // start camera to find the "success" colour wall
 		e_poxxxx_launch_capture((char *)fbwbufferGS);
         while(!e_poxxxx_is_img_ready()){};              // THIS IS CURRENTLY CAUSING ISSUES
         
 		ImageGS();
-//		e_led_clear();
+        e_led_clear();
         
 		if (isRedVisible) {         // If red, turn on torch and stop
             // e_activate_agenda(turn, 650);
-            e_set_front_led(1);
-            gostraight=0;
-            leftwheel=0;
-            rightwheel=0;
+            e_set_led(0,1);
+            e_set_led(1,1);
+            e_set_led(7,1);
+            //gostraight=0;
+            //leftwheel=0;
+            //rightwheel=0;
+            e_set_speed_left (0);
+			e_set_speed_right(0);
 		} else {                    // If red isn't visible, continue straight ahead
             // e_destroy_agenda(turn);
-            e_set_front_led(0);
-            gostraight=1;
-            leftwheel=BIAS_SPEED;
-            rightwheel=BIAS_SPEED;
+            e_set_led(4,1);
+            //gostraight=1;
+            //leftwheel=BIAS_SPEED;
+            //rightwheel=BIAS_SPEED;
+            e_set_speed_left (0);
+			e_set_speed_right(0);
 		}
         
-		followGetSensorValuesGS(distances); // read sensor values
+		// followGetSensorValuesGS(distances); // read sensor values
         /*
         // This code stopped the bot if it detected an object in any of the 8 sensors
-		gostraight=0;
         
         for (i=0; i<8; i++) {
             if (distances[i]>50) {break;}
         }
         if (i==8) {
-            gostraight=1;
             leftwheel=BIAS_SPEED;
             rightwheel=BIAS_SPEED;
         } else {
-            gostraight=0;
             leftwheel=0;
             rightwheel=0;
         }*/
