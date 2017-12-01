@@ -30,6 +30,10 @@
 #include "../../library/uart/e_uart_char.h"
 #include "../../library/motor_led/e_init_port.h"
 
+#include "cwk_goal_seek.h"
+#include "followGreen.h"
+#include "findRed.h"
+
 #include "ComModule.h"
 #include "runcollaboration.h"
 #include "runaccelerometer.h"
@@ -79,7 +83,8 @@ int main() {
 	} else if (selector==2) {
 		run_locatesound();
 	} else if (selector==3) {
-		run_wallfollow();
+        // run_wallfollow();
+        run_goal_seek_basic();
 	} else if (selector==4) {
 		run_breitenberg_follower();
 	} else if (selector==5) {

@@ -27,7 +27,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
  * \author Code: Borter Jean-Joel \n Doc: Jonathan Besuchet
  */
 
-#include "p30f6014A.h"
+#include "p30F6014A.h"
 #include "e_ad_conv.h"
 #include "../../motor_led/e_epuck_ports.h"
 
@@ -79,6 +79,8 @@ int e_get_micro_average(unsigned int micro_id, unsigned int filter_size)
 
 
 /*! \brief Get the difference between the highest and lowest sample.
+ * Beware that from e-puck rev 1.3 the microphone sensitivity resulted a little bit different from the previous hardware revision;
+ * some empirical tests show that the difference is about +/-15%.
  *
  * \param micro_id		micro's ID (0, 1, or 2)
  *							(use \ref MIC0_BUFFER, \ref MIC1_BUFFER , \ref MIC2_BUFFER  defined in e_micro.h)

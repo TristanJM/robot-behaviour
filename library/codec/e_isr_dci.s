@@ -13,7 +13,7 @@
 
 
 
-.include "p30f6014A.inc"
+.include "p30F6014A.inc"
 .include "e_common.inc"
 
 

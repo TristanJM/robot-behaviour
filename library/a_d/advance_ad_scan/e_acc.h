@@ -29,7 +29,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
  *
  * A little exemple to read the accelerator.
  * \code
- * #include <p30f6014A.h>
+ * #include <p30F6014A.h>
  * #include <motor_led/e_epuck_ports.h>
  * #include <motor_led/e_init_port.h>
  * #include <a_d/advance_ad_scan/e_ad_conv.h>
@@ -75,6 +75,9 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 #define ACCY_BUFFER	1
 #define ACCZ_BUFFER	2
 
+
+#define GRAVITY 768             // 1 g fot 10 bits accelerometer
+#define GRAVITY_LSM330 16384    // 1 g for 16 bits accelerometer
 
 /*! \struct TypeAccSpheric
  * \brief struct to store the acceleration vector in spherical coord

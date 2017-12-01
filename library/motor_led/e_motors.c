@@ -30,47 +30,22 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
  * timer5.
  *
  * A little exemple for the motors (e-puck turn on himself)
+ * \code
+ * #include <p30F6014A.h>
+ * #include <motor_led/e_epuck_ports.h>
+ * #include <motor_led/e_init_port.h>
+ * #include <motor_led/e_motors.h>
+ * 
+ * int main(void)
+ * {
+ * 	e_init_motors();
+ * 	e_set_speed_left(500); //go forward on half speed
+ * 	e_set_speed_right(-500); //go backward on half speed
+ * 	while(1) {}
+ * }
+ * \endcode
+ * \author Code: Michael Bonani, Francesco Mondada, Lucas Meier \n Doc: Jonathan Besuchet
  */
-#include <p30f6014A.h>
-#include <motor_led/e_epuck_ports.h>
-#include <motor_led/e_init_port.h>
-#include <motor_led/e_motors.h>
-
-int main(void)
-{
-	int i = 0;
-	long x;
-	int forward = 1;
-
-
-	e_init_motors();
-	e_set_speed_left(500); //go forward on half speed
-	e_set_speed_right(500); //go backward on half speed
-
-	while(1) 
-	{
-		e_set_led(8, 0);	
-		e_set_led(i, 1);
-
-		if (forward == 1) {
-			forward = 0;
-			e_set_speed_left(-500);
-			e_set_speed_right(500);
-			for(x=0;x<685000;x++){}
-		} else {
-			forward = 1;
-			e_set_speed_left(500);
-			e_set_speed_right(500);
-			for(x=0;x<2000000;x++){}
-		}	
-
-		asm("nop");
-
-		// increment LED counter
-		i = i + 1;
-		if (i == 8) { i = 0; }
-	}
-}
 
 #include <stdlib.h>
 #include "e_epuck_ports.h"
