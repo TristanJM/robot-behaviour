@@ -191,8 +191,8 @@ void run_goal_seek_basic() {
 	unsigned char selector_change;
 	 
 	e_init_port();
-	e_init_ad_scan(ALL_ADC);
 	e_init_motors();
+    e_init_uart1();
     
     // camera set up
 	e_poxxxx_init_cam();
@@ -216,30 +216,28 @@ void run_goal_seek_basic() {
 		ImageGS();
         e_led_clear();
         
-		if (isRedVisible) {         // If red, turn on torch and stop
+		if (!isRedVisible) {         // If red, turn on torch and stop
             // e_activate_agenda(turn, 650);
             e_set_led(0,1);
             e_set_led(1,1);
             e_set_led(7,1);
-            //gostraight=0;
             //leftwheel=0;
             //rightwheel=0;
-            e_set_speed_left (0);
+            e_set_speed_left(0);
 			e_set_speed_right(0);
 		} else {                    // If red isn't visible, continue straight ahead
             // e_destroy_agenda(turn);
             e_set_led(4,1);
-            //gostraight=1;
             //leftwheel=BIAS_SPEED;
             //rightwheel=BIAS_SPEED;
-            e_set_speed_left (0);
-			e_set_speed_right(0);
+            e_set_speed_left(BIAS_SPEED);
+			e_set_speed_right(BIAS_SPEED);
 		}
         
-		// followGetSensorValuesGS(distances); // read sensor values
         /*
         // This code stopped the bot if it detected an object in any of the 8 sensors
-        
+        followGetSensorValuesGS(distances); // read sensor values
+
         for (i=0; i<8; i++) {
             if (distances[i]>50) {break;}
         }
@@ -249,13 +247,13 @@ void run_goal_seek_basic() {
         } else {
             leftwheel=0;
             rightwheel=0;
-        }*/
-
-		leftwheel=BIAS_SPEED;
+        }
+        leftwheel=BIAS_SPEED;
 		rightwheel=BIAS_SPEED;
+        */
 
 		// set robot speed
-		followsetSpeedGS(leftwheel, rightwheel);
+		//followsetSpeedGS(leftwheel, rightwheel);
 
 		wait(15000);
 	}	

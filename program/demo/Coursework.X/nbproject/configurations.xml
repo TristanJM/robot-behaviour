@@ -109,44 +109,6 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
     <itemPath>../p30f6014A.gld</itemPath>
-    <itemPath>../obj/camtest.o</itemPath>
-    <itemPath>../obj/cwk_aggressive.o</itemPath>
-    <itemPath>../obj/cwk_curious.o</itemPath>
-    <itemPath>../obj/cwk_custom_behaviour.o</itemPath>
-    <itemPath>../obj/cwk_fear.o</itemPath>
-    <itemPath>../obj/cwk_goal_seek.o</itemPath>
-    <itemPath>../obj/cwk_love.o</itemPath>
-    <itemPath>../obj/distanceRed.o</itemPath>
-    <itemPath>../obj/e_acc.o</itemPath>
-    <itemPath>../obj/e_ad_conv.o</itemPath>
-    <itemPath>../obj/e_agenda.o</itemPath>
-    <itemPath>../obj/e_calc_po3030k.o</itemPath>
-    <itemPath>../obj/e_calc_po6030k.o</itemPath>
-    <itemPath>../obj/e_common.o</itemPath>
-    <itemPath>../obj/e_const_sound.o</itemPath>
-    <itemPath>../obj/e_fast_copy.o</itemPath>
-    <itemPath>../obj/e_fft.o</itemPath>
-    <itemPath>../obj/e_I2C_master_module.o</itemPath>
-    <itemPath>../obj/e_I2C_protocol.o</itemPath>
-    <itemPath>../obj/e_init_codec_slave.o</itemPath>
-    <itemPath>../obj/e_init_dci_master.o</itemPath>
-    <itemPath>../obj/e_init_port.o</itemPath>
-    <itemPath>../obj/e_init_uart1.o</itemPath>
-    <itemPath>../obj/e_input_signal.o</itemPath>
-    <itemPath>../obj/e_interrupt.o</itemPath>
-    <itemPath>../obj/e_isr_dci.o</itemPath>
-    <itemPath>../obj/e_led.o</itemPath>
-    <itemPath>../obj/e_micro.o</itemPath>
-    <itemPath>../obj/e_motors.o</itemPath>
-    <itemPath>../obj/e_po3030k_registers.o</itemPath>
-    <itemPath>../obj/e_po6030k_registers.o</itemPath>
-    <itemPath>../obj/e_po8030d_registers.o</itemPath>
-    <itemPath>../obj/e_prox.o</itemPath>
-    <itemPath>../obj/findRed.o</itemPath>
-    <itemPath>../obj/findWhite.o</itemPath>
-    <itemPath>../obj/follower.o</itemPath>
-    <itemPath>../obj/followGreen.o</itemPath>
-    <itemPath>../obj/imageCapture.o</itemPath>
   </logicalFolder>
   <sourceRootList>
     <Elem>..</Elem>
