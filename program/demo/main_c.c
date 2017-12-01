@@ -27,8 +27,8 @@
 #include "stdio.h"
 #include "string.h"
 
-#include "uart/e_uart_char.h"
-#include "motor_led/e_init_port.h"
+#include "../../library/uart/e_uart_char.h"
+#include "../../library/motor_led/e_init_port.h"
 
 #include "cwk_goal_seek.h"
 #include "followGreen.h"
@@ -44,6 +44,7 @@
 #include "runfftlistener.h"
 #include "rungrounddirection.h"
 #include "utility.h"
+#include "cwk_aggressive.h"
 
 #define PI 3.14159265358979
 
@@ -75,9 +76,10 @@ int main() {
 	e_send_uart1_char(buffer, strlen(buffer));
 	
 	if (selector==0) {
-		run_grounddirection();
+		//idle
+		//run_grounddirection();
 	} else if (selector==1) {
-		run_accelerometer();
+		run_aggressive();
 	} else if (selector==2) {
 		run_locatesound();
 	} else if (selector==3) {

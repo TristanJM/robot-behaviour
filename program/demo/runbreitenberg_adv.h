@@ -42,5 +42,7 @@
 
 void run_breitenberg_follower(void);
 void run_breitenberg_shocker(void);
+int lin_speed_calc(int distance, int gain);
+int angle_speed_calc(int pos, int gain);
 
 #endif
