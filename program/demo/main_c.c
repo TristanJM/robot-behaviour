@@ -90,8 +90,8 @@ int main() {
 	} else if (selector==6) {
 		run_follow_ball();
 	} else if (selector==7) {
-//		run_follow_ball_red();
-        findRed();
+		run_follow_ball_red();
+//        findRed();
 	} else if (selector==8) {
 		run_follow_ball_green();
 	} else
