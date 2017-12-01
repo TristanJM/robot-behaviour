@@ -37,6 +37,11 @@ void e_i2cp_init(void)
 	e_i2c_init();
 }
 
+void e_i2cp_deinit(void)
+{
+	e_i2c_deinit();
+}
+
 /*! \brief Enable special I2C interrupt
  * \return 1 to confirme the oparation and 0 for an error
  */

@@ -75,7 +75,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
  * the motors, the LED and the IR receiver of the e-puck. 
  * 
  * \subsection intro_subsec1_ports Ports
- * The standard port's name of the p30f6014A microcontroller is not explicit in the
+ * The standard port's name of the p30F6014A microcontroller is not explicit in the
  * e-puck context, so we need to redefine these names to make them more user friendly.
  * \n This work is made in the file: e_epuck_ports.h.
  * 
@@ -112,7 +112,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
  * e_agenda.h for more information about agenda).
  *
  * \section timer_sect_timer Timer's problems
- * The p30f6014A microcontroller has five timers. The camera's package uses the
+ * The p30F6014A microcontroller has five timers. The camera's package uses the
  * timer4 and the timer5, so we can't exploit them to make the motors work when we
  * want to use the camera. For this reason we can't use the standard solution above.
  * \warning If you are using the camera, you have to work with one of this three
@@ -143,7 +143,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 #ifndef _EPUCK_PORTS
 #define _EPUCK_PORTS
 
-#include "p30f6014A.h"
+#include "p30F6014A.h"
 
 /*********************GENERAL SETUP************************/
 
@@ -318,7 +318,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 #define CLRWDT() {__asm__ volatile ("clrwdt");}
 #define SLEEP() {__asm__ volatile ("pwrsav #0");}
 #define IDLE() {__asm__ volatile ("pwrsav #1");}
-#define INTERRUPT_OFF() {__asm__ volatile ("disi	#10000");}
+#define INTERRUPT_OFF() {__asm__ volatile ("disi	#10000");}	//disable interrupts with priority 0-6 for 10000 cycles
 #define INTERRUPT_ON() {__asm__ volatile ("disi	#2");}
 #define RESET() {__asm__ volatile ("reset");}	
 

@@ -28,38 +28,40 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
  * A little exemple which turn the LED0 when an obstacle is detected
  * by the proximity sensor number 0. 
  * \code
- * #include <p30f6014A.h>
+ * #include <p30F6014A.h>
  * #include <motor_led/e_epuck_ports.h>
  * #include <motor_led/e_init_port.h>
  * #include <a_d/advance_ad_scan/e_prox.h>
  * #include <a_d/advance_ad_scan/e_ad_conv.h>
- */ 
-/*
- int main(void)
- {
- 	int proxy0;
- 	e_init_port();
- 	e_init_ad_scan();
- 	while(1)
- 	{
- 		long i;
- 		proxy0 = e_get_prox(0);
- 		if(proxy0 < 1000)
- 			LED0 = 0;
- 		else
- 			LED0 = 1;
- 		for(i=0; i<100000; i++) { asm("nop"); }
- 	}
- }
-*/
+ * 
+ * int main(void)
+ * {
+ * 	int proxy0;
+ * 	e_init_port();
+ * 	e_init_ad_scan();
+ * 	while(1)
+ * 	{
+ * 		long i;
+ * 		proxy0 = e_get_prox(0);
+ * 		if(proxy0 < 1000)
+ * 			LED0 = 0;
+ * 		else
+ * 			LED0 = 1;
+ * 		for(i=0; i<100000; i++) { asm("nop"); }
+ * 	}
+ * }
+ * \endcode
+ * \author Code: Lucas Meier \n Doc: Jonathan Besuchet
+ */
+
 #include "e_ad_conv.h"
 #include "../../motor_led/e_epuck_ports.h"
 #include "e_prox.h"
 
-extern int e_ambient_ir[8];						// ambient light measurement
-extern int e_ambient_and_reflected_ir[8];		// light when led is on
+extern int e_ambient_ir[10];						// ambient light measurement
+extern int e_ambient_and_reflected_ir[10];		// light when led is on
 
-static int init_value_ir[8] = {0,0,0,0,0,0,0,0};
+static int init_value_ir[10] = {0,0,0,0,0,0,0,0,0,0};
 
 /*! \brief To calibrate your ir sensor
  * \warning Call this function one time before calling e_get_calibrated_prox
@@ -68,21 +70,21 @@ void e_calibrate_ir()
 {
 	int i=0,j=0;
 	int long t;
-	int long tmp[8];
+	int long tmp[10];
 	
-	for (;i<8;++i) {
+	for (;i<10;++i) {
 		init_value_ir[i]=0;
 		tmp[i]=0;
 	}
 
 	for (;j<100;++j) {
-		for (i=0;i<8;++i) {
+		for (i=0;i<10;++i) {
 			tmp[i]+=(e_get_prox(i));
 			for (t=0;t<1000;++t);
 		}
 	}
 
-	for (i=0;i<8;++i) {
+	for (i=0;i<10;++i) {
 		init_value_ir[i]=(int)(tmp[i]/(j*1.0));
 	}
 }
@@ -104,7 +106,7 @@ void e_calibrate_ir()
  */
 int e_get_prox(unsigned int sensor_number)
 {
-	if (sensor_number > 7)
+	if (sensor_number > 9)
 		return 0;
 	else
 		return e_ambient_ir[sensor_number] - e_ambient_and_reflected_ir[sensor_number];
@@ -122,7 +124,7 @@ int e_get_prox(unsigned int sensor_number)
 int e_get_calibrated_prox(unsigned int sensor_number)
 {
 	int temp;
-	if (sensor_number > 7)
+	if (sensor_number > 9)
 		return 0;
 	else
 	{
@@ -144,7 +146,7 @@ int e_get_calibrated_prox(unsigned int sensor_number)
  */
 int e_get_ambient_light(unsigned int sensor_number)
 {
-	if (sensor_number > 7)
+	if (sensor_number > 9)
 		return 0;
 	else
 		return e_ambient_ir[sensor_number];

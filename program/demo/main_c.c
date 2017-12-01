@@ -81,7 +81,7 @@ int main() {
 	} else if (selector==2) {
 		run_locatesound();
 	} else if (selector==3) {
-//		run_wallfollow();
+        // run_wallfollow();
         run_goal_seek_basic();
 	} else if (selector==4) {
 		run_breitenberg_follower();
@@ -90,8 +90,7 @@ int main() {
 	} else if (selector==6) {
 		run_follow_ball();
 	} else if (selector==7) {
-//		run_follow_ball_red();
-        findRed();
+		run_follow_ball_red();
 	} else if (selector==8) {
 		run_follow_ball_green();
 	} else

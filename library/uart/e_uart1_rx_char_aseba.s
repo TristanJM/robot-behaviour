@@ -26,7 +26,7 @@ History:
 .global _U1RXBuf
 .global _U1RXRcvCnt
 .global _U1RXReadCnt
-_U1RXBuf: .space 64							; reception buffer
+_U1RXBuf: .space 1024							; reception buffer
 _U1RXRcvCnt: .space 2						; amount of received bytes
 _U1RXReadCnt: .space 2						; amount of read bytes
 
@@ -61,7 +61,7 @@ get_char_loop:
 		btst	U1STA,#0					; Test if char to receive
 		bra		Z,no_more_char				; If no char, exit loop
 		mov		_U1RXRcvCnt, w0				; Received counter in w0
-		and		#0x3f, w0					; Mask at buffer length
+		and		#0x3ff, w0					; Mask at buffer length
 		mov		#_U1RXBuf, w1				; Buffer pointer in w1
 		add		w0, w1, w1					; Element pointer in w1
 		mov.b   U1RXREG, WREG				; Transfer received byte to w0
@@ -90,7 +90,7 @@ _e_getchar_uart1:
 		
 		bra		Z, no_char_to_ret			; If equal, no char to return
 		
-		and		#0x3f, w2					; Mask at buffer length
+		and		#0x3ff, w2					; Mask at buffer length
 		mov		#_U1RXBuf, w1				; Buffer pointer in w1
 		add		w1, w2, w2					; Element pointer in w2
 		

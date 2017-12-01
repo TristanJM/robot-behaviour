@@ -29,7 +29,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
  *
  * A little exemple to read the accelerator.
  * \code
- * #include <p30f6014A.h>
+ * #include <p30F6014A.h>
  * #include <motor_led/e_epuck_ports.h>
  * #include <motor_led/e_init_port.h>
  * #include <a_d/advance_ad_scan/e_ad_conv.h>
@@ -66,10 +66,14 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 #include "e_ad_conv.h"
 #include "../../motor_led/e_epuck_ports.h"
 #include "../../motor_led/advance_one_timer/e_led.h"
+#include "../../acc_gyro/e_lsm330.h"
+#include "../../motor_led/e_init_port.h"
 #include <stdlib.h>
 
+extern unsigned char updateAccI2CCounter;
 extern int e_acc_scan[3][ACC_SAMP_NB];
 extern unsigned int e_last_acc_scan_id;
+unsigned char isCalibratingFlag = 0;
 
 /*****************************************************
  * internal variables                                *
@@ -78,10 +82,11 @@ static int angle_mem = 0;			//used in the display_angle function
 
 static int centre_x = 0;			//zero value for x axe
 static int centre_y = 0;			//zero value for y axe
-static int centre_z = 2000;			//zero value for z axe
+int centre_z = 2000;			//zero value for z axe
 
 static int acc_x, acc_y, acc_z;	//raw acceleration values in carthesian coord.
 static float acceleration, orientation, inclination;	//spherical coord. of the accel vector
+int lastAccX, lastAccY, lastAccZ;
 
 /*****************************************************
  * internal function                                 *
@@ -94,12 +99,37 @@ static float acceleration, orientation, inclination;	//spherical coord. of the a
  */
 int e_get_acc(unsigned int captor)
 {
+    int tempValue=0;
+    if(isEpuckVersion1_3()) {
+        // Try to optimize the I2C requests: the time is based on the ADC ISR (64*1/16384=about 3.9 ms, that is 256 Hz as with analog accelerometer),
+        // so we get and update for all 3 channels (with a single call) every 256 Hz independently of the requested channel.
+        // This is to avoid especially situations in which the user requires all 3 channels (to do some maths) one after the other, in this case
+        // it would requires 3 I2C calls that we can avoid this way.
+        if(updateAccI2CCounter == 64) {
+            getAllAxesAcc(&lastAccX, &lastAccY, &lastAccZ);
+            updateAccI2CCounter = 0;
+        }
 	switch(captor) {
-		case 0: return (e_acc_scan[captor][e_last_acc_scan_id] - centre_x);
-		case 1: return (e_acc_scan[captor][e_last_acc_scan_id] - centre_y);
-		case 2: return (e_acc_scan[captor][e_last_acc_scan_id] - centre_z);
-		default: return((int)ANGLE_ERROR);
+            // Shift by 4 the value received from the sensor (16 bits) to get 12 bits value as with the analog accelerometer (to maintain compatibility with e-puck rev < 1.3)
+            // Moreover decrease the resulting value by 1/4 to get about the same resolution for the g:
+            // - e-puck rev < 1.3: 1 g = about 800
+            // - e-puck rev 1.3: 1 g = about 1000 => decreased by 1/4 => about 750 (5% difference)
+            case 0: tempValue = lastAccY - centre_y;   // exchange x and y axes in order to be consistent with e-puck rev < 1.3
+                return (tempValue>>4) - (tempValue>>6);
+            case 1: tempValue = lastAccX - centre_x;
+                return (tempValue>>4) - (tempValue>>6);
+            case 2: tempValue = lastAccZ - centre_z;
+                return (tempValue>>4) - (tempValue>>6);
+            default: return((int)ANGLE_ERROR);
 	}
+    } else {
+	switch(captor) {
+            case 0: return (e_acc_scan[captor][e_last_acc_scan_id] - centre_x);
+            case 1: return (e_acc_scan[captor][e_last_acc_scan_id] - centre_y);
+            case 2: return (e_acc_scan[captor][e_last_acc_scan_id] - centre_z);
+            default: return((int)ANGLE_ERROR);
+	}
+    }
 }
 
 /*! \brief Read the value of a channel, filtered by an averaging filter
@@ -109,8 +139,44 @@ int e_get_acc(unsigned int captor)
  */
 int e_get_acc_filtered(unsigned int captor, unsigned int filter_size)
 {
-	long temp = 0;
-	int i,j;
+    long temp = 0;
+    int i,j,tempValue;
+    
+    if(isEpuckVersion1_3()) {
+        // Filter no more required for the new chip used with e-puck rev 1.3.
+        
+        // Try to optimize the I2C requests: the time is based on the ADC ISR (64*1/16384=about 3.9 ms, that is 256 Hz as with analog accelerometer),
+        // so we get and update for all 3 channels (with a single call) every 256 Hz independently of the requested channel.
+        // This is to avoid especially situations in which the user requires all 3 channels (to do some maths) one after the other, in this case
+        // it would requires 3 I2C calls that we can avoid this way.
+        if(updateAccI2CCounter == 64) {
+            getAllAxesAcc(&lastAccX, &lastAccY, &lastAccZ);
+            updateAccI2CCounter = 0;
+        }
+        if(isCalibratingFlag) {
+            switch(captor) {
+                case 0: return getYAxisAcc();   // exchange x and y axes in order to be consistent with e-puck 1.0;
+                case 1: return getXAxisAcc();
+                case 2: return getZAxisAcc();
+                default: return((int)ANGLE_ERROR);
+            }
+        } else {
+            switch(captor) {
+                // Shift by 4 the value received from the sensor (16 bits) to get 12 bits value as with the analog accelerometer (to maintain compatibility with e-puck rev < 1.3)
+                // Moreover decrease the resulting value by 1/4 to get about the same resolution for the g:
+                // - e-puck rev < 1.3: 1 g = about 800
+                // - e-puck rev 1.3: 1 g = about 1000 => decreased by 1/4 => about 750 (5% difference)
+                // Add an offset of 2048 because it represents the value of 0 g with the analog accelerometer (to maintain compatibility with e-puck rev < 1.3).
+                case 0: tempValue = lastAccY;  // exchange x and y axes in order to be consistent with e-puck rev < 1.3;
+                    return ((tempValue>>4)-(tempValue>>6))+2048;   
+                case 1: tempValue = lastAccX;
+                    return ((tempValue>>4)-(tempValue>>6))+2048;
+                case 2: tempValue = lastAccZ;
+                    return ((tempValue>>4)-(tempValue>>6))+2048;
+                default: return((int)ANGLE_ERROR);
+            }
+        }
+    } else {
 
 	// channel ID must be between 0 to 13 and 
 	// filter_size must be between 1 to SAMPLE_NUMBER
@@ -123,6 +189,7 @@ int e_get_acc_filtered(unsigned int captor, unsigned int filter_size)
 		}
 	}
 	return ((int)(temp/filter_size));
+    }
 }
 
 /*! \brief read the x, y, z values, apply an averaging filter
@@ -130,9 +197,15 @@ int e_get_acc_filtered(unsigned int captor, unsigned int filter_size)
  */
 void calculate_acc_raw(void)
 {
+    if(isEpuckVersion1_3()) {
+        acc_x = e_get_acc(0);
+        acc_y = e_get_acc(1);
+        acc_z = e_get_acc(2);
+    } else {
 	acc_x = e_get_acc_filtered(ACCX_BUFFER, FILTER_SIZE) - centre_x;	// generates positive  
 	acc_y = e_get_acc_filtered(ACCY_BUFFER, FILTER_SIZE) - centre_y;	// and negative value
 	acc_z = e_get_acc_filtered(ACCZ_BUFFER, FILTER_SIZE) - centre_z;	// to make the use easy
+    }
 	return;
 }
 
@@ -148,9 +221,9 @@ void calculate_acc_spherical(void)
 	
 	inclination =  90.0 - atan2f((float)(acc_z), sqrtf( (float)(((long)acc_x * (long)acc_x) + ((long)acc_y * (long)acc_y) ))) * CST_RADIAN;
 	
-	if (inclination<5)
+	if (inclination<5 || inclination>160) 
 		orientation=0;
-	else 
+	else
 		orientation = (atan2f((float)(acc_x), (float)(acc_y)) * CST_RADIAN) + 180.0;		// 180 is added to have 0 to 360° range
 
 	return;
@@ -170,9 +243,15 @@ void calculate_acc_spherical(void)
  */
 void e_acc_calibr(void)
 {
+        isCalibratingFlag = 1;
 	centre_x = e_get_acc_filtered(ACCX_BUFFER, 50);
 	centre_y = e_get_acc_filtered(ACCY_BUFFER, 50);
-	centre_z = e_get_acc_filtered(ACCZ_BUFFER, 50);
+        if(isEpuckVersion1_3()) {
+            centre_z = e_get_acc_filtered(ACCZ_BUFFER, 50) - GRAVITY_LSM330;
+        } else {
+            centre_z = e_get_acc_filtered(ACCZ_BUFFER, 50) - GRAVITY;
+        }
+        isCalibratingFlag = 0;
 }
 
 /*! \brief calculate and return the accel. in spherical coord

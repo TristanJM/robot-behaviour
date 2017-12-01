@@ -102,6 +102,7 @@
       <itemPath>../imageCapture.c</itemPath>
       <itemPath>../../../library/camera/fast_2_timer/e_calc_po8030d.c</itemPath>
       <itemPath>../../../library/camera/fast_2_timer/e_po8030d_registers.c</itemPath>
+      <itemPath>../../../library/acc_gyro/e_lsm330.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -120,6 +121,7 @@
     <Elem>../../../library/a_d/advance_ad_scan</Elem>
     <Elem>../../../library/motor_led</Elem>
     <Elem>../../../library/I2C</Elem>
+    <Elem>../../../library/acc_gyro</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

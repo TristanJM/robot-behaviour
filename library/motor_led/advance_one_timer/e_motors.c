@@ -25,7 +25,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
  *
  * A little exemple to use the motors with agenda (e-puck turn on himself)
  * \code
- * #include <p30f6014A.h>
+ * #include <p30F6014A.h>
  * #include <motor_led/e_epuck_ports.h>
  * #include <motor_led/e_init_port.h>
  * #include <motor_led/advance_one_timer/e_motors.h>
@@ -60,6 +60,9 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 #define POWERSAVE
 #define TRESHV 650
 #define MAXV 601
+// following params are for maximum energy saving (but motors have small torque)
+//#define TRESHV 1000
+//#define MAXV 999
 
 #if TRESHV <= MAXV
 #error TRESHV must be higher than MAXV
@@ -252,15 +255,17 @@ void e_init_motors(void)
  */
 void e_set_speed_left(int motor_speed)
 {
+    // this is to avoid high current drain when the speed is changed very frequently
+    MOTOR1_PHA = 0;
+    MOTOR1_PHB = 0;
+    MOTOR1_PHC = 0;
+    MOTOR1_PHD = 0;
+
   // speed null
   if (motor_speed == 0)
   {
     left_speed = 0;
     e_set_agenda_cycle(run_left_motor, 0);
-    MOTOR1_PHA = 0;
-    MOTOR1_PHB = 0;
-    MOTOR1_PHC = 0;
-    MOTOR1_PHD = 0;
   }
   // speed inferior to the minimum value
   else if(motor_speed < -1000)
@@ -298,15 +303,17 @@ void e_set_speed_left(int motor_speed)
  */
 void e_set_speed_right(int motor_speed)  // motor speed in percent
 {
+    // this is to avoid high current drain when the speed is changed very frequently
+    MOTOR2_PHA = 0;
+    MOTOR2_PHB = 0;
+    MOTOR2_PHC = 0;
+    MOTOR2_PHD = 0;
+
   // speed null
   if (motor_speed == 0)
   {
     right_speed = 0;
     e_set_agenda_cycle(run_right_motor, 0);
-    MOTOR2_PHA = 0;
-    MOTOR2_PHB = 0;
-    MOTOR2_PHC = 0;
-    MOTOR2_PHD = 0;
   }
   // speed inferior to the minimum value
   else if (motor_speed < -1000)
