@@ -74,101 +74,7 @@ void followsetSpeedGS(int LeftSpeed, int RightSpeed) {
 }
 
 /*! \brief The "main" function of the program */
-void run_goal_seek() {
-    int leftwheel, rightwheel; // motor speed left and right
-    int distances[NB_SENSORS]; // array keeping the distance sensor readings
-    int i; // FOR-loop counters
-    int gostraight;
-    int loopcount;
-    unsigned char selector_change;
 
-    e_init_port();
-    e_init_ad_scan(ALL_ADC);
-    e_init_motors();
-    e_start_agendas_processing();
-
-    //follow_sensor_calibrate();	
-
-    e_activate_agenda(left_led, 2500);
-    e_activate_agenda(right_led, 2500);
-    e_pause_agenda(left_led);
-    e_pause_agenda(right_led);
-
-    e_calibrate_ir();
-    loopcount = 0;
-    selector_change = !(followgetSelectorValueGS() & 0x0001);
-
-    while (1) {
-        followGetSensorValuesGS(distances); // read sensor values
-
-        gostraight = 0;
-        if ((followgetSelectorValueGS() & 0x0001) == RIGHT_FOLLOW) {
-            if (selector_change == LEFT_FOLLOW) {
-                selector_change = RIGHT_FOLLOW;
-                e_led_clear();
-                e_pause_agenda(left_led);
-                e_restart_agenda(right_led);
-            }
-            for (i = 0; i < 8; i++) {
-                if (distances[i] > 50) {
-                    break;
-                }
-            }
-            if (i == 8) {
-                gostraight = 1;
-            } else {
-                follow_weightleftGS[0] = -10;
-                follow_weightleftGS[7] = -10;
-                follow_weightrightGS[0] = 10;
-                follow_weightrightGS[7] = 10;
-                if (distances[2] > 300) {
-                    distances[1] -= 200;
-                    distances[2] -= 600;
-                    distances[3] -= 100;
-                }
-            }
-        } else {
-            if (selector_change == RIGHT_FOLLOW) {
-                selector_change = LEFT_FOLLOW;
-                e_led_clear();
-                e_pause_agenda(right_led);
-                e_restart_agenda(left_led);
-            }
-            for (i = 0; i < 8; i++) {
-                if (distances[i] > 50) {
-                    break;
-                }
-            }
-            if (i == 8) {
-                gostraight = 1;
-            } else {
-                follow_weightleftGS[0] = 10;
-                follow_weightleftGS[7] = 10;
-                follow_weightrightGS[0] = -10;
-                follow_weightrightGS[7] = -10;
-                if (distances[5] > 300) {
-                    distances[4] -= 100;
-                    distances[5] -= 600;
-                    distances[6] -= 200;
-                }
-            }
-        }
-
-        leftwheel = BIAS_SPEED;
-        rightwheel = BIAS_SPEED;
-        if (gostraight == 0) {
-            for (i = 0; i < 8; i++) {
-                leftwheel += follow_weightleftGS[i]*(distances[i] >> 4);
-                rightwheel += follow_weightrightGS[i]*(distances[i] >> 4);
-            }
-        }
-
-        // set robot speed
-        followsetSpeedGS(leftwheel, rightwheel);
-
-        wait(15000);
-    }
-}
 
 // Image processing removes useless information
 void ImageColDetect_Red() {
@@ -180,7 +86,7 @@ void ImageColDetect_Red() {
         red = (fbwbufferGS[2 * i] & 0xF8);
         green = (((fbwbufferGS[2 * i] & 0x07) << 5) | ((fbwbufferGS[2 * i + 1] & 0xE0) >> 3));
         //blue = ((fbwbufferGS[2*i+1] & 0x1F) << 3); we don't need blue for looking for red.
-        if (red > green + 20) { // green will be less then red when red is strong.
+        if (red > green + 30) { // green will be less then red when red is strong.
             numbufferGS[i] = 1;
             vis++;
         } else {
@@ -194,10 +100,145 @@ void ImageColDetect_Red() {
     }
 }
 
-// Should go straight and stop when detecting a red object
-void run_goal_seek_basic() {
+void run_goal_seek() {
+    int leftwheel, rightwheel; // motor speed left and right
     int distances[NB_SENSORS]; // array keeping the distance sensor readings
     int i; // FOR-loop counters
+    int gostraight;
+    int loopcount;
+    int redcount = 0;   //number of times red has been detected consecutively
+    unsigned char selector_change;
+
+    e_init_port();
+    e_init_ad_scan(ALL_ADC);
+    e_init_motors();
+    e_start_agendas_processing();
+    
+    e_poxxxx_init_cam();
+    e_poxxxx_config_cam(0, (ARRAY_HEIGHT - 4) / 2, 640, 4, 8, 4, RGB_565_MODE);
+    e_poxxxx_write_cam_registers();
+
+    //follow_sensor_calibrate();	
+
+//    e_activate_agenda(left_led, 2500);
+    e_activate_agenda(right_led, 2500);
+//    e_pause_agenda(left_led);
+    e_pause_agenda(right_led);
+
+    e_calibrate_ir();
+    loopcount = 0;
+    
+    //removed selector switch functionality
+//    selector_change = !(followgetSelectorValueGS() & 0x0001);
+
+    while (1) {
+        
+        e_set_led(4,0);
+        
+        if(loopcount % 2 == 1) {
+            e_set_led(3,1);
+            e_set_led(6,0);
+        }
+        else {
+            e_set_led(3,0);
+            e_set_led(6,1);
+        }
+        
+        followGetSensorValuesGS(distances); // read sensor values
+        
+        gostraight = 0;
+//        if ((followgetSelectorValueGS() & 0x0001) == RIGHT_FOLLOW) {
+//            if (selector_change == LEFT_FOLLOW) {
+//                selector_change = RIGHT_FOLLOW;
+        
+//        if (loopcount % 5 == 0) {
+        e_poxxxx_launch_capture((char *) fbwbufferGS);
+        while (!e_poxxxx_is_img_ready()) {
+        };
+        ImageColDetect_Red();
+//        }
+        
+        e_led_clear();
+        
+        //turned off pulsing wallfollow lights - affected red detection
+//        e_pause_agenda(left_led);
+//        e_restart_agenda(right_led);
+       
+        //            }
+        for (i = 0; i < 8; i++) {
+            if (distances[i] > 50) {
+                break;
+            }
+        }
+        
+        //moved here from end of function - so that wheelspeed can be assigned to 0 when red detected
+        leftwheel = BIAS_SPEED;
+        rightwheel = BIAS_SPEED;
+        
+        if (i == 8) {
+            gostraight = 1;
+        } else {
+//            if (isRedVisible) { // If red, turn on torch and stop
+//                e_set_led(4,1);
+//                leftwheel = 0;
+//                rightwheel = 0;
+//                redcount++;
+//            }
+//            else {
+                
+                follow_weightleftGS[0] = -10;
+                follow_weightleftGS[7] = -10;
+                follow_weightrightGS[0] = 10;
+                follow_weightrightGS[7] = 10;
+                if (distances[2] > 300) {
+                    distances[1] -= 200;
+                    distances[2] -= 600;
+                    distances[3] -= 100;   
+                }
+//            }
+        }
+        
+//        leftwheel = BIAS_SPEED;
+//        rightwheel = BIAS_SPEED;
+        
+        //when here, robot will wallfollow until it sees red, then stops fully.
+//        if (isRedVisible) { // If red, turn on torch and stop
+//            e_set_led(2, 1);
+//            e_set_led(6, 1);
+//            leftwheel = 0;
+//            rightwheel = 0;
+//        } else 
+        
+        if (gostraight == 0) {
+            for (i = 0; i < 8; i++) {
+                leftwheel += follow_weightleftGS[i]*(distances[i] >> 4);
+                rightwheel += follow_weightrightGS[i]*(distances[i] >> 4);
+            }
+        }
+
+        // set robot speed
+//        if (redcount > 2) {
+//            e_set_speed_left(0);
+//            e_set_speed_right(0);   
+//        }
+//        else {
+//            redcount = 0;
+            e_set_speed_left(leftwheel);
+            e_set_speed_right(rightwheel);
+//        }
+        
+            
+//        followsetSpeedGS(leftwheel, rightwheel);
+
+        wait(15000);
+        loopcount++;
+        
+    }
+}
+// Should go straight and stop when detecting a red object
+void run_goal_seek_basic() {
+//    int distances[NB_SENSORS]; // array keeping the distance sensor readings
+//    int i; // FOR-loop counters
     int loopcount = 0;
 
     e_init_port();
