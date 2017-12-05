@@ -26,7 +26,7 @@
 #define LEFT_FOLLOW			0		// behaviors IDs	
 #define RIGHT_FOLLOW		1 
 
-#define NB_SENSORS          8		// number of sensors
+#define NUM_SENSORS         8		// number of sensors
 #define BIAS_SPEED      	350		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
@@ -41,42 +41,32 @@ int follow_sensorzeroGS[8];
 int follow_weightleftGS[8] = {-10, -10, -5, 0, 0, 5, 10, 10};
 int follow_weightrightGS[8] = {10, 10, 5, 0, 0, -5, -10, -10};
 
-int followgetSelectorValueGS() {
-    return SELECTOR0 + 2 * SELECTOR1 + 4 * SELECTOR2 + 8 * SELECTOR3;
-}
-
-/*! \breif Read the sensors proxymities
+/*! 
+ * \brief Read the sensors proximities
  * \param sensorTable Where the value must be stocked
  */
 void followGetSensorValuesGS(int *sensorTable) {
     unsigned int i;
-    for (i = 0; i < NB_SENSORS; i++) {
+    for (i = 0; i < NUM_SENSORS; i++) {
         sensorTable[i] = e_get_calibrated_prox(i); //e_get_prox(i) - follow_sensorzeroGS[i];
     }
 }
 
-/*! \brief Set robot speed */
+// Cap robot's speed
 void followsetSpeedGS(int LeftSpeed, int RightSpeed) {
-    if (LeftSpeed < -MAXSPEED) {
-        LeftSpeed = -MAXSPEED;
-    }
-    if (LeftSpeed > MAXSPEED) {
-        LeftSpeed = MAXSPEED;
-    }
-    if (RightSpeed < -MAXSPEED) {
-        RightSpeed = -MAXSPEED;
-    }
-    if (RightSpeed > MAXSPEED) {
-        RightSpeed = MAXSPEED;
-    }
+    // Cap lower limits
+    if (LeftSpeed < -MAXSPEED) { LeftSpeed = -MAXSPEED; }
+    if (RightSpeed < -MAXSPEED) { RightSpeed = -MAXSPEED; }
+    
+    // Cap upper limits
+    if (LeftSpeed > MAXSPEED) { LeftSpeed = MAXSPEED; }
+    if (RightSpeed > MAXSPEED) { RightSpeed = MAXSPEED; }
+
     e_set_speed_left(LeftSpeed);
     e_set_speed_right(RightSpeed);
 }
 
-/*! \brief The "main" function of the program */
-
-
-// Image processing removes useless information
+// Detect color of image
 void ImageColDetect_Red() {
     long i;
     int vis = 0;
@@ -102,12 +92,10 @@ void ImageColDetect_Red() {
 
 void run_goal_seek() {
     int leftwheel, rightwheel; // motor speed left and right
-    int distances[NB_SENSORS]; // array keeping the distance sensor readings
+    int distances[NUM_SENSORS]; // array keeping the distance sensor readings
     int i; // FOR-loop counters
-    int gostraight;
+    int follow_wall;
     int loopcount;
-    int redcount = 0;   //number of times red has been detected consecutively
-    unsigned char selector_change;
 
     e_init_port();
     e_init_ad_scan(ALL_ADC);
@@ -118,127 +106,85 @@ void run_goal_seek() {
     e_poxxxx_config_cam(0, (ARRAY_HEIGHT - 4) / 2, 640, 4, 8, 4, RGB_565_MODE);
     e_poxxxx_write_cam_registers();
 
-    //follow_sensor_calibrate();	
-
-//    e_activate_agenda(left_led, 2500);
+    // Right side light pulse
     e_activate_agenda(right_led, 2500);
-//    e_pause_agenda(left_led);
     e_pause_agenda(right_led);
 
     e_calibrate_ir();
     loopcount = 0;
-    
-    //removed selector switch functionality
-//    selector_change = !(followgetSelectorValueGS() & 0x0001);
 
-    while (1) {
-        
-        e_set_led(4,0);
-        
-        if(loopcount % 2 == 1) {
-            e_set_led(3,1);
-            e_set_led(6,0);
-        }
-        else {
-            e_set_led(3,0);
-            e_set_led(6,1);
-        }
-        
+    while (1) {        
         followGetSensorValuesGS(distances); // read sensor values
         
-        gostraight = 0;
-//        if ((followgetSelectorValueGS() & 0x0001) == RIGHT_FOLLOW) {
-//            if (selector_change == LEFT_FOLLOW) {
-//                selector_change = RIGHT_FOLLOW;
-        
-//        if (loopcount % 5 == 0) {
-        e_poxxxx_launch_capture((char *) fbwbufferGS);
-        while (!e_poxxxx_is_img_ready()) {
-        };
-        ImageColDetect_Red();
-//        }
-        
         e_led_clear();
+        follow_wall = 0;
         
-        //turned off pulsing wallfollow lights - affected red detection
-//        e_pause_agenda(left_led);
-//        e_restart_agenda(right_led);
-       
-        //            }
+        // capture image
+        e_poxxxx_launch_capture((char *) fbwbufferGS);
+        while (!e_poxxxx_is_img_ready()) {};
+        
+        // detect colour in image
+        ImageColDetect_Red();
+        
+        // turned off pulsing lights - affected red detection
+        // e_pause_agenda(left_led);
+        // e_restart_agenda(right_led);
+        
+        // check detection from any of the 8 IR sensors
         for (i = 0; i < 8; i++) {
-            if (distances[i] > 50) {
-                break;
-            }
+            if (distances[i] > 50) { break; }
         }
         
-        //moved here from end of function - so that wheelspeed can be assigned to 0 when red detected
-        leftwheel = BIAS_SPEED;
-        rightwheel = BIAS_SPEED;
-        
+        // if nothing close
         if (i == 8) {
-            gostraight = 1;
-        } else {
-//            if (isRedVisible) { // If red, turn on torch and stop
-//                e_set_led(4,1);
-//                leftwheel = 0;
-//                rightwheel = 0;
-//                redcount++;
-//            }
-//            else {
-                
+            e_set_led(1,1);
+            e_set_led(7,1);
+            leftwheel = BIAS_SPEED;
+            rightwheel = BIAS_SPEED;
+        }
+        // otherwise, objects are detected
+        else {
+            // If red, stop
+            if (isRedVisible) {
+                e_set_led(4,1); // back light
+                leftwheel = 0;
+                rightwheel = 0;
+            } 
+            else {
+                follow_wall = 1;
                 follow_weightleftGS[0] = -10;
                 follow_weightleftGS[7] = -10;
                 follow_weightrightGS[0] = 10;
                 follow_weightrightGS[7] = 10;
-                if (distances[2] > 300) {
+                if (distances[2] > 300) {   // right side sensor?
                     distances[1] -= 200;
                     distances[2] -= 600;
                     distances[3] -= 100;   
                 }
-//            }
+            }
         }
         
-//        leftwheel = BIAS_SPEED;
-//        rightwheel = BIAS_SPEED;
-        
-        //when here, robot will wallfollow until it sees red, then stops fully.
-//        if (isRedVisible) { // If red, turn on torch and stop
-//            e_set_led(2, 1);
-//            e_set_led(6, 1);
-//            leftwheel = 0;
-//            rightwheel = 0;
-//        } else 
-        
-        if (gostraight == 0) {
+        // follow the wall
+        if (follow_wall == 1) {
             for (i = 0; i < 8; i++) {
                 leftwheel += follow_weightleftGS[i]*(distances[i] >> 4);
                 rightwheel += follow_weightrightGS[i]*(distances[i] >> 4);
             }
         }
 
-        // set robot speed
-//        if (redcount > 2) {
-//            e_set_speed_left(0);
-//            e_set_speed_right(0);   
-//        }
-//        else {
-//            redcount = 0;
-            e_set_speed_left(leftwheel);
-            e_set_speed_right(rightwheel);
-//        }
-        
-            
-//        followsetSpeedGS(leftwheel, rightwheel);
+        e_set_speed_left(leftwheel);
+        e_set_speed_right(rightwheel);   
+        // followsetSpeedGS(leftwheel, rightwheel);
 
-        wait(15000);
-        loopcount++;
-        
+        loopcount++;    
     }
 }
-// Should go straight and stop when detecting a red object
+
+// Goes straight and stops when detecting a red object
+// Also has example for detecting objects in IR
 void run_goal_seek_basic() {
-//    int distances[NB_SENSORS]; // array keeping the distance sensor readings
-//    int i; // FOR-loop counters
+    //int distances[NB_SENSORS]; // array keeping the distance sensor readings
+    //int i; // FOR-loop counters
     int loopcount = 0;
 
     e_init_port();
@@ -278,7 +224,7 @@ void run_goal_seek_basic() {
 
         /*
         // This code stopped the bot if it detected an object in any of the 8 IR sensors
-        
+
         followGetSensorValuesGS(distances); // read sensor values
         for (i=0; i<8; i++) {
             if (distances[i]>50) { break; }
@@ -289,8 +235,7 @@ void run_goal_seek_basic() {
         } else {
             e_set_speed_left(0);
             e_set_speed_right(0);
-        }
-         */
+        }*/
 
         loopcount++;
     }
