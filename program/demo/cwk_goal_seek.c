@@ -67,7 +67,7 @@ void followsetSpeedGS(int LeftSpeed, int RightSpeed) {
 }
 
 // Detect color of image
-void ImageColDetect_Red() {
+int ImageColDetect_Red() {
     long i;
     int vis = 0;
     int green, red;
@@ -84,17 +84,21 @@ void ImageColDetect_Red() {
         }
     }
     if (vis > 0) {
-        isRedVisible = 1;
+        return 1;   // red is visible
     } else {
-        isRedVisible = 0;
+        return 0;
     }
 }
 
 void run_goal_seek() {
     int leftwheel, rightwheel; // motor speed left and right
     int distances[NUM_SENSORS]; // array keeping the distance sensor readings
-    int i; // FOR-loop counters
-    int follow_wall;
+    int i;
+    int short_sensors;
+    int long_sensors;
+    
+    int goforward;
+    int wallfollow;
     int loopcount;
 
     e_init_port();
@@ -116,67 +120,75 @@ void run_goal_seek() {
     while (1) {        
         followGetSensorValuesGS(distances); // read sensor values
         
+        // reset variables
         e_led_clear();
-        follow_wall = 0;
-        
-        // capture image
-        e_poxxxx_launch_capture((char *) fbwbufferGS);
-        while (!e_poxxxx_is_img_ready()) {};
-        
-        // detect colour in image
-        ImageColDetect_Red();
+        wallfollow = 0;
+        goforward = 1;
         
         // turned off pulsing lights - affected red detection
         // e_pause_agenda(left_led);
         // e_restart_agenda(right_led);
         
         // check detection from any of the 8 IR sensors
-        for (i = 0; i < 8; i++) {
-            if (distances[i] > 50) { break; }
+        for (short_sensors = 0; short_sensors < 8; short_sensors++) {
+            if (distances[short_sensors] > 50) { break; }
+        }
+        for (long_sensors = 0; long_sensors < 8; long_sensors++) {
+            if (distances[long_sensors] > 5) { break; }   // longer range sensors
         }
         
-        // if nothing close
-        if (i == 8) {
-            e_set_led(1,1);
-            e_set_led(7,1);
-            leftwheel = BIAS_SPEED;
-            rightwheel = BIAS_SPEED;
+        // if something detected only close-range
+        if (short_sensors != 8) {
+            wallfollow = 1;
         }
-        // otherwise, objects are detected
-        else {
-            // If red, stop
-            if (isRedVisible) {
-                e_set_led(4,1); // back light
+        
+        // if something detected within mid-range
+        if (long_sensors != 8) {
+            // capture image
+            e_poxxxx_launch_capture((char *) fbwbufferGS);
+            while (!e_poxxxx_is_img_ready()) {};
+        
+            // detect colour in image
+            if (ImageColDetect_Red()) {
+                e_set_led(4,1);
+                // stop robot
                 leftwheel = 0;
                 rightwheel = 0;
+                wallfollow = 0;
+                goforward = 0;
             } 
-            else {
-                follow_wall = 1;
-                follow_weightleftGS[0] = -10;
-                follow_weightleftGS[7] = -10;
-                follow_weightrightGS[0] = 10;
-                follow_weightrightGS[7] = 10;
-                if (distances[2] > 300) {   // right side sensor?
-                    distances[1] -= 200;
-                    distances[2] -= 600;
-                    distances[3] -= 100;   
-                }
-            }
+        }
+        
+        // default behaviour - go straight
+        if (goforward == 1) {
+            leftwheel = BIAS_SPEED;
+            rightwheel = BIAS_SPEED;
+            e_set_led(1,1);
+            e_set_led(7,1);
         }
         
         // follow the wall
-        if (follow_wall == 1) {
+        if (wallfollow == 1) {
+            follow_weightleftGS[0] = -10;
+            follow_weightleftGS[7] = -10;
+            follow_weightrightGS[0] = 10;
+            follow_weightrightGS[7] = 10;
+            if (distances[2] > 300) {   // right side sensor?
+                distances[1] -= 200;
+                distances[2] -= 600;
+                distances[3] -= 100;   
+            }
+            
             for (i = 0; i < 8; i++) {
                 leftwheel += follow_weightleftGS[i]*(distances[i] >> 4);
                 rightwheel += follow_weightrightGS[i]*(distances[i] >> 4);
             }
         }
+  
+        followsetSpeedGS(leftwheel, rightwheel);
 
-        e_set_speed_left(leftwheel);
-        e_set_speed_right(rightwheel);   
-        // followsetSpeedGS(leftwheel, rightwheel);
-
-        loopcount++;    
+        loopcount++;
+        wait(15000);
     }
 }
 
@@ -204,14 +216,12 @@ void run_goal_seek_basic() {
         // read in camera to find the "success" colour
         if (loopcount % 15 == 0) {
             e_poxxxx_launch_capture((char *) fbwbufferGS);
-            while (!e_poxxxx_is_img_ready()) {
-            };
-            ImageColDetect_Red();
+            while (!e_poxxxx_is_img_ready()) {};
         }
 
         e_led_clear();
 
-        if (isRedVisible) { // If red, turn on torch and stop
+        if (ImageColDetect_Red()) { // If red, turn on torch and stop
             e_set_led(2, 1);
             e_set_led(6, 1);
             e_set_speed_left(0);
