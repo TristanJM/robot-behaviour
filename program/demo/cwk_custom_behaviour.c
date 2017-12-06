@@ -2,33 +2,65 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
-#include "math.h"
-#include "../../../library/motor_led/e_init_port.h"
-#include "../../../library/motor_led/advance_one_timer/e_motors.h"
-#include "../../../library/camera/fast_2_timer/e_poxxxx.h"
-#include "../../../library/motor_led/advance_one_timer/e_led.h"
+#include "../../library/motor_led/e_epuck_ports.h"
+#include "../../library/motor_led/e_init_port.h"
+#include "../../library/motor_led/advance_one_timer/e_agenda.h"
+#include "../../library/motor_led/advance_one_timer/e_led.h"
+#include "../../library/motor_led/advance_one_timer/e_motors.h"
+#include "../../library/uart/e_uart_char.h"
+#include "../../library/a_d/advance_ad_scan/e_ad_conv.h"
+#include "../../library/a_d/advance_ad_scan/e_prox.h"
+#include "../../library/camera/fast_2_timer/e_poxxxx.h"
+#include "utility.h"
 
+#define MOTOR_SPEED 100;
+#define NUM_SENSORS 8;
 
+// Buffer for the camera to read into
+char fbwbufferGS[160];
+int numbufferGS[80];
 
+// Stores data about the rgb levels
+int red_level, green_level, blue_level;
+
+// Main method for this behaviour
+// This is what should be called from outside */
 void do_goal_seek(){
 
-	// Vars to store colour levels from camera
-	int red_level;
-	int green_level;
-	int blue_level;
-	int obstacle_ahead;
+	// Vars for camera
 	int primary_colour;
 
+	// Vars for proximity
+	int proximities[NUM_SENSORS];
+	int obstacle_ahead;
+
+	// Do some setup
+	e_init_port();
+	e_init_ad_scan(ALL_ADC);
+	e_init_motors();
+	e_start_agendas_processing();
+
+	// Initialise camera
+	e_poxxxx_init_cam();
+    e_poxxxx_config_cam(0, (ARRAY_HEIGHT - 4) / 2, 640, 4, 8, 4, RGB_565_MODE);
+    e_poxxxx_write_cam_registers();
+
+	// Initialise prox sensors
+	e_calibrate_ir();
+
+	// Main control loop (Do this forever)
 	while(1){
 
+		// Update sensor values
+		update_proximity(proximities);
+
 		// Check if there's anything ahead
-		obstacle_ahead = is_obstacle_ahead();
+		obstacle_ahead = is_obstacle_ahead(proximities);
 
 		// Get levels from camera
-		red_level = get_red_level();
-		green_level = get_green_level();
-		blue_level = get_blue_level();
+		update_levels();
 
+		// Now we should have red_ green_ and blue_level set by that function
 		// Get the dominant colour level
 		primary_colour = get_dominant_rgb(red_level, green_level, blue_level);
 
@@ -40,6 +72,7 @@ void do_goal_seek(){
 		if(primary_colour == 2) start_motors();
 
 		// If the camera sees blue, only move if the path is clear
+		// (I guess a secondary behaviour here is that it drives to the paper then stops?)
 		if(primary_colour == 3){
 		
 			if(obstacle_ahead == 1){
@@ -63,33 +96,69 @@ void do_goal_seek(){
 
 
 
-// Set up anything necessary like prox sensors, leds or camera
-void do_setup(){
+
+// Update the red_ green_ and blue_level variables with whatever the camera sees
+void update_levels(){
+
+	// Used in loop later
+	long i;
 	
+	// Holds the dominant colour of this col
+	int domimant;
+
+	// Grab frame from camera
+	e_poxxxx_launch_capture((char *) fbwbufferGS);
+
+	// Wait for capture to complete
+	while (!e_poxxxx_is_img_ready()) {};
+
+	// Reset red_ green_ and blue_level to 0's
+	red_level = 0;
+	green_level = 0;
+	blue_level = 0;
+
+	// Iterate over every column
+    for (i = 0; i < 80; i++) {
+
+        // RGB turned into an integer value for comparison
+        red = (fbwbufferGS[2 * i] & 0xF8);
+        green = (((fbwbufferGS[2 * i] & 0x07) << 5) | ((fbwbufferGS[2 * i + 1] & 0xE0) >> 3));
+        blue = ((fbwbufferGS[2*i+1] & 0x1F) << 3);
+
+        // Get the dominant colour
+		dominant = get_dominant_rgb(red, green, blue);
+
+		// Add 1 to whatever's the dominant colour
+		if( dominant == 1 ) red_level++;
+		if( dominant == 2 ) green_level++;
+		if( dominant == 3 ) blue_level++;
+
+    }
+
 }
 
 
-// Return the red level of the camera
-int get_red_level(){
-	
+void update_proximity(int *arr){
+	int i;
+	for( i=0; i < NUM_SENSORS; i++ ){
+		arr[i] = e_get_prox(i);
+	}
 }
 
-
-// Return the green level of the camera
-int get_green_level(){
-	
-}
-
-
-// Return the blue level of the camera
-int get_blue_level(){
-	
-}
 
 
 // Return 1 if there's an obstacle ahead of us, otherwise 0
-int is_obstacle_ahead(){
+int is_obstacle_ahead(int *arr){
 	
+	// This is REALLY BASIC
+	if( arr[7] < 200  ||  arr[0] < 200 ){
+		return 1;
+	} else {
+		return 0;
+	}
+
+	// Literally just checks if the front two sensors are <200 and returns true if so
+
 }
 
 
@@ -104,10 +173,12 @@ int get_dominant_rgb(int r, int g, int b){
 
 // Start the robot moving forward
 void start_motors(){
-	
+	e_set_speed_left(MOTOR_SPEED);
+	e_set_speed_right(MOTOR_SPEED);
 }
 
 // Stop moving the robot
 void stop_moving(){
-
+	e_set_speed_left(0);
+	e_set_speed_right(0);
 }
