@@ -42,6 +42,7 @@
       <itemPath>../imageCapture.h</itemPath>
       <itemPath>../../../library/camera/fast_2_timer/e_po6030k.h</itemPath>
       <itemPath>../../../library/camera/fast_2_timer/e_po8030d.h</itemPath>
+      <itemPath>../DataEEPROM.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

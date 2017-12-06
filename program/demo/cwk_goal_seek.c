@@ -90,6 +90,29 @@ int ImageColDetect_Red() {
     }
 }
 
+int ImageColDetect_Green() {
+    long i;
+    int vis = 0;
+    int green, blue, red;
+    for (i = 0; i < 80; i++) {
+        //RGB turned into an integer value for comparison
+        red = (fbwbufferGS[2 * i] & 0xF8);
+        green = (((fbwbufferGS[2 * i] & 0x07) << 5) | ((fbwbufferGS[2 * i + 1] & 0xE0) >> 3));
+        blue = ((fbwbufferGS[2*i+1] & 0x1F) << 3);
+        if (green > red + 20) {
+            numbufferGS[i] = 1;
+            vis++;
+        } else {
+            numbufferGS[i] = 0;
+        }
+    }
+    if (vis > 0) {
+        return 1;   // blue is visible
+    } else {
+        return 0;
+    }
+}
+
 void run_goal_seek() {
     int leftwheel, rightwheel; // motor speed left and right
     int distances[NUM_SENSORS]; // array keeping the distance sensor readings
@@ -149,7 +172,7 @@ void run_goal_seek() {
             while (!e_poxxxx_is_img_ready()) {};
         
             // detect colour in image
-            if (ImageColDetect_Red()) {
+            if (ImageColDetect_Green()) {
                 e_set_led(4,1);
                 // stop robot
                 leftwheel = 0;
@@ -220,6 +243,7 @@ void run_goal_seek_basic() {
         }
 
         e_led_clear();
+        e_set_body_led(0); // what does this do?? :D
 
         if (ImageColDetect_Red()) { // If red, turn on torch and stop
             e_set_led(2, 1);
