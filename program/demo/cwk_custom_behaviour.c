@@ -2,19 +2,19 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "string.h"
-#include "../../library/motor_led/e_epuck_ports.h"
-#include "../../library/motor_led/e_init_port.h"
-#include "../../library/motor_led/advance_one_timer/e_agenda.h"
-#include "../../library/motor_led/advance_one_timer/e_led.h"
-#include "../../library/motor_led/advance_one_timer/e_motors.h"
-#include "../../library/uart/e_uart_char.h"
-#include "../../library/a_d/advance_ad_scan/e_ad_conv.h"
-#include "../../library/a_d/advance_ad_scan/e_prox.h"
-#include "../../library/camera/fast_2_timer/e_poxxxx.h"
+#include "motor_led/e_epuck_ports.h"
+#include "motor_led/e_init_port.h"
+#include "motor_led/advance_one_timer/e_agenda.h"
+#include "motor_led/advance_one_timer/e_led.h"
+#include "motor_led/advance_one_timer/e_motors.h"
+#include "uart/e_uart_char.h"
+#include "a_d/advance_ad_scan/e_ad_conv.h"
+#include "a_d/advance_ad_scan/e_prox.h"
+#include "camera/fast_2_timer/e_poxxxx.h"
 #include "utility.h"
 
-#define MOTOR_SPEED 100;
-#define NUM_SENSORS 8;
+#define MOTOR_SPEED 100
+#define NUM_SENSORS 8
 
 // Buffer for the camera to read into
 char fbwbufferGS[160];
@@ -22,6 +22,7 @@ int numbufferGS[80];
 
 // Stores data about the rgb levels
 int red_level, green_level, blue_level;
+int dominant;
 
 // Main method for this behaviour
 // This is what should be called from outside */
@@ -102,6 +103,7 @@ void update_levels(){
 
 	// Used in loop later
 	long i;
+	int red, green, blue;
 	
 	// Holds the dominant colour of this col
 	int domimant;
@@ -116,7 +118,7 @@ void update_levels(){
 	red_level = 0;
 	green_level = 0;
 	blue_level = 0;
-
+	
 	// Iterate over every column
     for (i = 0; i < 80; i++) {
 
@@ -141,7 +143,7 @@ void update_levels(){
 void update_proximity(int *arr){
 	int i;
 	for( i=0; i < NUM_SENSORS; i++ ){
-		arr[i] = e_get_prox(i);
+		arr[i] = e_get_calibrated_prox(i);
 	}
 }
 
@@ -151,13 +153,13 @@ void update_proximity(int *arr){
 int is_obstacle_ahead(int *arr){
 	
 	// This is REALLY BASIC
-	if( arr[7] < 200  ||  arr[0] < 200 ){
+	if( arr[7] > 200  ||  arr[0] > 200 ){
 		return 1;
 	} else {
 		return 0;
 	}
 
-	// Literally just checks if the front two sensors are <200 and returns true if so
+	// Literally just checks if the front two sensors are >200 and returns true if so
 
 }
 
@@ -178,7 +180,88 @@ void start_motors(){
 }
 
 // Stop moving the robot
-void stop_moving(){
+void stop_motors(){
 	e_set_speed_left(0);
 	e_set_speed_right(0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void do_line_follow(){
+
+	// Vars for camera
+	int primary_colour;
+	int left_goal_cols = 0;
+	int right_goal_cols = 0;
+
+	int red;
+int green;
+int blue;
+int i;
+int dominant;
+
+	// Do some setup
+	e_init_port();
+	e_init_ad_scan(ALL_ADC);
+	e_init_motors();
+	e_start_agendas_processing();
+
+	// Initialise camera
+	e_poxxxx_init_cam();
+    e_poxxxx_config_cam(0, (ARRAY_HEIGHT - 4) / 2, 640, 4, 8, 4, RGB_565_MODE);
+    e_poxxxx_write_cam_registers();
+
+	
+	while(1){
+
+		// Grab frame from camera
+		e_poxxxx_launch_capture((char *) fbwbufferGS);
+		
+		// Wait for capture to complete
+		while (!e_poxxxx_is_img_ready()) {};
+
+		left_goal_cols = 0;
+		right_goal_cols = 0;
+
+		// Iterate over every column
+    	for (i = 0; i < 80; i++) {
+			// RGB turned into an integer value for comparison
+        	red = (fbwbufferGS[2 * i] & 0xF8);
+        	green = (((fbwbufferGS[2 * i] & 0x07) << 5) | ((fbwbufferGS[2 * i + 1] & 0xE0) >> 3));
+        	blue = ((fbwbufferGS[2*i+1] & 0x1F) << 3);
+
+			primary_colour = get_dominant_rgb(red, green, blue);
+
+			if(i < 40){
+				if(primary_colour == 2){
+					left_goal_cols++;
+				}
+			} else {
+				if(primary_colour == 2){
+					right_goal_cols++;
+				}
+			}
+
+		}
+
+		e_set_speed_left(100 * right_goal_cols);
+		e_set_speed_right(100 * left_goal_cols);
+
+
+	}
+
+
+
+
 }

@@ -12,3 +12,5 @@ int get_dominant_rgb(int r, int g, int b);
 void start_motors();
 
 void stop_moving();
+
+void do_line_follow();
