@@ -30,6 +30,8 @@
 #include "uart/e_uart_char.h"
 #include "motor_led/e_init_port.h"
 
+#include "cwk_love.h"
+
 #include "ComModule.h"
 #include "runcollaboration.h"
 #include "runaccelerometer.h"
