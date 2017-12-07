@@ -90,9 +90,11 @@ int main() {
 	} else if (selector==6) {
 		run_follow_ball();
 	} else if (selector==7) {
-		run_follow_ball_red();
+//		run_follow_ball_red();
+        run_wallfollow();
 	} else if (selector==8) {
-		run_follow_ball_green();
+//		run_follow_ball_green();
+        run_goal_seek();
 	} else
 		run_fft_listener();
 	
