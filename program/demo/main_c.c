@@ -33,6 +33,7 @@
 #include "cwk_goal_seek.h"
 #include "followGreen.h"
 #include "findRed.h"
+#include "cwk_aggressive.h"
 
 #include "ComModule.h"
 #include "runcollaboration.h"
@@ -91,7 +92,7 @@ int main() {
 		run_follow_ball();
 	} else if (selector==7) {
 //		run_follow_ball_red();
-        run_wallfollow();
+        run_aggressive();
 	} else if (selector==8) {
 //		run_follow_ball_green();
         run_goal_seek();
