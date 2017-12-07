@@ -30,10 +30,11 @@
 #include "uart/e_uart_char.h"
 #include "motor_led/e_init_port.h"
 
-#include "cwk_goal_seek.h"
 #include "followGreen.h"
 #include "findRed.h"
 #include "cwk_aggressive.h"
+#include "cwk_fear.h"
+#include "cwk_goal_seek.h"
 
 #include "ComModule.h"
 #include "runcollaboration.h"
@@ -89,7 +90,8 @@ int main() {
 	} else if (selector==5) {
 		run_breitenberg_shocker();
 	} else if (selector==6) {
-		run_follow_ball();
+//		run_follow_ball();
+        run_fear();
 	} else if (selector==7) {
 //		run_follow_ball_red();
         run_aggressive();
