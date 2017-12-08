@@ -44,6 +44,9 @@ void run_custom() {
     int distances[8]; // array keeping the distance sensor readings
     int i;
     int primary_colour;
+    int waiting_for_turn = 0;
+    int leftwheel;
+    int rightwheel;
 
     e_init_port();
     e_init_motors();
@@ -66,32 +69,55 @@ void run_custom() {
         
         // Get dominant colour
         primary_colour = get_dominant_rgb(red_level, green_level, blue_level);
-
-        // If Red detected, Stop.
+        
+        // React to colour
         if (primary_colour == 1) {
+            // RED DETECTED
             e_set_led(4, 1);    
-            e_set_speed_left(0);
-            e_set_speed_right(0);
+            leftwheel = 0;
+            rightwheel = 0;
+        } else if (primary_colour == 2) {
+            // GREEN DETECTED
+            leftwheel = BIAS_SPEED;
+            rightwheel = BIAS_SPEED;
+        } else if (primary_colour == 3) {
+            // BLUE DETECTED
+            rotate_robot(180);
+            waiting_for_turn = 1;
+            leftwheel = BIAS_SPEED;
+            rightwheel = BIAS_SPEED;
         } else {
-            e_set_speed_left(BIAS_SPEED);
-            e_set_speed_right(BIAS_SPEED);
+            // NO COLOUR (DEBUG ONLY)
         }
 
+        
+        // Stay within walls of road
+        
+        // Read sensor values
+        getSensorValues(distances);
+        
+        // TODO:
+        // Check "distances" for left and right sensor
+        
+        // Adjust robot pos so they are kept roughly the same
+        
+        // If there is a turning (ie. no sensor activation on one side for multiple iterations):
+        // Then, if waiting_for_turn == 0, go straight
+        // Or, if waiting_for_turn == 1, rotate_robot(90 or 270)
+        
         /*
-        // This code stopped the bot if it detected an object in any of the 8 IR sensors
+        // EXAMPLE: This code stopped the bot if it detected an object in any of the 8 IR sensors
 
         getSensorValues(distances); // read sensor values
         for (i=0; i<8; i++) {
-            if (distances[i]>50) { break; }
+            if (distances[i] > 50) { break; }
         }
-        if (i == 8) {
-            e_set_speed_left(BIAS_SPEED);
-            e_set_speed_right(BIAS_SPEED);
-        } else {
-            e_set_speed_left(0);
-            e_set_speed_right(0);
-        }*/
+        if (i == 8) { // go straight }
+        else { // stop }
+        */
 
+        followsetSpeedGS(leftwheel, rightwheel);    // sets motor speed, within max limits (from cwk_goal_seek.c)
+        
         wait(15000);
     }
 }
@@ -146,4 +172,8 @@ void getSensorValues(int *sensorTable) {
     for (i = 0; i < 8; i++) {
         sensorTable[i] = e_get_calibrated_prox(i); //e_get_prox(i) - follow_sensorzeroCustom[i];
     }
+}
+
+void rotate_robot(int angle) {
+    
 }
