@@ -83,21 +83,17 @@ int main() {
 	} else if (selector==2) {
 		run_locatesound();
 	} else if (selector==3) {
-        // run_wallfollow();
-        run_goal_seek_basic();
+        run_custom();                   // custom behaviour
 	} else if (selector==4) {
 		run_breitenberg_follower();
 	} else if (selector==5) {
 		run_breitenberg_shocker();
 	} else if (selector==6) {
-//		run_follow_ball();
-        run_fear();
+        run_fear();                     // fear
 	} else if (selector==7) {
-//		run_follow_ball_red();
-        run_aggressive();
+        run_aggressive();               // aggressive
 	} else if (selector==8) {
-//		run_follow_ball_green();
-        run_goal_seek();
+        run_goal_seek();                // goal seek
 	} else
 		run_fft_listener();
 	
