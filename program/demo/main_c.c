@@ -83,7 +83,7 @@ int main() {
 	} else if (selector==4) {
 		run_breitenberg_follower();
 	} else if (selector==5) {
-		run_breitenberg_shocker();
+		run_love();				// love
 	} else if (selector==6) {
 		run_follow_ball();
 	} else if (selector==7) {

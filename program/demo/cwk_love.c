@@ -11,17 +11,20 @@
 #include "../../library/a_d/advance_ad_scan/e_ad_conv.h"
 #include "../../library/motor_led/advance_one_timer/e_led.h"
 
+//Constants
+#define NUM_SENSORS 8			// number of sensors 
+#define WAIT_TIME 30000			// interval time between each iteration of the main loop
+#define HEART_BEAT_TIME 800000	// max interval time before a heartbeat
+
 void run_love(void)
 {
 	long i = 0;							//loop counter
 	int leftWheel = 0;					//speed of left wheel
 	int rightWheel = 0;					//speed of right wheel
-	long waitInterval = 30000;			//interval between each iteration of the main loop	
-	long heartBeatInterval = 800000;	//Max interval before a heartbeat (in processor steps)
 	long heartBeatCntr = 0;				//Counts how many steps since last heartbeat
 	int heartBeatLEDs = 0;				//0 for all LEDs off, 1 for all LEDs on
 	
-	// Initialise setup libraries
+	//Initialise setup libraries
 	e_init_port();
 	e_init_motors();
 	e_led_clear();
@@ -34,14 +37,16 @@ void run_love(void)
 	e_set_speed_left(100);
 	
 	while (1) {
+		// starting off
 		leftWheel = leftWheel * 0.9;
 		rightWheel = rightWheel * 0.9;
-		rightWheel+=38;
+		leftWheel+=38;
 		rightWheel+=38;
 		
 		//adjusts the speed if something is near it in that specific direction
-		for (i=0;i<7;i++) {
-			//note: could maybe make use of the ambient light function in 'prox' (e_get_ambient_light)
+		for (i=0;i<NUM_SENSORS;i++) {
+			//roughly 1000 means its about to touch
+			//any less than 500 and it starts having false positives
 			if (e_get_prox(i)>=500) {	
 				switch (i) {
 					//left side sensors
@@ -57,34 +62,34 @@ void run_love(void)
 					case 7:leftWheel+=300;rightWheel+=100;break;
 				}
 			}
-		}
+		}	
 		
-		//heartbeat
+		//performing heartBeat
 		heartBeatCntr++;
 		//get mean average of both front sensors
 		int frontProx = (e_get_prox(0) + e_get_prox(7)) / 2;
 		if (frontProx < 1) frontProx = 1;
 		//calculates maximum time for heartbeat
-		long heartBeatMax = heartBeatInterval;
+		long heartBeatMax = HEART_BEAT_TIME;
 
 		if (e_get_prox(0)>300 || e_get_prox(7)>300)
-			heartBeatMax = heartBeatInterval/2;
+			heartBeatMax = HEART_BEAT_TIME/2;
 		if (e_get_prox(0)>900 || e_get_prox(7)>900)
-			heartBeatMax = heartBeatInterval/4;
+			heartBeatMax = HEART_BEAT_TIME/4;
 		
 		//measure as to when to do a heartbeat
-		if (heartBeatCntr*waitInterval > heartBeatMax) {
+		if (heartBeatCntr*WAIT_TIME > heartBeatMax) {
 			//toggle between 0 and 1
 			heartBeatLEDs = 1 - heartBeatLEDs;
 			//set LEDs
-			for (i=0;i<7;i++) {
+			for (i=0;i<NUM_SENSORS;i++) {
 				e_set_led(i,heartBeatLEDs);
 			}
 			//reset timer
 			heartBeatCntr = 0;
 		}
 		
-		//front sensors
+		//action for front sensors
 		if (e_get_prox(0)>1000 || e_get_prox(1)>1000) {
 			if (e_get_prox(0)> e_get_prox(7)) {
 				leftWheel  = 200;
@@ -97,9 +102,7 @@ void run_love(void)
 			for(i=0;i<80000;i++) {asm("nop");}
 		}
 		
-		
-		
-		
+	
 		//limit max speed (to 800)
 		if (leftWheel>800) { leftWheel = 800; }
 		if (rightWheel>800) { rightWheel = 800; }
@@ -107,7 +110,7 @@ void run_love(void)
 		if (rightWheel<-800) { rightWheel = -800; }
 		
 		//wait time
-		for(i=0;i<waitInterval;i++) {asm("nop");}
+		for(i=0;i<WAIT_TIME;i++) {asm("nop");}
 		e_set_steps_right(rightWheel);
 		e_set_steps_left(leftWheel);
 	}
