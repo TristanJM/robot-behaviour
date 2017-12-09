@@ -23,24 +23,29 @@
 #define MOTOR_MAX_SPEED     500     // <= 500 [lt/e 500]
 
 void animate_lights(int flag, int wait_time) {
-    switch (flag) {
+               long k;
+               switch (flag) {
         case 0:
             e_set_led(8, 1);
             wait(wait_time);
             e_set_led(8, 0);
             break;
         case 1:
-            k2000_led();
+
+            for(k=0;k<50;k++){
+            k2000_led();            
             wait(wait_time);
+            }
             break;
         default:
             break;
     }
 }
 
-void epuck_set_speed(int speed) {
+void epuck_set_speed(int speed, int wait_time) {
     e_set_speed_left(speed);
     e_set_speed_right(speed);
+    wait(wait_time);
 }
 
 void epuck_shake(int speed, int wait_time, int iterations) {
@@ -48,9 +53,12 @@ void epuck_shake(int speed, int wait_time, int iterations) {
     for (i = 0; i < iterations; ++i) {
         e_set_speed(0, -1 * speed);
         wait(wait_time);
-        e_set_speed(0, 2 * speed);
+        e_set_speed(0, 1 * speed);
+        wait(wait_time);
+        e_set_speed(0, 1 *speed);
         wait(wait_time);
         e_set_speed(0, -1 * speed);
+        wait(wait_time);
     }
 }
 
@@ -75,7 +83,7 @@ void creep(int max_ir_index, int current_ir_activation, int proximity_threshold)
     int speed_multiplier = log(current_ir_activation + 1) / log(100 + 1);
 
     if (speed_multiplier < 0.9) {
-        linear_speed = speed_multiplier * linear_speed;
+        linear_speed = (1 - speed_multiplier) * linear_speed;
     } else {
         // Proximity Alert
         proximity_alert = 1;
@@ -83,31 +91,31 @@ void creep(int max_ir_index, int current_ir_activation, int proximity_threshold)
 
     switch (max_ir_index) {
         case 0: // -3
-            angular_speed = (int) floor((MOTOR_MAX_SPEED / 2) * (-1));
+            angular_speed = (int) floor((120 / 2) * (-1));
             break;
         case 1: // -2
-            angular_speed = (int) floor((MOTOR_MAX_SPEED / 2) * (-2 / 3));
+            angular_speed = (int) floor((120 / 2) * (-2 / 3));
             break;
         case 2: // -1
-            angular_speed = (int) floor((MOTOR_MAX_SPEED / 2) * (-1 / 3));
+            angular_speed = (int) floor((120 / 2) * (-1 / 3));
             break;
         case 3: // +4
-            angular_speed = (int) floor((MOTOR_MAX_SPEED / 2) * 0);
+            angular_speed = (int) floor((120 / 2) * 0);
             break;
         case 4: // +4
-            angular_speed = (int) floor((MOTOR_MAX_SPEED / 2) * 0);
+            angular_speed = (int) floor((120 / 2) * 0);
             break;
         case 5: // +1
-            angular_speed = (int) floor((MOTOR_MAX_SPEED / 2) * (1 / 3));
+            angular_speed = (int) floor((120 / 2) * (1 / 3));
             break;
         case 6: // +2
-            angular_speed = (int) floor((MOTOR_MAX_SPEED / 2) * (2 / 3));
+            angular_speed = (int) floor((120 / 2) * (2 / 3));
             break;
         case 7: // +3
-            angular_speed = (int) floor((MOTOR_MAX_SPEED / 2) * (1));
+            angular_speed = (int) floor((120 / 2) * (1));
             break;
         default:
-            angular_speed = rand() % MOTOR_MAX_SPEED;
+            angular_speed = (rand() % 2*120)-120;
             break;
     }
 
@@ -126,32 +134,41 @@ void creep(int max_ir_index, int current_ir_activation, int proximity_threshold)
 void run_curious() {
     /* Initialisations */
     e_init_port();
+    e_init_ad_scan(ALL_ADC);
     e_init_motors();
     e_init_uart1();
-
+    
     e_start_agendas_processing();
     e_calibrate_ir();
 
     srand(time(NULL));
 
     /* Configurations */
-    int conf_curious_mode = 0;          // Uses Prox sensors if set to 1.
-    int conf_wait_time = 1000;          // Wait time for all operations
-    int conf_turn_wait = 10000;         // Time needed to complete the turn
-    int conf_cal_ir_activation = 75;    // Assumed Range 0-100
+    int conf_curious_mode = 1;          // Uses Prox sensors if set to 1.
+    int conf_wait_time = 50000;         // Wait time for all operations
+    int conf_turn_wait = 500;           // Time needed to complete the turn
+    int conf_animateled_wait = 50000;   // Wait time for LED Animations
+    int conf_cal_ir_activation = 200;    // Assumed Range 0-100
     int conf_proximity_threshold = 0.9;
+    
+    long wait_iter, i, j ,k;
+
 
     /* State Variables */
-    int state_prox[SENSORS];
+    int state_prox[SENSORS] = {0, 0, 0, 0, 0, 0, 0, 0};
 
     while (1) {
         if (conf_curious_mode) {
             // Prox Sensor Enabled Code
-            update_sensor_array(state_prox);
-            long i;
+            //update_sensor_array(state_prox);
+
+            for (i = 0; i < SENSORS; i++) {
+                state_prox[i] = e_get_prox(i);
+            }
+            
             int max_ir_index = 8;
             for (i = 0; i < SENSORS; ++i) { // Update LED on IR Activation
-                if (state_prox[i] >= conf_cal_ir_activation) {
+                if (state_prox[i] > conf_cal_ir_activation) {
                     e_set_led(i, 1);
                     max_ir_index = i;
                 } else {
@@ -161,35 +178,21 @@ void run_curious() {
 
             // Creep towards object - Creep slows down, the closer the object is.
             creep(max_ir_index, (max_ir_index < SENSORS) ? state_prox[max_ir_index] : 0, conf_proximity_threshold);
-            wait(conf_wait_time);
-
             // Repeat
+            for(i=0; i<50000; i++) { asm("nop"); }
+
         } else {
             // Basic Movement Code
-            animate_lights(0, 0);
-            // Move Forward
-            epuck_set_speed(MOTOR_MAX_SPEED);
+            //animate_lights(0, conf_animateled_wait);
+            // Move Forward - Random
+            e_set_speed(rand()%(400+1-350)+350, rand()%(2*80)-80);
+            wait(conf_wait_time*4);
+            //wait(conf_wait_time*4);
             // Shake
-            epuck_shake(100, 1000, 2);
+            epuck_shake(500, conf_turn_wait, 1);
+            animate_lights(1, 1000);
             // Flash Lights
-            animate_lights(0, 0);
-            // Turn Left
-            e_set_speed(MOTOR_BIAS_SPEED, -500);
-            wait(conf_turn_wait);
-            // Move Forward
-            epuck_set_speed(MOTOR_MAX_SPEED);
-            // Shake
-            epuck_shake(100, 1000, 2);
-            // Flash Lights
-            animate_lights(0, 0);
-            // Turn Back
-            e_set_speed(MOTOR_BIAS_SPEED, 500);
-            wait(2 * conf_turn_wait);           // Wait for 2 turns for a 180d turn
-            // Move Forward
-            epuck_set_speed(MOTOR_MAX_SPEED);
-            // Shake
-            epuck_shake(100, 1000, 2);
-            // Repeat
+            //animate_lights(0, conf_animateled_wait);
         }
     }
 }

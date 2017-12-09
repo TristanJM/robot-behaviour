@@ -35,6 +35,7 @@
 #include "cwk_aggressive.h"
 #include "cwk_fear.h"
 #include "cwk_goal_seek.h"
+#include "cwk_curious.h"
 
 #include "ComModule.h"
 #include "runcollaboration.h"
@@ -79,7 +80,7 @@ int main() {
 	if (selector==0) {
 		run_grounddirection();
 	} else if (selector==1) {
-		run_accelerometer();
+		run_curious();
 	} else if (selector==2) {
 		run_locatesound();
 	} else if (selector==3) {
