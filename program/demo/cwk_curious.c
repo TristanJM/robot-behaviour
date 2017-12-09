@@ -83,28 +83,28 @@ void creep(int max_ir_index, int current_ir_activation, int proximity_threshold)
 
     switch (max_ir_index) {
         case 0: // -3
-            angular_speed = -450;
+            angular_speed = (MOTOR_MAX_SPEED / 2) * (-1);
             break;
         case 1: // -2
-            angular_speed = -300;
+            angular_speed = (MOTOR_MAX_SPEED / 2) * (-2 / 3);
             break;
         case 2: // -1
-            angular_speed = -150;
+            angular_speed = (MOTOR_MAX_SPEED / 2) * (-1 / 3);
             break;
         case 3: // +4
-            angular_speed = 0;
+            angular_speed = (MOTOR_MAX_SPEED / 2) * 0;
             break;
         case 4: // +4
-            angular_speed = 0;
+            angular_speed = (MOTOR_MAX_SPEED / 2) * 0;
             break;
         case 5: // +1
-            angular_speed = 150;
+            angular_speed = (MOTOR_MAX_SPEED / 2) * (1 / 3);
             break;
         case 6: // +2
-            angular_speed = 300;
+            angular_speed = (MOTOR_MAX_SPEED / 2) * (2 / 3);
             break;
         case 7: // +3
-            angular_speed = 450;
+            angular_speed = (MOTOR_MAX_SPEED / 2) * (1);
             break;
         default:
             angular_speed = rand() % MOTOR_MAX_SPEED;
