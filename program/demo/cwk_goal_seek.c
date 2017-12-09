@@ -179,7 +179,7 @@ void run_goal_seek() {
                 rightwheel = 0;
                 wallfollow = 0;
                 goforward = 0;
-            } 
+            }
         }
         
         // default behaviour - go straight

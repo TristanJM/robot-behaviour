@@ -1,19 +1,19 @@
 build/default/production/_ext/1472/main_c.o:  \
 ../main_c.c  \
- ../../../library/uart/e_uart_char.h  \
- ../../../library/motor_led/e_init_port.h  \
+../../../library/uart/e_uart_char.h  \
+../../../library/motor_led/e_init_port.h  \
 ../followGreen.h  \
 ../findRed.h  \
- ../cwk_aggressive.h  \
+../cwk_aggressive.h  \
 ../cwk_fear.h  \
 ../cwk_goal_seek.h  \
 ../ComModule.h  \
- ../runcollaboration.h  \
+../runcollaboration.h  \
 ../runaccelerometer.h  \
 ../runbreitenberg_adv.h  \
- ../runlocatesound.h  \
+../runlocatesound.h  \
 ../runwallfollow.h  \
 ../runfollowball.h  \
- ../runfftlistener.h  \
+../runfftlistener.h  \
 ../rungrounddirection.h  \
 ../utility.h 
