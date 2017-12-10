@@ -9,6 +9,8 @@ build/default/production/_ext/1472/cwk_custom_behaviour.o:  \
  ../../../library/a_d/advance_ad_scan/e_ad_conv.h  \
  ../../../library/a_d/advance_ad_scan/e_prox.h  \
  ../../../library/camera/fast_2_timer/e_poxxxx.h  \
+ ../../../library/a_d/advance_ad_scan/e_ad_conv.h  \
+ ../../../library/a_d/advance_ad_scan/e_prox.h  \
 ../utility.h  \
  ../runwallfollow.h  \
 ../runfollowball.h  \

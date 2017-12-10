@@ -33,7 +33,7 @@
 
 #define TURN_AGGRESSION       1     // Changes how quickly the robot turns to get back on track when wall following
 
-#define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
+#define SENSOR_DROPOFF_THRESHOLD   0     // How low a sensor needs to be before considering dropped off
 #define SENSOR_DROPOFF_TIME        10      // How many cycles a sensor needs to be dropped off for before turning
 
 #define BIAS_SPEED      	350		// robot bias speed
@@ -78,10 +78,6 @@ void run_custom() {
     e_poxxxx_init_cam();
     e_poxxxx_config_cam(0, (ARRAY_HEIGHT - 4) / 2, 640, 4, 8, 4, RGB_565_MODE);
     e_poxxxx_write_cam_registers();
-
-    
-    
-
     
     // Start by following both walls.
     state = FOLLOW_BOTH_WALLS;
@@ -92,6 +88,7 @@ void run_custom() {
         // Clear LEDs
         e_led_clear();
         
+        /*
         // Get levels from camera
         update_levels();
         
@@ -113,11 +110,10 @@ void run_custom() {
         } else {
             // NO COLOUR (DEBUG ONLY)
         }
-
+        */
+        
         leftwheel = 0;
-        rightwheel = 0;
-        
-        
+        rightwheel = 0;    
         
         /* Update Proximity Sensor value array, also turn on LEDs if detected */
 		for(i=0; i<8; i++){
@@ -130,11 +126,10 @@ void run_custom() {
 		}
         
         
-        
         if( state == FOLLOW_BOTH_WALLS || state == TURN_NEXT ){
             // If we're supposed to be following both walls, make sure IR6 and IR1 are similar
-            leftwheel = MAXSPEED;
-            rightwheel = MAXSPEED;
+            leftwheel = BIAS_SPEED;
+            rightwheel = BIAS_SPEED;
             
             // - difference means facing too far right, + too far left 
             sensor_difference = distances[6] - distances[1];
@@ -145,7 +140,7 @@ void run_custom() {
             
 
             //Check if the left side sensor is dropped off (indicating a corner))
-            if(distances[5] < SENSOR_DROPOFF_THRESHOLD){
+            if(distances[5] <= SENSOR_DROPOFF_THRESHOLD){
                 
                 // Increase the count for the number of cycles this has been the case
                 left_sensor_drop_cycles++;
@@ -165,10 +160,8 @@ void run_custom() {
                         power_forward(1000000); //Move forward for 1000000us (1s)
                         left_sensor_drop_cycles = 0; //Reset the sensor drop count
                         state = FOLLOW_BOTH_WALLS; //Now that we've turned, follow both walls again
-                    }
-                    
+                    }   
                 }
-
             } else {
                 // Reset drop count to 0 when the sensor comes back
                 left_sensor_drop_cycles = 0;
@@ -177,7 +170,7 @@ void run_custom() {
             
             
             // Check if right side sensor is dropped off (indicating a corner)
-            if(distances[2] < SENSOR_DROPOFF_THRESHOLD){
+            if(distances[2] <= SENSOR_DROPOFF_THRESHOLD){
                 
                 // Increase the count for the number of cycles this has been the case
                 right_sensor_drop_cycles++;
@@ -197,17 +190,12 @@ void run_custom() {
                         power_forward(1000000); //Move forward for 1000000us (1s)
                         right_sensor_drop_cycles = 0; //Reset the sensor drop count
                         state = FOLLOW_BOTH_WALLS; //Now that we've turned, follow both walls again
-                    }
-                    
+                    }        
                 }
-
             } else {
                 // Reset drop count to 0 when the sensor comes back
                 right_sensor_drop_cycles = 0;
-            }
-            
-            
-            
+            }  
         }
         
         
