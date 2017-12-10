@@ -311,7 +311,7 @@ void rotate_robot(int angle) {
 
 void power_forward(int time){
     //Set both wheels to full speed
-    followsetSpeedGS(MAXSPEED, MAXSPEED);
+    followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
     //Hang our program for time uS
     wait(time);
 }
