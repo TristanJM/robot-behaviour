@@ -295,22 +295,28 @@ void getSensorValues(int *sensorTable) {
 
 void rotate_robot(int angle) {
     
-    //If the angle is 90, turn right for an amount of time
+    //If the angle is 90, turn right for 330 steps
     if(angle == 90){
-        followsetSpeedGS(MAXSPEED, -MAXSPEED);
-        wait(500000);   // <- This will need tweaking, and might even differ between epucks
+        e_set_steps_right(0);
+        while(e_get_steps_right() < 330){
+            followsetSpeedGS(100, -100);
+        }
     }
     
-    //If the angle is -90, turn left for an amount of time
+    //If the angle is -90, turn left 330 steps
     if(angle == -90){
-        followsetSpeedGS(-MAXSPEED, MAXSPEED);
-        wait(500000);   // <- This will need tweaking, and might even differ between epucks
+        e_set_steps_left(0);
+        while(e_get_steps_left() < 330){
+            followsetSpeedGS(-100, 100);
+        }
     }
     
-    //If the angle is 180, turn right for a bigger amount of time
+    //If the angle is 180, turn right for a 660 steps
     if(angle == 180){
-        followsetSpeedGS(MAXSPEED, -MAXSPEED);
-        wait(1000000);  // <- This will need tweaking, and might even differ between epucks
+        e_set_steps_right(0);
+        while(e_get_steps_right() < 660){
+            followsetSpeedGS(100, -100);
+        }
     }
     
 }
