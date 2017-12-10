@@ -81,13 +81,18 @@ void follow_lover(void)
 {
 	// skipping a heartbeat when lover is spotted/near 
 	if(e_get_calibrated_prox(0) || e_get_calibrated_prox(7) < 1000)
-		e_activate_agenda(e_start_led_blinking, 500);
+		e_activate_agenda(e_start_led_blinking, 500); // SARTHAK-NOTE: ERROR - e_activate_agenda((func) VOID!) you can only put a function with no arguments in here.
 	else 
 	{
-		e_activate_agenda(e_stop_led_blinking, 250); 
+		// SARTHAK-NOTE: e_stop_led_blinking(void) os fine as it has no arguments.
+        e_activate_agenda(e_stop_led_blinking, 250); 
+        
+        // SARTHAK-NOTE: ERROR - e_activate_agenda((func) VOID!) you can only put a function with no arguments in here.
 		e_activate_agenda(e_set_blinking_cycle, 25000);	// restarting the heartbeat effect after the skip
+        
+        // SARTHAK-NOTE: My suggestion would be to create wrapper functions with no arguments and calling those from above. 
 	}
-
+    
 	int basic_speed = lin_speed_calc((e_get_calibrated_prox(7)+e_get_calibrated_prox(0))/2, 6);
 	int angle_speed = angle_speed_calc((e_get_calibrated_prox(0)+e_get_calibrated_prox(1)) -
 										(e_get_calibrated_prox(7)+e_get_calibrated_prox(6)), 4);
