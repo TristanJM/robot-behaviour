@@ -65,6 +65,15 @@ char e_i2c_init(void)
 	return 1;
 }
 
+char e_i2c_deinit(void) {
+	I2CCONbits.I2CEN=0;			// disable I2C
+	IFS0bits.MI2CIF=0;			// clear master interrupt flag
+	IFS0bits.SI2CIF=0;			// clear slave interrupt flag
+        IEC0bits.MI2CIE=0;			// disable master I2C interrupt
+	IEC0bits.SI2CIE=0;			// diseble slave I2C interrupt
+        return 1;
+}
+
 /*! \brief Reset the microcontroller for I2C uses
  * \return 1 to confirme the oparation and 0 for an error
  */
@@ -74,7 +83,8 @@ char e_i2c_reset(void)
 	I2CCONbits.I2CEN=0;			// disable I2C and stop peripheric
 	IFS0bits.MI2CIF=0;			// 
 	IFS0bits.SI2CIF=0;			// 
-	IEC0bits.SI2CIE=0;			// 
+	IEC0bits.SI2CIE=0;			//
+        I2CSTAT = 0;
 	for(i=10000;i;i--);
 
 	e_i2c_init();				// intit I2C

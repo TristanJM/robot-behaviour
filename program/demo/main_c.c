@@ -30,6 +30,12 @@
 #include "uart/e_uart_char.h"
 #include "motor_led/e_init_port.h"
 
+#include "followGreen.h"
+#include "findRed.h"
+#include "cwk_aggressive.h"
+#include "cwk_fear.h"
+#include "cwk_goal_seek.h"
+#include "cwk_curious.h"
 #include "cwk_love.h"
 
 #include "ComModule.h"
@@ -75,21 +81,21 @@ int main() {
 	if (selector==0) {
 		run_grounddirection();
 	} else if (selector==1) {
-		run_accelerometer();
+		run_curious();
 	} else if (selector==2) {
 		run_locatesound();
 	} else if (selector==3) {
-		run_wallfollow();
+        run_goal_seek_basic();
 	} else if (selector==4) {
 		run_breitenberg_follower();
 	} else if (selector==5) {
-		run_love();				// love
+		run_love();
 	} else if (selector==6) {
-		run_follow_ball();
+        run_fear();
 	} else if (selector==7) {
-		run_follow_ball_red();
+        run_aggressive();
 	} else if (selector==8) {
-		run_follow_ball_green();
+        run_goal_seek();
 	} else
 		run_fft_listener();
 	

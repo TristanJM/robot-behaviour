@@ -84,6 +84,11 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 #ifndef _UART_TXRX_CHAR
 #define _UART_TXRX_CHAR
 
+#define BAUD115200 7
+#define BAUD230400 3
+#define BAUD460800 1
+#define BAUD921600 0
+
 /*! \brief Init uart 1 at 115200bps, 8 data bits, 1 stop bit, Enable ISR for RX and TX */
 void e_init_uart1(void);
 
@@ -110,7 +115,7 @@ int  e_uart1_sending(void);
 
 
 /*! \brief Init uart 2 at 115200bps, 8 data bits, 1 stop bit, Enable ISR for RX and TX */
-void e_init_uart2(void);
+void e_init_uart2(int);
 
 /*! \brief Check if something is comming on uart 2
  * \return the number of characters available, 0 if none are available */

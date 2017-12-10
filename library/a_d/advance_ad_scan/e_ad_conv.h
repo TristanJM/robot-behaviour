@@ -69,20 +69,23 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 
 //Calculation of the periodes in ad_cycle
 //ad_cycle = 1/MIC_SAMP_FREQ
-#define ACC_PROX_PERIOD (int)(MIC_SAMP_FREQ/ACC_PROX_SAMP_FREQ)	// 60 acc and prox periode in [ad_cycle]	
-#define PULSE_PERIOD (int)(PULSE_LENGHT*MIC_SAMP_FREQ)			//  pulse length in [ad_cycle]			
+#define ACC_PROX_PERIOD (int)(MIC_SAMP_FREQ/ACC_PROX_SAMP_FREQ)	// (64) acc and prox periode in [ad_cycle]
+#define PULSE_PERIOD (int)(PULSE_LENGHT*MIC_SAMP_FREQ)			// (5)  pulse length in [ad_cycle]
 
 //ADCS calculation to allways have the same time for an AD conversion scan  
 //with a different numbers of channels
 #define ADCS_3_CHAN	(int)(2.0*FCY/(MIC_SAMP_FREQ*(14+1)*3)-1)	// SAMPLETIME 3TAD
 #define ADCS_5_CHAN	(int)(2.0*FCY/(MIC_SAMP_FREQ*(14+1)*5)-1)	// 
 #define ADCS_6_CHAN	(int)(2.0*FCY/(MIC_SAMP_FREQ*(14+1)*6)-1)	// 
+#define ADCS_2_CHAN	(int)(2.0*FCY/(MIC_SAMP_FREQ*(14+1)*2)-1)	// 
 
-#define MIC_SAMP_NB 256	// number of microphone samples to store (put 100 to use with sercom_adv)
+#define MIC_SAMP_NB 100	// number of microphone samples to store (put 100 to use with sercom_adv, otherwise 256)
 #define ACC_SAMP_NB  50	// number of accelerometer samples to store
 
 #define MICRO_ONLY 1
 #define ALL_ADC 0
+
+#define ADC_ISR_PERIOD_MS 0.061 //(1000.0/MIC_SAMP_FREQ)
 
 void e_init_ad_scan(unsigned char only_micro);
 unsigned char e_ad_is_array_filled(void);

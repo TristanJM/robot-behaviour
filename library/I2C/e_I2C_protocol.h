@@ -41,6 +41,7 @@ EPFL Ecole polytechnique federale de Lausanne http://www.epfl.ch
 // use e_i2cp_write,I2Cp_read to write or read in the Camera registers
 
 void e_i2cp_init(void);
+void e_i2cp_deinit(void);
 char e_i2cp_write (char device_add,char reg, char value);
 char e_i2cp_read(char device_add,char reg);
 char e_i2cp_read_string(char device_add, unsigned char read_buffer[], char start_address, char string_length);

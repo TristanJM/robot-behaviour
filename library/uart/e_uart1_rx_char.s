@@ -13,12 +13,13 @@ History:
 	21/12/05		Optimisation and new function name
 	12/02/07		Added possibility of clearing an external on interrupt
 	12/03/07		Major rewrite, added rx buffer
+	03/10/13		Fixed reading of characters when internal buffer has more than one, clear overflow
 
 ****************************************************************************************************************/
 
 ; to be used with e_uart_char.h
 
-.include "p30f6014A.inc"
+.include "p30F6014A.inc"
 
 .section  .data, near
 
@@ -52,16 +53,22 @@ __U1RXInterrupt:
 		and		_e_uart1_int_clr_mask		; Mask w0 with user-specified mask
 		mov		w0, [w1]					; Deference pointer write
 .endif
-		
+
+		; Clear any overflow
+		bclr	U1STA,#1					; Clear overflow bit
+		; Get all incoming characters (while U1STA[0] == 1)
+get_char_loop:
+		btst	U1STA,#0					; Test if char to receive
+		bra		Z,no_more_char				; If no char, exit loop
 		mov		_U1RXRcvCnt, w0				; Received counter in w0
 		and		#0x3f, w0					; Mask at buffer length
 		mov		#_U1RXBuf, w1				; Buffer pointer in w1
 		add		w0, w1, w1					; Element pointer in w1
-		clr     w0							; Clear w0
 		mov.b   U1RXREG, WREG				; Transfer received byte to w0
 		mov.b	w0, [w1]					; Store received byte
 		inc		_U1RXRcvCnt					; Increment amount of received bytes
-		
+		bra		get_char_loop				; Next loop iteration
+no_more_char:
 		pop.d   w0							; Restore context - w0, w1
 
 		retfie								; Return from Interrupt

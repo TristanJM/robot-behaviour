@@ -31,7 +31,8 @@ int e_poxxxx_config_cam(unsigned int sensor_x1,unsigned int sensor_y1,
 			 unsigned int zoom_fact_width,unsigned int zoom_fact_height,  
 			 int color_mode);
 
-void e_poxxxx_init_cam(void);
+int e_poxxxx_init_cam(void);
+int e_poxxxx_get_orientation(void);
 
 void e_poxxxx_write_cam_registers(void);
 
@@ -42,5 +43,9 @@ int  e_poxxxx_is_img_ready(void);
 void e_poxxxx_set_mirror(int vertical, int horizontal);
 
 int e_poxxxx_apply_timer_config(int pixel_row, int pixel_col, int bpp, int pbp, int bbl);
+
+void e_poxxxx_set_awb_ae(int awb, int ae);
+void e_poxxxx_set_rgb_gain(unsigned char r, unsigned char g, unsigned char b);
+void e_poxxxx_set_exposure(unsigned long exp);
 
 #endif

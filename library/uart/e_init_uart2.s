@@ -13,7 +13,7 @@ History:
 ;to be used with uart_txrx_char.h
 
 .include "e_epuck_ports.inc"
-.equiv	BAUDRATE, 115000 
+;.equiv	BAUDRATE, 115000 
 
 .extern _U2RXRcvCnt
 .extern _U2RXReadCnt
@@ -33,7 +33,7 @@ _e_init_uart2:
 		bset    IEC1, #U2RXIE                       ; Enable Rx ISR processing
 
 		bset    U2MODE, #UARTEN                     ; Enable UART
-		mov     #(((FCY/BAUDRATE)/16)-1), W0        ; Initialize Baud rate
+		;mov     #(((FCY/BAUDRATE)/16)-1), W0        ; Initialize Baud rate
 		mov     w0, U2BRG                           ; 9600 to 115200 Kbaud
 		
 		bclr    IFS1, #U2TXIF                       ; Enable Txmit ISR processing
