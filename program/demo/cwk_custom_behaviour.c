@@ -84,7 +84,8 @@ void run_custom() {
 
     
     while (1) {
-               
+        followGetSensorValuesGS(distances); // read sensor values
+        
         // Clear LEDs
         e_led_clear();
         
@@ -115,32 +116,47 @@ void run_custom() {
         leftwheel = 0;
         rightwheel = 0;    
         
-        /* Update Proximity Sensor value array, also turn on LEDs if detected */
-		for(i=0; i<8; i++){
-			distances[i] = e_get_prox(i);
-			if(distances[i] > 250){
-				e_set_led(i, 1);
-			} else {
-				e_set_led(i, 0);
-			}
+        /* Turn on LEDs if proximity detected */
+		for (i=0; i<8; i++) {
+			if(distances[i] > 80) e_set_led(i, 1);
+			else e_set_led(i, 0);
 		}
-        
+
         
         if( state == FOLLOW_BOTH_WALLS || state == TURN_NEXT ){
             // If we're supposed to be following both walls, make sure IR6 and IR1 are similar
             leftwheel = BIAS_SPEED;
             rightwheel = BIAS_SPEED;
             
-            // - difference means facing too far right, + too far left 
-            sensor_difference = distances[6] - distances[1];
+            // positive means left wall is closer than right
+            // negative means right wall is closer than left
+            sensor_difference = distances[5] - distances[2];
             
             // Adjust wheel speeds to correct for difference in sensor value
             rightwheel -= sensor_difference * TURN_AGGRESSION;
             leftwheel  += sensor_difference * TURN_AGGRESSION;
             
-
+            /*
+            // NEW ATTEMPT: Wallfollow right, will need to only do this if both left and right sensors are active
+            follow_weightleftCustom[0] = -10;
+            follow_weightleftCustom[7] = -10;
+            follow_weightrightCustom[0] = 10;
+            follow_weightrightCustom[7] = 10;
+            if (distances[2] > 300) {   // right side sensor?
+                distances[1] -= 200;
+                distances[2] -= 600;
+                distances[3] -= 100;   
+            }
+            
+            for (i = 0; i < 8; i++) {
+                leftwheel += follow_weightleftCustom[i]*(distances[i] >> 4);
+                rightwheel += follow_weightrightCustom[i]*(distances[i] >> 4);
+            }*/
+            
+            
             //Check if the left side sensor is dropped off (indicating a corner))
             if(distances[5] <= SENSOR_DROPOFF_THRESHOLD){
+                e_set_front_led(1);
                 
                 // Increase the count for the number of cycles this has been the case
                 left_sensor_drop_cycles++;
@@ -165,12 +181,11 @@ void run_custom() {
             } else {
                 // Reset drop count to 0 when the sensor comes back
                 left_sensor_drop_cycles = 0;
-            }
-            
-            
+            }              
             
             // Check if right side sensor is dropped off (indicating a corner)
             if(distances[2] <= SENSOR_DROPOFF_THRESHOLD){
+                e_set_front_led(1);
                 
                 // Increase the count for the number of cycles this has been the case
                 right_sensor_drop_cycles++;
@@ -195,33 +210,8 @@ void run_custom() {
             } else {
                 // Reset drop count to 0 when the sensor comes back
                 right_sensor_drop_cycles = 0;
-            }  
+            }
         }
-        
-        
-             
-        
-        
-        
-        // TODO:
-        // Check "distances" for left and right sensor
-        
-        // Adjust robot pos so they are kept roughly the same
-        
-        // If there is a turning (ie. no sensor activation on one side for multiple iterations):
-        // Then, if waiting_for_turn == 0, go straight
-        // Or, if waiting_for_turn == 1, rotate_robot(90 or 270)
-        
-        /*
-        // EXAMPLE: This code stopped the bot if it detected an object in any of the 8 IR sensors
-
-        getSensorValues(distances); // read sensor values
-        for (i=0; i<8; i++) {
-            if (distances[i] > 50) { break; }
-        }
-        if (i == 8) { // go straight }
-        else { // stop }
-        */
 
         followsetSpeedGS(leftwheel, rightwheel);    // sets motor speed, within max limits (from cwk_goal_seek.c)
         
