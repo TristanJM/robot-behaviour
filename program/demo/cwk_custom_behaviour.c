@@ -37,14 +37,14 @@
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
 #define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
-#define SENSOR_DROPOFF_TIME        20      // How many cycles a sensor needs to be dropped off for before turning
+#define SENSOR_DROPOFF_TIME        10      // How many cycles a sensor needs to be dropped off for before turning
 #define POWER_THROUGH_TIME         20      // Cycles to power forward and not check sensors/camera
 
 #define BIAS_SPEED      	300		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
 
-#define COL_DIFF_AMOUNT     50      // eg. red is detected if this much more than blue and green)
+#define COL_DIFF_AMOUNT     40      // eg. red is detected if this much more than blue and green)
 
 // colour detection
 char fbwbufferCustom[160];
@@ -119,7 +119,6 @@ void run_custom() {
         right_distance = e_get_prox(2);
         left_distance = e_get_prox(5);
 
-
         // Get levels from camera
         update_levels();
 
@@ -146,10 +145,10 @@ void run_custom() {
         rightwheel = 0;    
 
         /* Turn on LEDs if proximity detected */
-        if (distances[5] > 400) e_set_led(6, 1);
+        if (distances[5] > 300) e_set_led(6, 1);
         else e_set_led(6, 0);
 
-        if (distances[2] > 400) e_set_led(2, 1);
+        if (distances[2] > 300) e_set_led(2, 1);
         else e_set_led(2, 0);
 
         if (state == FOLLOW_BOTH_WALLS || state == TURN_NEXT) {
@@ -164,7 +163,7 @@ void run_custom() {
             //rightwheel -= sensor_difference * TURN_AGGRESSION;
             //leftwheel  += sensor_difference * TURN_AGGRESSION;
 
-            // NEW ATTEMPT: Wallfollow right, will need to only do this if both left and right sensors are active
+            // Wallfollow right
             follow_weightleftCustom[0] = -10;
             follow_weightleftCustom[7] = -10;
             follow_weightrightCustom[0] = 10;
