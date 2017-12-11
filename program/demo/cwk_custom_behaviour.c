@@ -37,10 +37,10 @@
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
 #define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
-#define SENSOR_DROPOFF_TIME        10      // How many cycles a sensor needs to be dropped off for before turning
+#define SENSOR_DROPOFF_TIME        15      // How many cycles a sensor needs to be dropped off for before turning
 #define POWER_THROUGH_TIME         40      // Cycles to power forward and not check sensors/camera
 
-#define BIAS_SPEED      	250		// robot bias speed
+#define BIAS_SPEED      	350		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
 
@@ -108,7 +108,6 @@ void run_custom() {
     // Calibrate the white balance on the camera...
     // It does this by increasing the red gain from 0..255, then blue from 0..255, until the camera DOESN'T see a key colour.
     while( camera_calibrated == 0 ){
-        
         // Set the gain
         e_poxxxx_set_rgb_gain(red_gain, 0, blue_gain);
         // <<There is a chance we might have to call e_poxxx_write_cam_registers() again here? >>
@@ -119,19 +118,16 @@ void run_custom() {
         // Check whether we're calibrated yet
         if( get_dominant_rgb(red_level, green_level, blue_level, 1) != 0 ){
             
-            if(red_gain == 0 && blue_gain == 0){
-                
+            if(red_gain == 0 && blue_gain == 0){  
                 // If we just started, start by increasing red_gain
                 red_gain ++;
                 
-            } else if(red_gain == 255){
-                
+            } else if(red_gain == 255){ 
                 // If red is at the max, set red back to 0 and start increasing blue.
                 red_gain = 0;
                 blue_gain = 1;
                 
-            } else if(red_gain > 0){
-                
+            } else if(red_gain > 0){  
                 // If we're increasing red right now, keey increasing red
                 red_gain ++;
                 
@@ -140,8 +136,7 @@ void run_custom() {
                 // If we're increasing blue rn, keep increasing blye
                 blue_gain ++;
                 
-            } else if(blue_gain == 255){
-                
+            } else if(blue_gain == 255){    
                 //If blue gain is at its max,
                 //Something is super wrong if we get here...
                 //So just turn auto wb back on and meh
@@ -156,10 +151,8 @@ void run_custom() {
                 e_set_led(4,1);
                 e_set_led(5,1);
                 e_set_led(6,1);
-                e_set_led(7,1);
-                
-            }
-            
+                e_set_led(7,1);   
+            }     
         } else {
             camera_calibrated = 1;
             e_set_led(1,1);
@@ -167,8 +160,7 @@ void run_custom() {
             e_set_led(5,1);
             e_set_led(7,1);
             wait(1000000);
-        } 
-        
+        }    
     }
     
     
