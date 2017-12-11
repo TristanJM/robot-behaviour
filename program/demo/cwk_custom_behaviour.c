@@ -51,6 +51,9 @@ char fbwbufferCustom[160];
 int numbufferCustom[80];
 int red_level, green_level, blue_level;
 
+int red_gain;
+int blue_gain;
+
 // sensors
 int follow_sensorzeroCustom[8];
 int follow_weightleftCustom[8] = {-10, -10, -5, 0, 0, 5, 10, 10};
@@ -79,6 +82,8 @@ void run_custom() {
     int right_distance = 0;
     int front_l_distance = 0;
     int front_r_distance = 0;
+    
+    int camera_calibrated = 0;
 
     e_init_port();
     e_init_uart1();
@@ -87,6 +92,9 @@ void run_custom() {
 	e_start_agendas_processing();
 	e_calibrate_ir();
     
+    // Turn off auto white balance
+    e_poxxxx_set_awb_ae(0, 1);  // <-- If it crashes, move this after e_poxxx_write_cam_registers, and anywhere between (not sure where it's meant to go)
+    
     // camera set up
     e_poxxxx_init_cam();
     e_poxxxx_config_cam(0, (ARRAY_HEIGHT - 4) / 2, 640, 4, 8, 4, RGB_565_MODE);
@@ -94,6 +102,67 @@ void run_custom() {
     
     // Start by following both walls.
     state = FOLLOW_BOTH_WALLS;
+    
+    
+    
+    // Calibrate the white balance on the camera...
+    // It does this by increasing the red gain from 0..255, then blue from 0..255, until the camera DOESN'T see a key colour.
+    while( camera_calibrated == 0 ){
+        
+        // Set the gain
+        e_poxxxx_set_rgb_gain(red_gain, 0, blue_gain);
+        // <<There is a chance we might have to call e_poxxx_write_cam_registers() again here? >>
+        
+        // Grab a frame
+        update_levels();
+        
+        // Check whether we're calibrated yet
+        if( get_dominant_rgb(red_level, green_level, blue_level, 1) != 0 ){
+            
+            if(red_gain == 0 && blue_gain == 0){
+                
+                // If we just started, start by increasing red_gain
+                red_gain ++;
+                
+            } else if(red_gain == 255){
+                
+                // If red is at the max, set red back to 0 and start increasing blue.
+                red_gain = 0;
+                blue_gain = 1;
+                
+            } else if(red_gain > 0){
+                
+                // If we're increasing red right now, keey increasing red
+                red_gain ++;
+                
+            } else if(blue_gain > 0){
+                
+                // If we're increasing blue rn, keep increasing blye
+                blue_gain ++;
+                
+            } else if(blue_gain == 255){
+                
+                //If blue gain is at its max,
+                //Something is super wrong if we get here...
+                //So just turn auto wb back on and meh
+                e_poxxxx_set_awb_ae(1, 1);
+                camera_calibrated = 1;
+                
+            }
+            
+        } else {
+            camera_calibrated = 1;
+            e_set_led(1,1);
+            e_set_led(3,1);
+            e_set_led(5,1);
+            e_set_led(7,1);
+            wait(1000000);
+        } 
+        
+    }
+    
+    
+    
 
     while (1) {
         e_led_clear();
@@ -282,7 +351,7 @@ void update_levels() {
         blue = ((fbwbufferCustom[2*i+1] & 0x1F) << 3);
 
         // Get the dominant colour
-		dominant = get_dominant_rgb(red, green, blue, 0);
+		dominant = get_dominant_rgb(red, green, blue, 1);
 
 		// Add 1 to whatever is the dominant colour
 		if( dominant == 1 ) red_level++;
