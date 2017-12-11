@@ -44,7 +44,7 @@
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
 
-#define COL_DIFF_AMOUNT     20      // eg. red is detected if this much more than blue and green)
+#define COL_DIFF_AMOUNT     30      // eg. red is detected if this much more than blue and green)
 
 // colour detection
 char fbwbufferCustom[160];
@@ -260,8 +260,7 @@ void update_levels() {
 	blue_level = 0;
 	
 	// Iterate over every column
-    // for (i = 0; i < 80; i++) {
-    for (i = 20; i < 60; i++) {
+     for (i = 0; i < 80; i++) {
 
         // RGB turned into an integer value for comparison
         red = (fbwbufferCustom[2 * i] & 0xF8);
