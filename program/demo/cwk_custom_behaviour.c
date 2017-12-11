@@ -37,7 +37,7 @@
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
 #define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
-#define SENSOR_DROPOFF_TIME        15      // How many cycles a sensor needs to be dropped off for before turning
+#define SENSOR_DROPOFF_TIME        30      // How many cycles a sensor needs to be dropped off for before turning
 #define POWER_THROUGH_TIME         40      // Cycles to power forward and not check sensors/camera
 
 #define BIAS_SPEED      	350		// robot bias speed
@@ -163,8 +163,6 @@ void run_custom() {
         }    
     }
     
-    
-    state = TURN_NEXT;
 
     while (1) {
         e_led_clear();
@@ -194,7 +192,7 @@ void run_custom() {
         front_l_distance = e_get_prox(7);
         front_r_distance = e_get_prox(0);
         
-        /*
+        
         // Check camera if there is something in front
         // we need this because otherwise the robot always detects colours and gets it wrong
         // if (front_l_distance > 200 || front_r_distance > 200) {
@@ -219,7 +217,7 @@ void run_custom() {
         } else {
             // NO COLOUR (DEBUG ONLY)
         }
-        */
+        
 
         // Left/Right LEDs if walls detected
         if (distances[5] > 500) e_set_led(6, 1);
