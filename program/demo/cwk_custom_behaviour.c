@@ -44,6 +44,8 @@
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
 
+#define COL_DIFF_AMOUNT     30      // eg. red is detected if this much more than blue and green)
+
 // colour detection
 char fbwbufferCustom[160];
 int numbufferCustom[80];
@@ -162,7 +164,6 @@ void run_custom() {
             //rightwheel -= sensor_difference * TURN_AGGRESSION;
             //leftwheel  += sensor_difference * TURN_AGGRESSION;
 
-
             // NEW ATTEMPT: Wallfollow right, will need to only do this if both left and right sensors are active
             follow_weightleftCustom[0] = -10;
             follow_weightleftCustom[7] = -10;
@@ -276,9 +277,9 @@ void update_levels() {
 
 // Return 1,2,3 depending on whether the screen is predominantly red, green or blue. Or, 0.
 int get_dominant_rgb(int r, int g, int b){
-	if(r > g+20 && r > b+20) return 1;    //Predominantly red
-	if(g > r+20 && g > b+20) return 2;    //Predominantly green
-	if(b > r+20 && b > g+20) return 3;    //Predominantly blue
+	if(r > g+COL_DIFF_AMOUNT && r > b+COL_DIFF_AMOUNT) return 1;    //Predominantly red
+	if(g > r+COL_DIFF_AMOUNT && g > b+COL_DIFF_AMOUNT) return 2;    //Predominantly green
+	if(b > r+COL_DIFF_AMOUNT && b > g+COL_DIFF_AMOUNT) return 3;    //Predominantly blue
 	return 0;              	        //Freak situation where they're equal
 }
 
@@ -288,31 +289,4 @@ void getSensorValues(int *sensorTable) {
     for (i = 0; i < 8; i++) {
         sensorTable[i] = e_get_calibrated_prox(i); //e_get_prox(i) - follow_sensorzeroCustom[i];
     }
-}
-
-void rotate_robot(int angle) {
-    //If the angle is 90, turn right for 330 steps
-    if(angle == 90){
-        e_set_steps_right(0);
-        while(e_get_steps_right() < 390){
-            followsetSpeedGS(1000, -1000);
-        }
-    }
-    
-    //If the angle is -90, turn left 330 steps
-    if(angle == -90){
-        e_set_steps_left(0);
-        while(e_get_steps_left() < 390){
-            followsetSpeedGS(-1000, 1000);
-        }
-    }
-    
-    //If the angle is 180, turn right for a 660 steps
-    if(angle == 180){
-        e_set_steps_right(0);
-        while(e_get_steps_right() < 780){
-            followsetSpeedGS(1000, -1000);
-        }
-    }
-    
 }
