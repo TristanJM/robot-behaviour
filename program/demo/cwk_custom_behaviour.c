@@ -172,7 +172,7 @@ void run_custom() {
     }
     
     
-    
+    state = TURN_NEXT;
 
     while (1) {
         e_led_clear();
@@ -202,11 +202,11 @@ void run_custom() {
         front_l_distance = e_get_prox(7);
         front_r_distance = e_get_prox(0);
         
+        /*
         // Check camera if there is something in front
         // we need this because otherwise the robot always detects colours and gets it wrong
-//        if (front_l_distance > 200 || front_r_distance > 200) {
-//            e_set_led(7,1);
-            // Get levels from camera
+        // if (front_l_distance > 200 || front_r_distance > 200) {
+        // Get levels from camera
         update_levels();
 
         // Get dominant colour
@@ -227,8 +227,7 @@ void run_custom() {
         } else {
             // NO COLOUR (DEBUG ONLY)
         }
-//            e_set_led(7,0);
-//        }
+        */
 
         // Left/Right LEDs if walls detected
         if (distances[5] > 500) e_set_led(6, 1);
@@ -244,9 +243,6 @@ void run_custom() {
             e_set_led(1, 1);
         }
         
-        // get rid of me
-//        leftwheel=300;
-//        rightwheel=300;
         
         if (state == FOLLOW_BOTH_WALLS || state == TURN_NEXT) {
             leftwheel = BIAS_SPEED;
