@@ -38,13 +38,13 @@
 
 #define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
 #define SENSOR_DROPOFF_TIME        10      // How many cycles a sensor needs to be dropped off for before turning
-#define POWER_THROUGH_TIME         30      // Cycles to power forward and not check sensors/camera
+#define POWER_THROUGH_TIME         40      // Cycles to power forward and not check sensors/camera
 
-#define BIAS_SPEED      	300		// robot bias speed
+#define BIAS_SPEED      	250		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
 
-#define COL_DIFF_AMOUNT     40      // eg. red is detected if this much more than blue and green)
+#define COL_DIFF_AMOUNT     20      // eg. red is detected if this much more than blue and green)
 
 // colour detection
 char fbwbufferCustom[160];
@@ -149,7 +149,6 @@ void run_custom() {
 
         if (state == STOP_MOVING) {
             e_set_led(4, 1);
-            continue;
         }
         
         if (state == TURN_NEXT) {
@@ -162,7 +161,7 @@ void run_custom() {
 
             // positive means left wall is closer than right
             // negative means right wall is closer than left
-            sensor_difference = (int) (left_distance - right_distance);
+            //sensor_difference = (int) (left_distance - right_distance);
 
             // Adjust wheel speeds to correct for difference in sensor value
             //rightwheel -= sensor_difference * TURN_AGGRESSION;
