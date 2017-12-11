@@ -118,28 +118,33 @@ void run_custom() {
         // Read non-calibrated Left/Right sensors
         right_distance = e_get_prox(2);
         left_distance = e_get_prox(5);
+        
+        // Check camera if there is something in front
+        if (distances[0] > 5 || distances[7] > 5) {
+            e_set_led(7,1);
+            // Get levels from camera
+            update_levels();
 
-        // Get levels from camera
-        update_levels();
+            // Get dominant colour
+            primary_colour = get_dominant_rgb(red_level, green_level, blue_level, 1);
 
-        // Get dominant colour
-        primary_colour = get_dominant_rgb(red_level, green_level, blue_level, 1);
-
-        // React to colour
-        if (primary_colour == 1) {
-            // RED DETECTED  
-            state = STOP_MOVING;
-        } else if (primary_colour == 2) {
-            // GREEN DETECTED
-            state = POWER_THROUGH;
-        } else if (primary_colour == 3) {
-            // BLUE DETECTED
-            e_set_led(1, 1);
-            turn_to_direction(PI);
-            state = TURN_NEXT;   // temp
-        } else {
-            // NO COLOUR (DEBUG ONLY)
-        }  
+            // React to colour
+            if (primary_colour == 1) {
+                // RED DETECTED  
+                state = STOP_MOVING;
+            } else if (primary_colour == 2) {
+                // GREEN DETECTED
+                state = POWER_THROUGH;
+            } else if (primary_colour == 3) {
+                // BLUE DETECTED
+                e_set_led(1, 1);
+                turn_to_direction(PI);
+                state = TURN_NEXT;   // temp
+            } else {
+                // NO COLOUR (DEBUG ONLY)
+            }
+            e_set_led(7,0);
+        }
 
         // Left/Right LEDs if walls detected
         if (distances[5] > 500) e_set_led(6, 1);
@@ -155,6 +160,10 @@ void run_custom() {
             e_set_led(1, 1);
         }
         
+        leftwheel = 400;
+        rightwheel = 400;
+        
+        /*
         if (state == FOLLOW_BOTH_WALLS || state == TURN_NEXT) {
             leftwheel = BIAS_SPEED;
             rightwheel = BIAS_SPEED;
@@ -235,7 +244,7 @@ void run_custom() {
                 right_sensor_drop_cycles = 0;
             }
         }
-
+        */
         followsetSpeedGS(leftwheel, rightwheel);    // sets motor speed, within max limits (from cwk_goal_seek.c)
 
         wait(15000);
