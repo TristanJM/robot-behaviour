@@ -260,7 +260,8 @@ void update_levels() {
 	blue_level = 0;
 	
 	// Iterate over every column
-    for (i = 0; i < 80; i++) {
+    // for (i = 0; i < 80; i++) {
+    for (i = 20; i < 60; i++) {
 
         // RGB turned into an integer value for comparison
         red = (fbwbufferCustom[2 * i] & 0xF8);
@@ -280,7 +281,7 @@ void update_levels() {
 
 // Return 1,2,3 depending on whether the screen is predominantly red, green or blue. Or, 0.
 int get_dominant_rgb(int r, int g, int b){
-	if(r > g+COL_DIFF_AMOUNT && r > b+COL_DIFF_AMOUNT) return 1;    //Predominantly red
+	if(r > g+COL_DIFF_AMOUNT+20 && r > b+COL_DIFF_AMOUNT+20) return 1;    //Predominantly red
 	if(g > r+COL_DIFF_AMOUNT && g > b+COL_DIFF_AMOUNT) return 2;    //Predominantly green
 	if(b > r+COL_DIFF_AMOUNT && b > g+COL_DIFF_AMOUNT) return 3;    //Predominantly blue
 	return 0;              	        //Freak situation where they're equal
