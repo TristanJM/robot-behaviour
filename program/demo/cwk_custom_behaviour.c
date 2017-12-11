@@ -281,7 +281,7 @@ void update_levels() {
 // Return 1,2,3 depending on whether the screen is predominantly red, green or blue. Or, 0.
 int get_dominant_rgb(int r, int g, int b, int bias){
     if (bias == 1) {
-    	if(r > g+COL_DIFF_AMOUNT+20 && r > b+COL_DIFF_AMOUNT+20) return 1;  //Predominantly red
+    	if(r > g+COL_DIFF_AMOUNT && r > b+COL_DIFF_AMOUNT) return 1;        //Predominantly red
         if(g > r+COL_DIFF_AMOUNT && g > b+COL_DIFF_AMOUNT) return 2;        //Predominantly green
         if(b > r+COL_DIFF_AMOUNT && b > g+COL_DIFF_AMOUNT) return 3;        //Predominantly blue
     } else {
