@@ -77,6 +77,8 @@ void run_custom() {
     // Hold IR sensor distances (non calibrated)
     int left_distance = 0;
     int right_distance = 0;
+    int front_l_distance = 0;
+    int front_r_distance = 0;
 
     e_init_port();
     e_init_uart1();
@@ -118,9 +120,12 @@ void run_custom() {
         // Read non-calibrated Left/Right sensors
         right_distance = e_get_prox(2);
         left_distance = e_get_prox(5);
+        front_l_distance = e_get_prox(7);
+        front_r_distance = e_get_prox(0);
         
         // Check camera if there is something in front
-        if (distances[0] > 25 || distances[7] > 25) {
+        // we need this because otherwise the robot always detects colours and gets it wrong
+        if (front_l_distance > 200 || front_r_distance > 200) {
             e_set_led(7,1);
             // Get levels from camera
             update_levels();
