@@ -148,6 +148,16 @@ void run_custom() {
                 e_poxxxx_set_awb_ae(1, 1);
                 camera_calibrated = 1;
                 
+                // Turn all the leds on to signal that we're turning auto whitebalance back on
+                e_set_led(0,1);
+                e_set_led(1,1);
+                e_set_led(2,1);
+                e_set_led(3,1);
+                e_set_led(4,1);
+                e_set_led(5,1);
+                e_set_led(6,1);
+                e_set_led(7,1);
+                
             }
             
         } else {
