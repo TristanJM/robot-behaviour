@@ -120,7 +120,7 @@ void run_custom() {
         left_distance = e_get_prox(5);
         
         // Check camera if there is something in front
-        if (distances[0] > 5 || distances[7] > 5) {
+        if (distances[0] > 25 || distances[7] > 25) {
             e_set_led(7,1);
             // Get levels from camera
             update_levels();
@@ -160,9 +160,9 @@ void run_custom() {
             e_set_led(1, 1);
         }
         
-        leftwheel = 400;
-        rightwheel = 400;
-        
+        // get rid of me
+        leftwheel=300;
+        rightwheel=300;
         /*
         if (state == FOLLOW_BOTH_WALLS || state == TURN_NEXT) {
             leftwheel = BIAS_SPEED;
