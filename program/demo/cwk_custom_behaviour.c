@@ -36,7 +36,7 @@
 
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
-#define SENSOR_DROPOFF_THRESHOLD   20     // How low a sensor needs to be before considering dropped off
+#define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
 #define SENSOR_DROPOFF_TIME        20     // How many cycles a sensor needs to be dropped off for before turning
 #define POWER_THROUGH_TIME         30      // Cycles to power forward and not check sensors/camera
 
@@ -109,8 +109,8 @@ void run_custom() {
         } else {
             followGetSensorValuesGS(distances); // read sensor values
             
-            right_distance = e_get_prox(5);
-            left_distance = e_get_prox(2);
+            right_distance = e_get_prox(2);
+            left_distance = e_get_prox(5);
 
             /*
             // Get levels from camera
@@ -140,10 +140,10 @@ void run_custom() {
             rightwheel = 0;    
 
             /* Turn on LEDs if proximity detected */
-            if (distances[5] > 350) e_set_led(6, 1);
+            if (distances[5] > 400) e_set_led(6, 1);
             else e_set_led(6, 0);
 
-            if (distances[2] > 350) e_set_led(2, 1);
+            if (distances[2] > 400) e_set_led(2, 1);
             else e_set_led(2, 0);
 
             if (state == FOLLOW_BOTH_WALLS || state == TURN_NEXT) {
