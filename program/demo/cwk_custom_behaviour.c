@@ -44,7 +44,7 @@
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
 
-#define COL_DIFF_AMOUNT     30      // eg. red is detected if this much more than blue and green)
+#define COL_DIFF_AMOUNT     50      // eg. red is detected if this much more than blue and green)
 
 // colour detection
 char fbwbufferCustom[160];
