@@ -28,7 +28,7 @@
 // fuction used to calculate the linear speed to set on 
 // each wheel depending on the information from the
 // front sensors - IR 0 & 7 
-int lin_speed_calc(int dist, int gain)
+int basic_speed_calc(int dist, int gain)
 {
 	int range = 350;
 	float x = 0.1;
@@ -60,46 +60,41 @@ int lin_speed_calc(int dist, int gain)
 // fuction used to calculate the angular speed to set on 
 // each wheel depending on the information from the
 // 4 front sensors IR 0,1,6 & 7 
-int angle_speed_calc(int pos, int gain)
+int corner_speed_calc(int pos, int gain)
 {
 	int range = 0;
-	int angle_speed = 0;
+	int corner_speed = 0;
 	int diffDist = range - pos;
 
-	angle_speed = diffDist*gain;
+	corner_speed = diffDist*gain;
 
-	if(angle_speed >= 1000)
-		angle_speed = 999;
-	else if(angle_speed <= -1000)
-		angle_speed = -999;
+	if(corner_speed >= 1000)
+		corner_speed = 999;
+	else if(corner_speed <= -1000)
+		corner_speed = -999;
 
-	return angle_speed;
+	return corner_speed;
 }
 
 // calculating the speed to follow the lover
 void follow_lover(void)
-{
-	// skipping a heartbeat when lover is spotted/near 
+{    
+	// determining if something is near 
 	if(e_get_calibrated_prox(0) || e_get_calibrated_prox(7) < 1000)
-		e_activate_agenda(e_start_led_blinking, 500); // SARTHAK-NOTE: ERROR - e_activate_agenda((func) VOID!) you can only put a function with no arguments in here.
-	else 
+		e_start_led_blinking(900);	// if nothing near, all LEDs start to blink mimicking a heartbeat effect 
+	else
 	{
-		// SARTHAK-NOTE: e_stop_led_blinking(void) os fine as it has no arguments.
-        e_activate_agenda(e_stop_led_blinking, 250); 
-        
-        // SARTHAK-NOTE: ERROR - e_activate_agenda((func) VOID!) you can only put a function with no arguments in here.
-		e_activate_agenda(e_set_blinking_cycle, 25000);	// restarting the heartbeat effect after the skip
-        
-        // SARTHAK-NOTE: My suggestion would be to create wrapper functions with no arguments and calling those from above. 
+		e_stop_led_blinking();	// heart skips a beat if an obstacle (lover) is detected/near.
+		e_set_blinking_cycle(30000);	// restarts motion 
 	}
-    
-	int basic_speed = lin_speed_calc((e_get_calibrated_prox(7)+e_get_calibrated_prox(0))/2, 6);
-	int angle_speed = angle_speed_calc((e_get_calibrated_prox(0)+e_get_calibrated_prox(1)) -
+
+	int basic_speed = basic_speed_calc((e_get_calibrated_prox(7)+e_get_calibrated_prox(0))/2, 6);
+	int corner_speed = corner_speed_calc((e_get_calibrated_prox(0)+e_get_calibrated_prox(1)) -
 										(e_get_calibrated_prox(7)+e_get_calibrated_prox(6)), 4);
 
 	// setting the wheel speed
-	e_set_speed_left (basic_speed - angle_speed);
-	e_set_speed_right(basic_speed + angle_speed);
+	e_set_speed_left(basic_speed - corner_speed);
+	e_set_speed_right(basic_speed + corner_speed);
 }
 
 
@@ -111,8 +106,8 @@ void run_love(void)
 	e_init_ad_scan(ALL_ADC);
 	
 	e_calibrate_ir();
-
-	e_activate_agenda(follow_lover, 650);
+	
+	e_activate_agenda(follow_lover, 650); 
 	e_start_agendas_processing();
 	while(1);
 }
