@@ -38,7 +38,7 @@
 
 #define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
 #define SENSOR_DROPOFF_TIME        10      // How many cycles a sensor needs to be dropped off for before turning
-#define POWER_THROUGH_TIME         20      // Cycles to power forward and not check sensors/camera
+#define POWER_THROUGH_TIME         30      // Cycles to power forward and not check sensors/camera
 
 #define BIAS_SPEED      	300		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
@@ -94,12 +94,12 @@ void run_custom() {
     state = FOLLOW_BOTH_WALLS;
 
     while (1) {
-
-        // Clear LEDs
         e_led_clear();
+        leftwheel = 0;
+        rightwheel = 0;  
 
         if (state == POWER_THROUGH) {
-            e_set_front_led(1);
+            e_set_body_led(1);
             if (power_through_cycles <= POWER_THROUGH_TIME) {
                 power_through_cycles++;
                 followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
@@ -108,7 +108,7 @@ void run_custom() {
                 power_through_cycles = 0;
                 state = FOLLOW_BOTH_WALLS;
             }
-            e_set_front_led(0);
+            e_set_body_led(0);
             continue;
         }
         
@@ -127,30 +127,35 @@ void run_custom() {
 
         // React to colour
         if (primary_colour == 1) {
-            // RED DETECTED
-            e_set_led(4, 1);    
+            // RED DETECTED  
             state = STOP_MOVING;
         } else if (primary_colour == 2) {
             // GREEN DETECTED
             state = POWER_THROUGH;
         } else if (primary_colour == 3) {
             // BLUE DETECTED
+            e_set_led(1, 1);
             turn_to_direction(PI);
-            state = STOP_MOVING;   // temp
+            state = TURN_NEXT;   // temp
         } else {
             // NO COLOUR (DEBUG ONLY)
-        }
+        }  
 
-        leftwheel = 0;
-        rightwheel = 0;    
-
-        /* Turn on LEDs if proximity detected */
-        if (distances[5] > 300) e_set_led(6, 1);
+        // Left/Right LEDs if walls detected
+        if (distances[5] > 500) e_set_led(6, 1);
         else e_set_led(6, 0);
-
-        if (distances[2] > 300) e_set_led(2, 1);
+        if (distances[2] > 500) e_set_led(2, 1);
         else e_set_led(2, 0);
 
+        if (state == STOP_MOVING) {
+            e_set_led(4, 1);
+            continue;
+        }
+        
+        if (state == TURN_NEXT) {
+            e_set_led(1, 1);
+        }
+        
         if (state == FOLLOW_BOTH_WALLS || state == TURN_NEXT) {
             leftwheel = BIAS_SPEED;
             rightwheel = BIAS_SPEED;
