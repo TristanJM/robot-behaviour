@@ -31,10 +31,11 @@
 #define FOLLOW_BOTH_WALLS     5     // Move forward keeping distance from both walls. If one prox sensor drops off, transition into FOLLOW_[remaining]_WALL
 #define TURN_AROUND           6     // Rotate until the sensors equalise and then transition to TURN_NEXT
 
-#define TURN_AGGRESSION       1     // Changes how quickly the robot turns to get back on track when wall following
+#define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
-#define SENSOR_DROPOFF_THRESHOLD   0     // How low a sensor needs to be before considering dropped off
-#define SENSOR_DROPOFF_TIME        10      // How many cycles a sensor needs to be dropped off for before turning
+#define SENSOR_DROPOFF_THRESHOLD   20     // How low a sensor needs to be before considering dropped off
+#define SENSOR_DROPOFF_TIME        10     // How many cycles a sensor needs to be dropped off for before turning
+#define POWER_THROUGH_TIME         5      // Cycles to power forward and not check sensors/camera
 
 #define BIAS_SPEED      	350		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
@@ -66,6 +67,7 @@ void run_custom() {
     int sensor_difference;
     int left_sensor_drop_cycles = 0;
     int right_sensor_drop_cycles = 0;
+    int power_through_cycles = 0;
 
     e_init_port();
     e_init_uart1();
@@ -83,139 +85,147 @@ void run_custom() {
     state = FOLLOW_BOTH_WALLS;
 
     
-    while (1) {
-        followGetSensorValuesGS(distances); // read sensor values
-        
-        // Clear LEDs
-        e_led_clear();
-        
-        /*
-        // Get levels from camera
-        update_levels();
-        
-        // Get dominant colour
-        primary_colour = get_dominant_rgb(red_level, green_level, blue_level);
-        
-        
-        // React to colour
-        if (primary_colour == 1) {
-            // RED DETECTED
-            e_set_led(4, 1);    
-            state = STOP_MOVING;
-        } else if (primary_colour == 2) {
-            // GREEN DETECTED
-            state = POWER_THROUGH;
-        } else if (primary_colour == 3) {
-            // BLUE DETECTED
-            state = TURN_AROUND;
+    while (1) {     
+        if (state == POWER_THROUGH) {
+            e_set_front_led(1);
+            if (power_through_cycles <= POWER_THROUGH_TIME) {
+                power_through_cycles++;
+                followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
+                wait(50000);
+            } else {
+                power_through_cycles = 0;
+                state = FOLLOW_BOTH_WALLS;
+            }
+            e_set_front_led(0);
         } else {
-            // NO COLOUR (DEBUG ONLY)
-        }
-        */
-        
-        leftwheel = 0;
-        rightwheel = 0;    
-        
-        /* Turn on LEDs if proximity detected */
-		for (i=0; i<8; i++) {
-			if(distances[i] > 80) e_set_led(i, 1);
-			else e_set_led(i, 0);
-		}
+            // Clear LEDs
+            e_led_clear();
+            
+            followGetSensorValuesGS(distances); // read sensor values
 
-        
-        if( state == FOLLOW_BOTH_WALLS || state == TURN_NEXT ){
-            // If we're supposed to be following both walls, make sure IR6 and IR1 are similar
-            leftwheel = BIAS_SPEED;
-            rightwheel = BIAS_SPEED;
-            
-            // positive means left wall is closer than right
-            // negative means right wall is closer than left
-            sensor_difference = distances[5] - distances[2];
-            
-            // Adjust wheel speeds to correct for difference in sensor value
-            rightwheel -= sensor_difference * TURN_AGGRESSION;
-            leftwheel  += sensor_difference * TURN_AGGRESSION;
-            
             /*
-            // NEW ATTEMPT: Wallfollow right, will need to only do this if both left and right sensors are active
-            follow_weightleftCustom[0] = -10;
-            follow_weightleftCustom[7] = -10;
-            follow_weightrightCustom[0] = 10;
-            follow_weightrightCustom[7] = 10;
-            if (distances[2] > 300) {   // right side sensor?
-                distances[1] -= 200;
-                distances[2] -= 600;
-                distances[3] -= 100;   
-            }
-            
-            for (i = 0; i < 8; i++) {
-                leftwheel += follow_weightleftCustom[i]*(distances[i] >> 4);
-                rightwheel += follow_weightrightCustom[i]*(distances[i] >> 4);
-            }*/
-            
-            
-            //Check if the left side sensor is dropped off (indicating a corner))
-            if(distances[5] <= SENSOR_DROPOFF_THRESHOLD){
-                e_set_front_led(1);
-                
-                // Increase the count for the number of cycles this has been the case
-                left_sensor_drop_cycles++;
-                
-                //Check if this has been the case for a significant amount of time
-                if(left_sensor_drop_cycles >= SENSOR_DROPOFF_TIME){
-                    
-                    //If we're NOT supposed to be turning
-                    if(state == FOLLOW_BOTH_WALLS){
-                        power_forward(1000000); //Move forward for 1000000us (1s)
-                        left_sensor_drop_cycles = 0; //Reset the sensor drop count
-                    }
-                    
-                    //If we ARE supposed to be turning
-                    if(state == TURN_NEXT){
-                        rotate_robot(-90); //Turn left
-                        power_forward(1000000); //Move forward for 1000000us (1s)
-                        left_sensor_drop_cycles = 0; //Reset the sensor drop count
-                        state = FOLLOW_BOTH_WALLS; //Now that we've turned, follow both walls again
-                    }   
-                }
-            } else {
-                // Reset drop count to 0 when the sensor comes back
-                left_sensor_drop_cycles = 0;
-            }              
-            
-            // Check if right side sensor is dropped off (indicating a corner)
-            if(distances[2] <= SENSOR_DROPOFF_THRESHOLD){
-                e_set_front_led(1);
-                
-                // Increase the count for the number of cycles this has been the case
-                right_sensor_drop_cycles++;
-                
-                //Check if this has been the case for a significant amount of time
-                if(right_sensor_drop_cycles >= SENSOR_DROPOFF_TIME){
-                    
-                    //If we're NOT supposed to be turning
-                    if(state == FOLLOW_BOTH_WALLS){
-                        power_forward(1000000); //Move forward for 1000000us (1s)
-                        right_sensor_drop_cycles = 0; //Reset the sensor drop count
-                    }
-                    
-                    //If we ARE supposed to be turning
-                    if(state == TURN_NEXT){
-                        rotate_robot(90); //Turn right
-                        power_forward(1000000); //Move forward for 1000000us (1s)
-                        right_sensor_drop_cycles = 0; //Reset the sensor drop count
-                        state = FOLLOW_BOTH_WALLS; //Now that we've turned, follow both walls again
-                    }        
-                }
-            } else {
-                // Reset drop count to 0 when the sensor comes back
-                right_sensor_drop_cycles = 0;
-            }
-        }
+            // Get levels from camera
+            update_levels();
 
-        followsetSpeedGS(leftwheel, rightwheel);    // sets motor speed, within max limits (from cwk_goal_seek.c)
-        
-        wait(15000);
+            // Get dominant colour
+            primary_colour = get_dominant_rgb(red_level, green_level, blue_level);
+
+
+            // React to colour
+            if (primary_colour == 1) {
+                // RED DETECTED
+                e_set_led(4, 1);    
+                state = STOP_MOVING;
+            } else if (primary_colour == 2) {
+                // GREEN DETECTED
+                state = POWER_THROUGH;
+            } else if (primary_colour == 3) {
+                // BLUE DETECTED
+                state = TURN_AROUND;
+            } else {
+                // NO COLOUR (DEBUG ONLY)
+            }
+            */
+
+            leftwheel = 0;
+            rightwheel = 0;    
+
+            /* Turn on LEDs if proximity detected */
+            if (distances[5] > 50) e_set_led(6, 1);
+            else e_set_led(6, 0);
+
+            if (distances[2] > 50) e_set_led(2, 1);
+            else e_set_led(2, 0);
+
+
+            if( state == FOLLOW_BOTH_WALLS || state == TURN_NEXT ){
+                // If we're supposed to be following both walls, make sure IR6 and IR1 are similar
+                leftwheel = BIAS_SPEED;
+                rightwheel = BIAS_SPEED;
+
+                // positive means left wall is closer than right
+                // negative means right wall is closer than left
+                sensor_difference = (int) (distances[5] - distances[2]);
+
+                // Adjust wheel speeds to correct for difference in sensor value
+                rightwheel -= sensor_difference * TURN_AGGRESSION;
+                leftwheel  += sensor_difference * TURN_AGGRESSION;
+
+                /*
+                // NEW ATTEMPT: Wallfollow right, will need to only do this if both left and right sensors are active
+                follow_weightleftCustom[0] = -10;
+                follow_weightleftCustom[7] = -10;
+                follow_weightrightCustom[0] = 10;
+                follow_weightrightCustom[7] = 10;
+                if (distances[2] > 300) {   // right side sensor?
+                    distances[1] -= 200;
+                    distances[2] -= 600;
+                    distances[3] -= 100;   
+                }
+
+                for (i = 0; i < 8; i++) {
+                    leftwheel += follow_weightleftCustom[i]*(distances[i] >> 4);
+                    rightwheel += follow_weightrightCustom[i]*(distances[i] >> 4);
+                }*/
+
+
+                //Check if the LEFT side sensor is dropped off (indicating a corner))
+                if (distances[5] <= SENSOR_DROPOFF_THRESHOLD) {       
+                    left_sensor_drop_cycles++;
+
+                    //Check if this has been the case for a significant amount of time
+                    if (left_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
+
+                        //If we're NOT supposed to be turning
+                        if (state == FOLLOW_BOTH_WALLS) {
+                            state = POWER_THROUGH; // Move forward
+                            left_sensor_drop_cycles = 0;
+                        }
+
+                        //If we ARE supposed to be turning
+                        if (state == TURN_NEXT) {
+                            rotate_robot(-90); // Turn left
+                            state = POWER_THROUGH; // Move forward
+                            left_sensor_drop_cycles = 0;
+                            state = FOLLOW_BOTH_WALLS; // Now that we've turned, follow both walls again
+                        }
+                    }
+                } else {
+                    // Reset drop count to 0 when the sensor comes back
+                    left_sensor_drop_cycles = 0;
+                }              
+
+                // Check if RIGHT side sensor is dropped off (indicating a corner)
+                if (distances[2] <= SENSOR_DROPOFF_THRESHOLD) {
+                    right_sensor_drop_cycles++;
+
+                    //Check if this has been the case for a significant amount of time
+                    if (right_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
+
+                        //If we're NOT supposed to be turning
+                        if (state == FOLLOW_BOTH_WALLS) {
+                            state = POWER_THROUGH; // Move forward
+                            right_sensor_drop_cycles = 0;
+                        }
+
+                        //If we ARE supposed to be turning
+                        if (state == TURN_NEXT) {
+                            rotate_robot(90); //Turn right
+                            state = POWER_THROUGH; // Move forward
+                            right_sensor_drop_cycles = 0;
+                            state = FOLLOW_BOTH_WALLS; // Now that we've turned, follow both walls again
+                        }
+                    }
+                } else {
+                    // Reset drop count to 0 when the sensor comes back
+                    right_sensor_drop_cycles = 0;
+                }
+            }
+
+            followsetSpeedGS(leftwheel, rightwheel);    // sets motor speed, within max limits (from cwk_goal_seek.c)
+
+            wait(15000);
+        }
     }
 }
 
@@ -297,11 +307,4 @@ void rotate_robot(int angle) {
         }
     }
     
-}
-
-void power_forward(int time){
-    //Set both wheels to full speed
-    followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
-    //Hang our program for time uS
-    wait(time);
 }
