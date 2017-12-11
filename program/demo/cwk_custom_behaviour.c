@@ -123,7 +123,7 @@ void run_custom() {
         update_levels();
 
         // Get dominant colour
-        primary_colour = get_dominant_rgb(red_level, green_level, blue_level);
+        primary_colour = get_dominant_rgb(red_level, green_level, blue_level, 1);
 
         // React to colour
         if (primary_colour == 1) {
@@ -269,21 +269,27 @@ void update_levels() {
         blue = ((fbwbufferCustom[2*i+1] & 0x1F) << 3);
 
         // Get the dominant colour
-		dominant = get_dominant_rgb(red, green, blue);
+		dominant = get_dominant_rgb(red, green, blue, 0);
 
 		// Add 1 to whatever is the dominant colour
 		if( dominant == 1 ) red_level++;
 		if( dominant == 2 ) green_level++;
 		if( dominant == 3 ) blue_level++;
-
     }
 }
 
 // Return 1,2,3 depending on whether the screen is predominantly red, green or blue. Or, 0.
-int get_dominant_rgb(int r, int g, int b){
-	if(r > g+COL_DIFF_AMOUNT+20 && r > b+COL_DIFF_AMOUNT+20) return 1;    //Predominantly red
-	if(g > r+COL_DIFF_AMOUNT && g > b+COL_DIFF_AMOUNT) return 2;    //Predominantly green
-	if(b > r+COL_DIFF_AMOUNT && b > g+COL_DIFF_AMOUNT) return 3;    //Predominantly blue
+int get_dominant_rgb(int r, int g, int b, int bias){
+    if (bias == 1) {
+    	if(r > g+COL_DIFF_AMOUNT+20 && r > b+COL_DIFF_AMOUNT+20) return 1;  //Predominantly red
+        if(g > r+COL_DIFF_AMOUNT && g > b+COL_DIFF_AMOUNT) return 2;        //Predominantly green
+        if(b > r+COL_DIFF_AMOUNT && b > g+COL_DIFF_AMOUNT) return 3;        //Predominantly blue
+    } else {
+        if(r > g && r > b) return 1;        //Predominantly red
+        if(g > r && g > b) return 2;        //Predominantly green
+        if(b > r && b > g) return 3;        //Predominantly blue 
+    }
+
 	return 0;              	        //Freak situation where they're equal
 }
 
