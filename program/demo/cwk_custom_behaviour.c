@@ -18,6 +18,9 @@
 #include "runwallfollow.h"
 #include "runfollowball.h"
 #include "cwk_goal_seek.h"
+#include "runlocatesound.h"
+
+#define PI 3.1415
 
 #define LEFT_FOLLOW			0		// behaviors IDs	
 #define RIGHT_FOLLOW		1 
@@ -33,9 +36,9 @@
 
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
-#define SENSOR_DROPOFF_THRESHOLD   20     // How low a sensor needs to be before considering dropped off
-#define SENSOR_DROPOFF_TIME        10     // How many cycles a sensor needs to be dropped off for before turning
-#define POWER_THROUGH_TIME         5      // Cycles to power forward and not check sensors/camera
+#define SENSOR_DROPOFF_THRESHOLD   0     // How low a sensor needs to be before considering dropped off
+#define SENSOR_DROPOFF_TIME        20     // How many cycles a sensor needs to be dropped off for before turning
+#define POWER_THROUGH_TIME         30      // Cycles to power forward and not check sensors/camera
 
 #define BIAS_SPEED      	350		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
@@ -84,8 +87,10 @@ void run_custom() {
     // Start by following both walls.
     state = FOLLOW_BOTH_WALLS;
 
-    
-    while (1) {     
+    while (1) {   
+        // Clear LEDs
+        e_led_clear();
+
         if (state == POWER_THROUGH) {
             e_set_front_led(1);
             if (power_through_cycles <= POWER_THROUGH_TIME) {
@@ -98,10 +103,10 @@ void run_custom() {
             }
             e_set_front_led(0);
         } else {
-            // Clear LEDs
-            e_led_clear();
-            
             followGetSensorValuesGS(distances); // read sensor values
+            
+            //distances[5] = e_get_prox(5);
+            //distances[2] = e_get_prox(2);
 
             /*
             // Get levels from camera
@@ -121,7 +126,7 @@ void run_custom() {
                 state = POWER_THROUGH;
             } else if (primary_colour == 3) {
                 // BLUE DETECTED
-                state = TURN_AROUND;
+                turn_to_direction(PI);
             } else {
                 // NO COLOUR (DEBUG ONLY)
             }
@@ -131,15 +136,13 @@ void run_custom() {
             rightwheel = 0;    
 
             /* Turn on LEDs if proximity detected */
-            if (distances[5] > 50) e_set_led(6, 1);
+            if (distances[5] > 350) e_set_led(6, 1);
             else e_set_led(6, 0);
 
-            if (distances[2] > 50) e_set_led(2, 1);
+            if (distances[2] > 350) e_set_led(2, 1);
             else e_set_led(2, 0);
 
-
-            if( state == FOLLOW_BOTH_WALLS || state == TURN_NEXT ){
-                // If we're supposed to be following both walls, make sure IR6 and IR1 are similar
+            if (state == FOLLOW_BOTH_WALLS || state == TURN_NEXT) {
                 leftwheel = BIAS_SPEED;
                 rightwheel = BIAS_SPEED;
 
@@ -148,10 +151,10 @@ void run_custom() {
                 sensor_difference = (int) (distances[5] - distances[2]);
 
                 // Adjust wheel speeds to correct for difference in sensor value
-                rightwheel -= sensor_difference * TURN_AGGRESSION;
-                leftwheel  += sensor_difference * TURN_AGGRESSION;
+                //rightwheel -= sensor_difference * TURN_AGGRESSION;
+                //leftwheel  += sensor_difference * TURN_AGGRESSION;
 
-                /*
+                
                 // NEW ATTEMPT: Wallfollow right, will need to only do this if both left and right sensors are active
                 follow_weightleftCustom[0] = -10;
                 follow_weightleftCustom[7] = -10;
@@ -166,11 +169,10 @@ void run_custom() {
                 for (i = 0; i < 8; i++) {
                     leftwheel += follow_weightleftCustom[i]*(distances[i] >> 4);
                     rightwheel += follow_weightrightCustom[i]*(distances[i] >> 4);
-                }*/
-
+                }
 
                 //Check if the LEFT side sensor is dropped off (indicating a corner))
-                if (distances[5] <= SENSOR_DROPOFF_THRESHOLD) {       
+                if (distances[5] <= SENSOR_DROPOFF_THRESHOLD) {
                     left_sensor_drop_cycles++;
 
                     //Check if this has been the case for a significant amount of time
@@ -184,7 +186,7 @@ void run_custom() {
 
                         //If we ARE supposed to be turning
                         if (state == TURN_NEXT) {
-                            rotate_robot(-90); // Turn left
+                            turn_to_direction(-PI/2); // Turn left
                             state = POWER_THROUGH; // Move forward
                             left_sensor_drop_cycles = 0;
                             state = FOLLOW_BOTH_WALLS; // Now that we've turned, follow both walls again
@@ -210,7 +212,7 @@ void run_custom() {
 
                         //If we ARE supposed to be turning
                         if (state == TURN_NEXT) {
-                            rotate_robot(90); //Turn right
+                            turn_to_direction(PI/2); // Turn right 90
                             state = POWER_THROUGH; // Move forward
                             right_sensor_drop_cycles = 0;
                             state = FOLLOW_BOTH_WALLS; // Now that we've turned, follow both walls again
@@ -282,28 +284,27 @@ void getSensorValues(int *sensorTable) {
 }
 
 void rotate_robot(int angle) {
-    
     //If the angle is 90, turn right for 330 steps
     if(angle == 90){
         e_set_steps_right(0);
-        while(e_get_steps_right() < 330){
-            followsetSpeedGS(100, -100);
+        while(e_get_steps_right() < 390){
+            followsetSpeedGS(1000, -1000);
         }
     }
     
     //If the angle is -90, turn left 330 steps
     if(angle == -90){
         e_set_steps_left(0);
-        while(e_get_steps_left() < 330){
-            followsetSpeedGS(-100, 100);
+        while(e_get_steps_left() < 390){
+            followsetSpeedGS(-1000, 1000);
         }
     }
     
     //If the angle is 180, turn right for a 660 steps
     if(angle == 180){
         e_set_steps_right(0);
-        while(e_get_steps_right() < 660){
-            followsetSpeedGS(100, -100);
+        while(e_get_steps_right() < 780){
+            followsetSpeedGS(1000, -1000);
         }
     }
     

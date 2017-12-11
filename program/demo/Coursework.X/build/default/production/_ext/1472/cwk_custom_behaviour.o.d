@@ -14,4 +14,5 @@ build/default/production/_ext/1472/cwk_custom_behaviour.o:  \
 ../utility.h  \
  ../runwallfollow.h  \
 ../runfollowball.h  \
-../cwk_goal_seek.h 
+../cwk_goal_seek.h  \
+ ../runlocatesound.h 
