@@ -295,8 +295,7 @@ void run_custom() {
                     if (state == TURN_NEXT) {
                         sprintf(debug, "TURNING LEFT (L Avg:%i).\r\n", left_sensor_avg);
                         e_send_uart1_char(debug, strlen(debug));
-
-                        turn_to_direction(-PI/2); // Turn left
+                        turn_to_direction(3*(PI/2)); // Turn left
                         wait(50000);
                         state = POWER_THROUGH; // Move forward
                     }
