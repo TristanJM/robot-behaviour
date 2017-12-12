@@ -228,7 +228,7 @@ void run_custom() {
         }
         
         
-        sprintf(debug, "left side: %i, right side: %i\r\n", distances[5], distances[2]);
+        sprintf(debug, "left side: %i, right side: %i. ", distances[5], distances[2]);
         e_send_uart1_char(debug, strlen(debug));
 
         // Left/Right LEDs if walls detected (5 == left)
@@ -276,6 +276,10 @@ void run_custom() {
 
             //Check if the LEFT side sensor is dropped off (indicating a corner))
             left_sensor_avg = ( 2*distances[5] + distances[6] ) / 3;
+            right_sensor_avg = ( 2*distances[2] + distances[1] ) / 3;
+            sprintf(debug, "Averages L: %i, R: %i.\r\n", left_sensor_avg, right_sensor_avg);
+            e_send_uart1_char(debug, strlen(debug));
+            
             if (left_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
                 left_sensor_drop_cycles++;
                 e_set_led(6,1);
@@ -307,7 +311,6 @@ void run_custom() {
             }              
 
             // Check if RIGHT side sensor is dropped off (indicating a corner)
-            right_sensor_avg = ( 2*distances[2] + distances[1] ) / 3;
             if (right_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
                 right_sensor_drop_cycles++;
                 e_set_led(1,1);
