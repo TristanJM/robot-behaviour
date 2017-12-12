@@ -2,3 +2,4 @@
 *.o
 *.o.d
 /program/demo/Coursework.X/dist/default/
+/program/demo/Coursework.X/build/default
