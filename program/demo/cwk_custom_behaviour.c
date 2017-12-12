@@ -54,6 +54,8 @@ int red_level, green_level, blue_level;
 int red_gain;
 int blue_gain;
 
+int debug[150];
+
 // sensors
 int follow_sensorzeroCustom[8];
 int follow_weightleftCustom[8] = {-10, -10, -5, 0, 0, 5, 10, 10};
@@ -219,6 +221,9 @@ void run_custom() {
             // NO COLOUR (DEBUG ONLY)
         }
         
+        
+        sprintf(debug, "left side: %i, right side: %i", distances[5], distances[2]);
+        e_send_uart1_char(debug, strlen(debug));
 
         // Left/Right LEDs if walls detected (5 == left)
         if (distances[5] > 50) e_set_led(6, 1);
@@ -280,6 +285,9 @@ void run_custom() {
 
                     //If we ARE supposed to be turning
                     if (state == TURN_NEXT) {
+                        sprintf(debug, "Turning Left");
+                        e_send_uart1_char(debug, strlen(debug));
+                        
                         turn_to_direction(-PI/2); // Turn left
                         wait(50000);
                         state = POWER_THROUGH; // Move forward
@@ -309,6 +317,8 @@ void run_custom() {
 
                     //If we ARE supposed to be turning
                     if (state == TURN_NEXT) {
+                        sprintf(debug, "Turning Right");
+                        e_send_uart1_char(debug, strlen(debug));
                         turn_to_direction(PI/2); // Turn right 90
                         wait(50000);
                         state = POWER_THROUGH; // Move forward
