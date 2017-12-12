@@ -286,7 +286,7 @@ void run_custom() {
                 e_send_uart1_char(debug, strlen(debug));
 
                 // Drop-off continual detection?
-                if (left_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
+                if (left_sensor_drop_cycles == SENSOR_DROPOFF_TIME) {
 
                     // Don't turn
                     if (state == FOLLOW_BOTH_WALLS) state = POWER_THROUGH;
@@ -310,7 +310,7 @@ void run_custom() {
                 e_send_uart1_char(debug, strlen(debug));
 
                 // Drop-off continual detection?
-                if (right_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
+                if (right_sensor_drop_cycles == SENSOR_DROPOFF_TIME) {
 
                     // Don't turn
                     if (state == FOLLOW_BOTH_WALLS) state = POWER_THROUGH;
