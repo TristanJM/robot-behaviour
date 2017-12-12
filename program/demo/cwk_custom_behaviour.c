@@ -273,8 +273,8 @@ void run_custom() {
             }
 
             // Check if the LEFT/RIGHT side sensors are dropped off (indicating a corner)
-            left_sensor_avg = ( 2*distances[5] + distances[6] ) / 3;
-            right_sensor_avg = ( 2*distances[2] + distances[1] ) / 3;
+            left_sensor_avg = ( 2*e_get_calibrated_prox(5) + e_get_calibrated_prox(6) ) / 3;
+            right_sensor_avg = ( 2*e_get_calibrated_prox(2) + e_get_calibrated_prox(1) ) / 3;
             sprintf(debug, "LAvg:%i, RAvg:%i.\r\n", left_sensor_avg, right_sensor_avg);
             e_send_uart1_char(debug, strlen(debug));
             
@@ -295,8 +295,7 @@ void run_custom() {
                     if (state == TURN_NEXT) {
                         sprintf(debug, "TURNING LEFT (L Avg:%i).\r\n", left_sensor_avg);
                         e_send_uart1_char(debug, strlen(debug));
-
-                        turn_to_direction(-PI/2); // Turn left
+                        turn_to_direction(3*(PI/2)); // Turn left
                         wait(50000);
                         state = POWER_THROUGH; // Move forward
                     }
