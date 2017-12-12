@@ -276,9 +276,9 @@ void run_custom() {
                     //If we ARE supposed to be turning
                     if (state == TURN_NEXT) {
                         turn_to_direction(-PI/2); // Turn left
+                        wait(50000);
                         state = POWER_THROUGH; // Move forward
                         left_sensor_drop_cycles = 0;
-                        state = FOLLOW_BOTH_WALLS; // Now that we've turned, follow both walls again
                     }
                 }
             } else {
@@ -302,9 +302,9 @@ void run_custom() {
                     //If we ARE supposed to be turning
                     if (state == TURN_NEXT) {
                         turn_to_direction(PI/2); // Turn right 90
+                        wait(50000);
                         state = POWER_THROUGH; // Move forward
                         right_sensor_drop_cycles = 0;
-                        state = FOLLOW_BOTH_WALLS; // Now that we've turned, follow both walls again
                     }
                 }
             } else {
