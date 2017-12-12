@@ -210,6 +210,7 @@ void run_custom() {
             // BLUE DETECTED
             e_set_led(1, 1);
             turn_to_direction(PI);
+            wait(50000);
             state = TURN_NEXT;   // temp
         } else {
             // NO COLOUR (DEBUG ONLY)
