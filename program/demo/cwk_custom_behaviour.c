@@ -36,7 +36,7 @@
 
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
-#define SENSOR_DROPOFF_THRESHOLD   50     // How low a sensor needs to be before considering dropped off
+#define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
 #define SENSOR_DROPOFF_TIME        10      // How many cycles a sensor needs to be dropped off for before turning
 #define POWER_THROUGH_TIME         40      // Cycles to power forward and not check sensors/camera
 
@@ -82,6 +82,9 @@ void run_custom() {
     int right_distance = 0;
     int front_l_distance = 0;
     int front_r_distance = 0;
+    
+    int right_sensor_avg;
+    int left_sensor_avg;
     
     int camera_calibrated = 0;
 
@@ -261,8 +264,8 @@ void run_custom() {
             }
 
             //Check if the LEFT side sensor is dropped off (indicating a corner))
-            //if (distances[5] <= SENSOR_DROPOFF_THRESHOLD && distances[4] <= SENSOR_DROPOFF_THRESHOLD) {
-            if (distances[5] <= (distances[3] / 3)) {
+            left_sensor_avg = ( 2*distances[5] + distances[6] ) / 3;
+            if (left_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
                 left_sensor_drop_cycles++;
                 e_set_led(6,1);
 
@@ -290,8 +293,8 @@ void run_custom() {
             }              
 
             // Check if RIGHT side sensor is dropped off (indicating a corner)
-            //if (distances[2] <= SENSOR_DROPOFF_THRESHOLD) {
-            if (distances[2] <= (distances[5] / 3)) {
+            right_sensor_avg = ( 2*distances[2] + distances[1] ) / 3;
+            if (right_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
                 right_sensor_drop_cycles++;
                 e_set_led(1,1);
 
