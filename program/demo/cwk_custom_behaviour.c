@@ -36,11 +36,11 @@
 
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
-#define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
-#define SENSOR_DROPOFF_TIME        30      // How many cycles a sensor needs to be dropped off for before turning
+#define SENSOR_DROPOFF_THRESHOLD   50     // How low a sensor needs to be before considering dropped off
+#define SENSOR_DROPOFF_TIME        10      // How many cycles a sensor needs to be dropped off for before turning
 #define POWER_THROUGH_TIME         40      // Cycles to power forward and not check sensors/camera
 
-#define BIAS_SPEED      	350		// robot bias speed
+#define BIAS_SPEED      	400		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
 
@@ -101,9 +101,7 @@ void run_custom() {
     e_poxxxx_write_cam_registers();
     
     // Start by following both walls.
-    state = FOLLOW_BOTH_WALLS;
-    
-    
+    state = FOLLOW_BOTH_WALLS;    
     
     // Calibrate the white balance on the camera...
     // It does this by increasing the red gain from 0..255, then blue from 0..255, until the camera DOESN'T see a key colour.
@@ -161,8 +159,7 @@ void run_custom() {
             e_set_led(7,1);
             wait(1000000);
         }    
-    }
-    
+    } 
 
     while (1) {
         e_led_clear();
@@ -219,10 +216,10 @@ void run_custom() {
         }
         
 
-        // Left/Right LEDs if walls detected
-        if (distances[5] > 500) e_set_led(6, 1);
+        // Left/Right LEDs if walls detected (5 == left)
+        if (distances[5] > 50) e_set_led(6, 1);
         else e_set_led(6, 0);
-        if (distances[2] > 500) e_set_led(2, 1);
+        if (distances[2] > 50) e_set_led(2, 1);
         else e_set_led(2, 0);
 
         if (state == STOP_MOVING) {
@@ -263,7 +260,7 @@ void run_custom() {
             }
 
             //Check if the LEFT side sensor is dropped off (indicating a corner))
-            if (left_distance <= SENSOR_DROPOFF_THRESHOLD) {
+            if (distances[5] <= SENSOR_DROPOFF_THRESHOLD) {
                 left_sensor_drop_cycles++;
 
                 //Check if this has been the case for a significant amount of time
@@ -289,7 +286,7 @@ void run_custom() {
             }              
 
             // Check if RIGHT side sensor is dropped off (indicating a corner)
-            if (right_distance <= SENSOR_DROPOFF_THRESHOLD) {
+            if (distances[2] <= SENSOR_DROPOFF_THRESHOLD) {
                 right_sensor_drop_cycles++;
 
                 //Check if this has been the case for a significant amount of time
