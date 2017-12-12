@@ -229,8 +229,8 @@ void run_custom() {
         }
         
         
-        sprintf(debug, "left side: %i, right side: %i.\r\n", distances[5], distances[2]);
-        e_send_uart1_char(debug, strlen(debug));
+        // sprintf(debug, "left side: %i, right side: %i.\r\n", distances[5], distances[2]);
+        // e_send_uart1_char(debug, strlen(debug));
 
         // Left/Right LEDs if walls detected (5 == left)
         if (distances[5] > 50) e_set_led(6, 1);
@@ -275,12 +275,15 @@ void run_custom() {
             // Check if the LEFT/RIGHT side sensors are dropped off (indicating a corner)
             left_sensor_avg = ( 2*distances[5] + distances[6] ) / 3;
             right_sensor_avg = ( 2*distances[2] + distances[1] ) / 3;
-            sprintf(debug, "(Lavg:%i, Ravg:%i).\r\n", left_sensor_avg, right_sensor_avg);
+            sprintf(debug, "LAvg:%i, RAvg:%i.\r\n", left_sensor_avg, right_sensor_avg);
             e_send_uart1_char(debug, strlen(debug));
             
             // LEFT DROP-OFF SIDE
             if (left_sensor_avg < right_sensor_avg && left_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
                 left_sensor_drop_cycles++;
+                
+                sprintf(debug, "Left drop_cycles = %i.\r\n", left_sensor_drop_cycles);
+                e_send_uart1_char(debug, strlen(debug));
 
                 // Drop-off continual detection?
                 if (left_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
@@ -302,6 +305,9 @@ void run_custom() {
             // RIGHT DROP-OFF SIDE
             else if (right_sensor_avg < left_sensor_avg && right_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
                 right_sensor_drop_cycles++;
+                
+                sprintf(debug, "Right drop_cycles = %i.\r\n", right_sensor_drop_cycles);
+                e_send_uart1_char(debug, strlen(debug));
 
                 // Drop-off continual detection?
                 if (right_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
