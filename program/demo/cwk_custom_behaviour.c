@@ -325,9 +325,10 @@ void run_custom() {
                         state = POWER_THROUGH; // Move forward
                     }
                 }  
+            } else {
+                left_sensor_drop_cycles = 0;
+                right_sensor_drop_cycles = 0;         
             }
-            left_sensor_drop_cycles = 0;
-            right_sensor_drop_cycles = 0;
         }
         
         followsetSpeedGS(leftwheel, rightwheel);    // sets motor speed, within max limits (from cwk_goal_seek.c)
