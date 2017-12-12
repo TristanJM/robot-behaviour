@@ -103,11 +103,11 @@ void run_love(void)
 										(e_get_calibrated_prox(7)+e_get_calibrated_prox(6)), 4);
 
 		// determining if something is near 
-		if((e_get_calibrated_prox(0) || e_get_calibrated_prox(7) > 1000) && (loopcount % 10 == 0))
+		if((e_get_calibrated_prox(0) || e_get_calibrated_prox(7) > 1000) && (loopcount % 20 == 0))
 		{
 			e_set_led(8, 1); // turn ON all the LEDs
 		}
-		else if(loopcount % 5 == 0)
+		else
 		{
 			e_set_led(8, 0); 	// turn OFF all LEDs
 		}
