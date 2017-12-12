@@ -87,6 +87,7 @@ void run_custom() {
     
     int right_sensor_avg;
     int left_sensor_avg;
+    int dropoff_side;
     
     int camera_calibrated = 0;
 
@@ -228,7 +229,7 @@ void run_custom() {
         }
         
         
-        sprintf(debug, "left side: %i, right side: %i. ", distances[5], distances[2]);
+        sprintf(debug, "left side: %i, right side: %i.\r\n", distances[5], distances[2]);
         e_send_uart1_char(debug, strlen(debug));
 
         // Left/Right LEDs if walls detected (5 == left)
@@ -243,22 +244,19 @@ void run_custom() {
         
         if (state == TURN_NEXT) {
             e_set_led(1, 1);
-        }
-        
+        } 
         
         if (state == FOLLOW_BOTH_WALLS || state == TURN_NEXT) {
             leftwheel = BIAS_SPEED;
             rightwheel = BIAS_SPEED;
 
-            // positive means left wall is closer than right
-            // negative means right wall is closer than left
-            //sensor_difference = (int) (left_distance - right_distance);
+            // // positive means left wall is closer than right
+            // // negative means right wall is closer than left
+            // sensor_difference = (int) (left_distance - right_distance);
+            // rightwheel -= sensor_difference * TURN_AGGRESSION;
+            // leftwheel  += sensor_difference * TURN_AGGRESSION;
 
-            // Adjust wheel speeds to correct for difference in sensor value
-            //rightwheel -= sensor_difference * TURN_AGGRESSION;
-            //leftwheel  += sensor_difference * TURN_AGGRESSION;
-
-            // Wallfollow right
+            // Follow the right wall
             follow_weightleftCustom[0] = -10;
             follow_weightleftCustom[7] = -10;
             follow_weightrightCustom[0] = 10;
@@ -274,71 +272,56 @@ void run_custom() {
                 rightwheel += follow_weightrightCustom[i]*(distances[i] >> 4);
             }
 
-            //Check if the LEFT side sensor is dropped off (indicating a corner))
+            // Check if the LEFT/RIGHT side sensors are dropped off (indicating a corner)
             left_sensor_avg = ( 2*distances[5] + distances[6] ) / 3;
             right_sensor_avg = ( 2*distances[2] + distances[1] ) / 3;
-            sprintf(debug, "Averages L: %i, R: %i.\r\n", left_sensor_avg, right_sensor_avg);
+            sprintf(debug, "(Lavg:%i, Ravg:%i).\r\n", left_sensor_avg, right_sensor_avg);
             e_send_uart1_char(debug, strlen(debug));
             
-            if (left_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
+            // LEFT DROP-OFF SIDE
+            if (left_sensor_avg < right_sensor_avg && left_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
                 left_sensor_drop_cycles++;
-                e_set_led(6,1);
 
-                //Check if this has been the case for a significant amount of time
+                // Drop-off continual detection?
                 if (left_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
 
-                    //If we're NOT supposed to be turning
-                    if (state == FOLLOW_BOTH_WALLS) {
-                        state = POWER_THROUGH; // Move forward
-                        left_sensor_drop_cycles = 0;
-                    }
+                    // Don't turn
+                    if (state == FOLLOW_BOTH_WALLS) state = POWER_THROUGH;
 
-                    //If we ARE supposed to be turning
+                    // Turn
                     if (state == TURN_NEXT) {
                         sprintf(debug, "TURNING LEFT (L Avg:%i).\r\n", left_sensor_avg);
                         e_send_uart1_char(debug, strlen(debug));
-                        
+
                         turn_to_direction(-PI/2); // Turn left
                         wait(50000);
                         state = POWER_THROUGH; // Move forward
-                        left_sensor_drop_cycles = 0;
                     }
                 }
-            } else {
-                // Reset drop count to 0 when the sensor comes back
-                left_sensor_drop_cycles = 0;
-                e_set_led(6,0);
-            }              
-
-            // Check if RIGHT side sensor is dropped off (indicating a corner)
-            if (right_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
+            }
+            // RIGHT DROP-OFF SIDE
+            else if (right_sensor_avg < left_sensor_avg && right_sensor_avg <= SENSOR_DROPOFF_THRESHOLD) {
                 right_sensor_drop_cycles++;
-                e_set_led(1,1);
 
-                //Check if this has been the case for a significant amount of time
+                // Drop-off continual detection?
                 if (right_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
 
-                    //If we're NOT supposed to be turning
-                    if (state == FOLLOW_BOTH_WALLS) {
-                        state = POWER_THROUGH; // Move forward
-                        right_sensor_drop_cycles = 0;
-                    }
+                    // Don't turn
+                    if (state == FOLLOW_BOTH_WALLS) state = POWER_THROUGH;
 
-                    //If we ARE supposed to be turning
+                    // Turn
                     if (state == TURN_NEXT) {
                         sprintf(debug, "TURNING RIGHT (R Avg:%i).\r\n", right_sensor_avg);
                         e_send_uart1_char(debug, strlen(debug));
-                        turn_to_direction(PI/2); // Turn right 90
+
+                        turn_to_direction(PI/2); // Turn right
                         wait(50000);
                         state = POWER_THROUGH; // Move forward
-                        right_sensor_drop_cycles = 0;
                     }
-                }
-            } else {
-                // Reset drop count to 0 when the sensor comes back
-                right_sensor_drop_cycles = 0;
-                e_set_led(1,0);
+                }  
             }
+            left_sensor_drop_cycles = 0;
+            right_sensor_drop_cycles = 0;
         }
         
         followsetSpeedGS(leftwheel, rightwheel);    // sets motor speed, within max limits (from cwk_goal_seek.c)
