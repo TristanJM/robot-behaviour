@@ -261,8 +261,10 @@ void run_custom() {
             }
 
             //Check if the LEFT side sensor is dropped off (indicating a corner))
-            if (distances[5] <= SENSOR_DROPOFF_THRESHOLD) {
+            //if (distances[5] <= SENSOR_DROPOFF_THRESHOLD && distances[4] <= SENSOR_DROPOFF_THRESHOLD) {
+            if (distances[5] <= (distances[3] / 3)) {
                 left_sensor_drop_cycles++;
+                e_set_led(6,1);
 
                 //Check if this has been the case for a significant amount of time
                 if (left_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
@@ -284,11 +286,14 @@ void run_custom() {
             } else {
                 // Reset drop count to 0 when the sensor comes back
                 left_sensor_drop_cycles = 0;
+                e_set_led(6,0);
             }              
 
             // Check if RIGHT side sensor is dropped off (indicating a corner)
-            if (distances[2] <= SENSOR_DROPOFF_THRESHOLD) {
+            //if (distances[2] <= SENSOR_DROPOFF_THRESHOLD) {
+            if (distances[2] <= (distances[5] / 3)) {
                 right_sensor_drop_cycles++;
+                e_set_led(1,1);
 
                 //Check if this has been the case for a significant amount of time
                 if (right_sensor_drop_cycles >= SENSOR_DROPOFF_TIME) {
@@ -310,6 +315,7 @@ void run_custom() {
             } else {
                 // Reset drop count to 0 when the sensor comes back
                 right_sensor_drop_cycles = 0;
+                e_set_led(1,0);
             }
         }
         
