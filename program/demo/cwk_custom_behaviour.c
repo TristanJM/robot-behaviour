@@ -175,7 +175,7 @@ void run_custom() {
             e_set_body_led(1);
             if (power_through_cycles <= POWER_THROUGH_TIME) {
                 if (power_through_cycles == 0) {
-                    sprintf(debug, "Starting Power-Through.\n");
+                    sprintf(debug, "Starting Power-Through.\r\n");
                     e_send_uart1_char(debug, strlen(debug));
                 }
                 power_through_cycles++;
@@ -184,7 +184,7 @@ void run_custom() {
             } else {
                 power_through_cycles = 0;
                 state = FOLLOW_BOTH_WALLS;
-                sprintf(debug, "Ending Power-Through.\n");
+                sprintf(debug, "Ending Power-Through.\r\n");
                 e_send_uart1_char(debug, strlen(debug));
             }
             e_set_body_led(0);
@@ -228,7 +228,7 @@ void run_custom() {
         }
         
         
-        sprintf(debug, "left side: %i, right side: %i\n", distances[5], distances[2]);
+        sprintf(debug, "left side: %i, right side: %i\r\n", distances[5], distances[2]);
         e_send_uart1_char(debug, strlen(debug));
 
         // Left/Right LEDs if walls detected (5 == left)
@@ -243,8 +243,6 @@ void run_custom() {
         
         if (state == TURN_NEXT) {
             e_set_led(1, 1);
-            sprintf(debug, "Currently in TURN_NEXT state.\n");
-            e_send_uart1_char(debug, strlen(debug));
         }
         
         
@@ -293,7 +291,7 @@ void run_custom() {
 
                     //If we ARE supposed to be turning
                     if (state == TURN_NEXT) {
-                        sprintf(debug, "TURNING LEFT.\n");
+                        sprintf(debug, "TURNING LEFT (L Avg:%i).\r\n", left_sensor_avg);
                         e_send_uart1_char(debug, strlen(debug));
                         
                         turn_to_direction(-PI/2); // Turn left
@@ -325,7 +323,7 @@ void run_custom() {
 
                     //If we ARE supposed to be turning
                     if (state == TURN_NEXT) {
-                        sprintf(debug, "TURNING RIGHT.\n");
+                        sprintf(debug, "TURNING RIGHT (R Avg:%i).\r\n", right_sensor_avg);
                         e_send_uart1_char(debug, strlen(debug));
                         turn_to_direction(PI/2); // Turn right 90
                         wait(50000);
