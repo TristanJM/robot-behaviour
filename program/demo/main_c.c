@@ -87,9 +87,10 @@ int main() {
 	} else if (selector==3) {
         run_goal_seek_basic();
 	} else if (selector==4) {
-		run_breitenberg_follower();
-	} else if (selector==5) {
+		//run_breitenberg_follower();
 		run_love();
+	} else if (selector==5) {
+		run_breitenberg_shocker();
 	} else if (selector==6) {
         run_fear();
 	} else if (selector==7) {

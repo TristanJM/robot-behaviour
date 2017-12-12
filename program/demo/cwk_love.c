@@ -15,23 +15,22 @@
 #include "utility.h"
 #include "cwk_love.h"
 
-/* 	Love - Once activated all 8 LEDs will start 
-	blinking in a motion to represent a heartbeat. 
-	Once the front IR sensors has detected something it 
-	will go towards that direction and will start following 
-	it. As it gets closer and closer to the obstacle (lover) 
-	the LEDs will stop blinking to symbolise a skip of a 
-	heartbeat :P
+/* 	Love - Once activated will move around with no LEDs 
+	lit up. If an obstacle is detected by the front 
+	sensors all 8 LEDs will light up and blink in motion 
+	to represent a heartbeat.  Once the front IR sensors 
+	has detected something it will go towards that direction 
+	and will start following it.
 */
 
 
-// fuction used to calculate the linear speed to set on 
+// function used to calculate the linear speed to set on 
 // each wheel depending on the information from the
 // front sensors - IR 0 & 7 
 int basic_speed_calc(int dist, int gain)
 {
-	int range = 350;
-	float x = 0.1;
+	int range = 100;
+	float x = 0.05;
 	int t = 3;
 	int linVal = 0;
 	int diffDist = range-dist;
@@ -57,57 +56,66 @@ int basic_speed_calc(int dist, int gain)
 	return basic_speed;
 }
 
-// fuction used to calculate the angular speed to set on 
+// function used to calculate the angular speed to set on 
 // each wheel depending on the information from the
 // 4 front sensors IR 0,1,6 & 7 
-int corner_speed_calc(int pos, int gain)
+int side_speed_calc(int pos, int gain)
 {
 	int range = 0;
-	int corner_speed = 0;
+	int side_speed = 0;
 	int diffDist = range - pos;
 
-	corner_speed = diffDist*gain;
+	side_speed = diffDist*gain;
 
-	if(corner_speed >= 1000)
-		corner_speed = 999;
-	else if(corner_speed <= -1000)
-		corner_speed = -999;
+	if(side_speed >= 1000)
+		side_speed = 999;
+	else if(side_speed <= -1000)
+		side_speed = -999;
 
-	return corner_speed;
-}
-
-// calculating the speed to follow the lover
-void follow_lover(void)
-{    
-	// determining if something is near 
-	if(e_get_calibrated_prox(0) || e_get_calibrated_prox(7) < 1000)
-		e_start_led_blinking(900);	// if nothing near, all LEDs start to blink mimicking a heartbeat effect 
-	else
-	{
-		e_stop_led_blinking();	// heart skips a beat if an obstacle (lover) is detected/near.
-		e_set_blinking_cycle(30000);	// restarts motion 
-	}
-
-	int basic_speed = basic_speed_calc((e_get_calibrated_prox(7)+e_get_calibrated_prox(0))/2, 6);
-	int corner_speed = corner_speed_calc((e_get_calibrated_prox(0)+e_get_calibrated_prox(1)) -
-										(e_get_calibrated_prox(7)+e_get_calibrated_prox(6)), 4);
-
-	// setting the wheel speed
-	e_set_speed_left(basic_speed - corner_speed);
-	e_set_speed_right(basic_speed + corner_speed);
+	return side_speed;
 }
 
 
-// main method for love ehaviour 
+// main method for love behavior 
 void run_love(void)
 {
+	int leftwheel;		// speed to be set on left wheel 
+	int rightwheel;		// speed to be set on the right wheel 
+	int loopcount = 0;	// used to keep count of loops
+
+
 	e_init_port();
 	e_init_motors();
 	e_init_ad_scan(ALL_ADC);
 	
 	e_calibrate_ir();
-	
-	e_activate_agenda(follow_lover, 650); 
 	e_start_agendas_processing();
-	while(1);
+	
+	while(1)
+	{
+		// setting the wheel speeds to 0 to start with
+		leftwheel = 0;
+		rightwheel = 0;	
+		
+		// calculating the speed
+		int basic_speed = basic_speed_calc((e_get_calibrated_prox(7)+e_get_calibrated_prox(0))/2, 6);
+		int side_speed = side_speed_calc((e_get_calibrated_prox(0)+e_get_calibrated_prox(1)) -
+										(e_get_calibrated_prox(7)+e_get_calibrated_prox(6)), 4);
+
+		// determining if something is near 
+		if((e_get_calibrated_prox(0) || e_get_calibrated_prox(7) > 1000) && (loopcount % 10 == 0))
+		{
+			e_set_led(8, 1); // turn ON all the LEDs
+		}
+		else if(loopcount % 5 == 0)
+		{
+			e_set_led(8, 0); 	// turn OFF all LEDs
+		}
+		loopcount++;	// increase loopcount
+
+		// setting the wheel speed
+		e_set_speed_left(basic_speed - side_speed);
+		e_set_speed_right(basic_speed + side_speed);	
+		wait(15000);		
+	}
 }
