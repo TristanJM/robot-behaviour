@@ -16,8 +16,9 @@
 
 
 /* Settings */
-#define MOTOR_INTENSITY 500  //Increase or decrease this to make the robot move & turn quicker.
-#define WAIT_TIME 250000       //Decrease this to update quicker / move smaller amounts between checks.
+#define MOTOR_INTENSITY 500    // Increase or decrease this to make the robot move & turn quicker.
+#define WAIT_TIME 250000       // Decrease this to update quicker / move smaller amounts between checks.
+#define DANGER_DISTANCE 175    // How close an object has to be before its considered dangerous
 
 void run_fear(){
 
@@ -46,9 +47,13 @@ void run_fear(){
 
 		/* Update Proximity Sensor value array, also turn on LEDs if detected */
 		for(i=0; i<8; i++){
-			prox[i] = e_get_prox(i);
-			if(prox[i] > 250){
+			prox[i] = e_get_calibrated_prox(i);
+			sprintf(buffer, "Prox %i = %i\r\n", i, prox[i]);
+                        e_send_uart1_char(buffer, strlen(buffer));
+			if(prox[i] > 150){
 				e_set_led(i, 1);
+				sprintf(buffer, "Attacker at Prox %i !!!\r\n", i);
+                                e_send_uart1_char(buffer, strlen(buffer));
 			} else {
 				e_set_led(i, 0);
 			}
@@ -66,59 +71,64 @@ void run_fear(){
 
 
 
-		/* For all sensors except tha back two sensors,
+		/* For all sensors except the back two sensors,
 		 * if we see something on this sensor, turn away from it.
-		 * turn faster if it's a front sensor and slower
+		 * turn faster if it's a front sensor and slower if it's a rear sensor.
+		 * if it's right ahead of us, just back away instead of turning because it's quicker
 		 * essentially we're just trying to get the back sensors to point at the enemy
 		 */
 
 		// Right side of robot
-		if(prox[2] > 250){
-			leftwheel =		-1 * MOTOR_INTENSITY;
-			rightwheel =	 1 * MOTOR_INTENSITY;
+		if(prox[2] > 150){
+			// Attacker is to our right. Turn left but not too quickly, we have time.
+			leftwheel =     -1 * MOTOR_INTENSITY;
+			rightwheel =     1 * MOTOR_INTENSITY;
 		}
-		if(prox[1] > 250){
-			leftwheel =		-3 * MOTOR_INTENSITY;
-			rightwheel =	 3 * MOTOR_INTENSITY;
+		if(prox[1] > 150){
+			// Attacker is on the front-right. Turn left quickly!!
+			leftwheel =     -3 * MOTOR_INTENSITY;
+			rightwheel =     3 * MOTOR_INTENSITY;
 		}		
-		if(prox[0] > 250){
-			leftwheel =		-3 * MOTOR_INTENSITY;
-			rightwheel =	-1 * MOTOR_INTENSITY;
+		if(prox[0] > 150){
+			// Attacker is right in front of us, on the right. Escape backwards, and also bend away from the attacker
+			leftwheel =     -3 * MOTOR_INTENSITY;
+			rightwheel =    -1 * MOTOR_INTENSITY;
 		}
 		
 		
 
 		// Left side of robot
-		if(prox[5] > 250){
-			leftwheel =		 1 * MOTOR_INTENSITY;
-			rightwheel =	-1 * MOTOR_INTENSITY;
+		if(prox[5] > 150){
+			// Attacker is on the left. Turn right but not too quickly, we have time.
+			leftwheel =      1 * MOTOR_INTENSITY;
+			rightwheel =    -1 * MOTOR_INTENSITY;
 		}
-		if(prox[6] > 250){
-			leftwheel =		 3 * MOTOR_INTENSITY;
-			rightwheel =	-3 * MOTOR_INTENSITY;
+		if(prox[6] > 150){
+			// Attacker is on the front-left. Turn right quickly!!
+			leftwheel =      3 * MOTOR_INTENSITY;
+			rightwheel =    -3 * MOTOR_INTENSITY;
 		}
-		if(prox[7] > 250){
-			leftwheel =		-1 * MOTOR_INTENSITY;
-			rightwheel =	-3 * MOTOR_INTENSITY;
+		if(prox[7] > 175){
+			// Attacker is right in front of us, on the left. Escape backwards, and also bend away from the attacker
+			leftwheel =     -1 * MOTOR_INTENSITY;
+			rightwheel =    -3 * MOTOR_INTENSITY;
 		}
 
 
 		/* Now for the rear sensors,
 		 * if we see something on these sensors, run forward */
-		if(prox[4] > 200){
-			leftwheel =		5 * MOTOR_INTENSITY;
-			rightwheel =	5 * MOTOR_INTENSITY;
-		}
-
-		if(prox[3] > 200){
-			leftwheel =		5 * MOTOR_INTENSITY;
-			rightwheel =	5 * MOTOR_INTENSITY;
+		if(prox[4] > 200 || prox[3] > 200){
+                        // The obstacle is behind us. Run forward.
+			leftwheel =     5 * MOTOR_INTENSITY;
+			rightwheel =    5 * MOTOR_INTENSITY;
 		}
 
 
 		/* Now actually set the motor speeds */
 		e_set_speed_left(leftwheel);
 		e_set_speed_right(rightwheel);
+                
+                // Wait for a set amount of time (makes the behaviour appear smoother)
 		wait(WAIT_TIME);
 
 
