@@ -23,11 +23,17 @@
 #define MOTOR_MAX_SPEED     500     // <= 500 [lt/e 500]
 
 #define CONF_CURIOUS_MODE         0             // Uses Prox sensors if set to 1.
+#define CONF_DEBUG_MODE             1             // Uses Prox sensors if set to 1.
 #define CONF_WAIT_TIME            50000         // Wait time for all operations
 #define CONF_TURN_WAIT            500           // Time needed to complete the turn
 #define CONF_ANIMATELED_WAIT      10000         // Wait time for LED Animations /// 1 Second
 #define CONF_CAL_IR_ACTIVATION    100           // Assumed Range 0-100
 #define CONF_PROXIMITY_THRESHOLD  0.9
+#define CONF_WALLFOLLOW_TIMER     10000
+
+int rand_range(int min, int max) {
+    return rand() % (max + 1 - min) + min;
+}
 
 void epuck_set_speed(int speed, int wait_time) {
     e_set_speed_left(speed);
@@ -57,22 +63,21 @@ void update_sensor_array(int *state_prox) {
 }
 
 void epuck_creep(int max_ir_index, int current_ir_activation) {
-    int linear_speed, angular_speed;
+    int linear_speed, angular_speed, speed_multiplier;
 
     /* Flags */
     int proximity_alert = 0;
     int prox_detected = max_ir_index < 8;
 
     // Set global linear speed; Max if object detected, random out of half otherwise
-    linear_speed = (prox_detected) ? MOTOR_MAX_SPEED : (rand() % (MOTOR_MAX_SPEED / 2));
+    linear_speed = (prox_detected) ? MOTOR_MAX_SPEED : rand_range(MOTOR_MAX_SPEED * 0.5, MOTOR_MAX_SPEED * 0.8);
 
     // Override linear_speed as a proximity based multiplier - Logarithmic Decrease
-    int speed_multiplier = log(current_ir_activation + 1) / log(100 + 1);
+    speed_multiplier = log(current_ir_activation + 1) / log(CONF_CAL_IR_ACTIVATION + 1);
 
-    if (speed_multiplier < 0.9) {
-        linear_speed = (1 - speed_multiplier) * linear_speed;
+    if (speed_multiplier < CONF_PROXIMITY_THRESHOLD) {
+        linear_speed = speed_multiplier * linear_speed;
     } else {
-        // Proximity Alert
         proximity_alert = 1;
     }
 
@@ -108,8 +113,9 @@ void epuck_creep(int max_ir_index, int current_ir_activation) {
 
     // Reverse override for proximity alert
     if (proximity_alert) {
-        linear_speed = -1 * linear_speed;
-        angular_speed = -1 * angular_speed;
+        linear_speed = 0;
+        angular_speed = 0;
+
     }
 
     e_set_speed(linear_speed, angular_speed);
@@ -118,10 +124,6 @@ void epuck_creep(int max_ir_index, int current_ir_activation) {
 void epuck_led_wait(int led_wait) {
     long a;
     for (a = 0; a < led_wait; a++) { asm("nop"); }
-}
-
-int rand_range(int min, int max) {
-    return rand() % (max + 1 - min) + min;
 }
 
 #pragma clang diagnostic push
@@ -156,21 +158,24 @@ void run_curious() {
             int max_ir_index = 8;
             for (i = 0; i < SENSORS; ++i) { // Update LED on IR Activation
                 if (state_prox[i] > CONF_CAL_IR_ACTIVATION) {
-                    e_set_led(i, 1);
+                    if (CONF_DEBUG_MODE) e_set_led(i, 1);
                     max_ir_index = i;
                 } else {
-                    e_set_led(i, 0);
+                    if (CONF_DEBUG_MODE) e_set_led(i, 0);
                 }
             }
 
             // Creep towards object - Creep slows down, the closer the object is.
             epuck_creep(max_ir_index, (max_ir_index < SENSORS) ? state_prox[max_ir_index] : 0);
+
+            // TODO: Timed Wall Follow. Use: @CONF_WALLFOLLOW_TIMER
+
             // Repeat
             for (i = 0; i < 50000; i++) { asm("nop"); }
         }
 
     } else {
-        while(1){
+        while (1) {
             // Basic Movement Code
             e_activate_agenda(e_blink_led, CONF_ANIMATELED_WAIT * 2.5);
             e_pause_agenda(e_blink_led);
@@ -179,7 +184,6 @@ void run_curious() {
             wait(CONF_WAIT_TIME * 4);
             // Shake
             epuck_shake(500, CONF_TURN_WAIT, 1);
-            animate_lights(1, 1000);
             // Flash Lights
             e_activate_agenda(e_blink_led, CONF_ANIMATELED_WAIT * 2.5);
             e_pause_agenda(e_blink_led);
