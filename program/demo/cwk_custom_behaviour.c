@@ -264,13 +264,20 @@ void run_custom() {
             if (distances[2] > 300) {   // right side sensor?
                 distances[1] -= 200;
                 distances[2] -= 600;
-                distances[3] -= 100;   
+                distances[3] -= 100;
             }
 
             for (i = 0; i < 8; i++) {
                 leftwheel += follow_weightleftCustom[i]*(distances[i] >> 4);
                 rightwheel += follow_weightrightCustom[i]*(distances[i] >> 4);
             }
+            
+            // Check if back is facing the left wall, if we're pointing away from the left wall, and if we're close to the right wall,    and then correct for that
+            if(e_get_calibrated_prox(4) > e_get_calibrated_prox(3) && e_get_calibrated_prox(4) > e_get_calibrated_prox(5) && e_get_calibrated_prox(2) > e_get_calibrated_prox(5)){
+                leftwheel *= .5;
+                rightwheel += 1.25;
+            }
+            
 
             // Check if the LEFT/RIGHT side sensors are dropped off (indicating a corner)
             left_sensor_avg = ( 2*e_get_calibrated_prox(5) + e_get_calibrated_prox(6) ) / 3;
@@ -328,6 +335,8 @@ void run_custom() {
                 left_sensor_drop_cycles = 0;
                 right_sensor_drop_cycles = 0;         
             }
+
+            
         }
         
         followsetSpeedGS(leftwheel, rightwheel);    // sets motor speed, within max limits (from cwk_goal_seek.c)
