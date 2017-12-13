@@ -68,8 +68,14 @@ int follow_weightrightCustom[8] = {10, 10, 5, 0, 0, -5, -10, -10};
 // If it sees green ahead, carry on through paper.
 // If it sees blue ahead, rotate 180 and follow road back, make first 90 degree turning off.
 void run_custom() {
-    int distances[8]; // array keeping the distance sensor readings
+    int distances[8]; // Will store the average of all the distances
+    int distances_avg0[8]; // n-1 average reading (Latest)
+    int distances_avg1[8]; // n-2 average reading
+    int distances_avg2[8]; // n-3 average reading
+    int distances_avg3[8]; // n-4 average reading
+    int distances_avg4[8]; // n-5 average reading (Oldest)
     int i;
+    int j;
     int primary_colour;
     int leftwheel;
     int rightwheel;
@@ -192,8 +198,21 @@ void run_custom() {
             continue;
         }
         
+        // Shuffle averages arrays along
+        for(i=0; i<8; i++){
+            distances_avg4[i] = distances_avg3[i];
+            distances_avg3[i] = distances_avg2[i];
+            distances_avg2[i] = distances_avg1[i];
+            distances_avg1[i] = distances_avg0[i];
+        }
+        
         // Read calibrated sensor values
-        followGetSensorValuesGS(distances);
+        followGetSensorValuesGS(distances_avg0);
+        
+        // Update the distances[] array used by wall follow to actually be an average of the last 5 readings (with the most recent readings more weighted)
+        for(i=0; i<8; i++){
+            distances[i] = (distances_avg4[i] + distances_avg3[i] + distances_avg2[i] + (2 * distances_avg1[i]) + (3 * distances_avg0[i]) ) / 8;
+        }
 
         // Read non-calibrated Left/Right sensors
         right_distance = e_get_prox(2);
