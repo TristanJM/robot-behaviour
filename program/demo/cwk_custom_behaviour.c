@@ -37,7 +37,8 @@
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
 #define SENSOR_DROPOFF_THRESHOLD   100    // How low a sensor needs to be before considering dropped off
-#define SENSOR_DROPOFF_TIME        9      // How many cycles a sensor needs to be dropped off for before turning
+#define LEFT_SENSOR_DROPOFF_TIME    12    // How many cycles the left sensor needs to be dropped off for before turning
+#define RIGHT_SENSOR_DROPOFF_TIME    4    // How many cycles the right sensor needs to be dropped off for before turning
 #define POWER_THROUGH_TIME         40     // Cycles to power forward and not check sensors/camera
 
 #define BIAS_SPEED      	350		// robot bias speed
@@ -325,7 +326,7 @@ void run_custom() {
                 e_send_uart1_char(debug, strlen(debug));
 
                 // Drop-off continual detection?
-                if (left_sensor_drop_cycles == SENSOR_DROPOFF_TIME) {
+                if (left_sensor_drop_cycles == LEFT_SENSOR_DROPOFF_TIME) {
 
                     // Don't turn
                     if (state == FOLLOW_BOTH_WALLS) state = POWER_THROUGH;
@@ -348,7 +349,7 @@ void run_custom() {
                 e_send_uart1_char(debug, strlen(debug));
 
                 // Drop-off continual detection?
-                if (right_sensor_drop_cycles == SENSOR_DROPOFF_TIME) {
+                if (right_sensor_drop_cycles == RIGHT_SENSOR_DROPOFF_TIME) {
 
                     // Don't turn
                     if (state == FOLLOW_BOTH_WALLS) state = POWER_THROUGH;
