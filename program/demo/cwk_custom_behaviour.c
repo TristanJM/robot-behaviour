@@ -187,7 +187,11 @@ void run_custom() {
                 }
                 power_through_cycles++;
                 // Only go forwards if there's nothing directly in front
-                if (e_get_prox(0) < 500 && e_get_prox(7) < 500) followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
+                int frontR = e_get_prox(0);
+                int frontL = e_get_prox(7);
+                if (frontR < 400 && frontL < 400) followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
+//                else if (frontR > frontL) followsetSpeedGS(0, BIAS_SPEED);   // turn left slightly
+//                else if (frontL >= frontR) followsetSpeedGS(BIAS_SPEED, 0);  // turn right slightly
                 else followsetSpeedGS(0, 0);
                 wait(50000);
             } else {
