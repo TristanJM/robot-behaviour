@@ -79,17 +79,17 @@ void run_fear(){
 		 */
 
 		// Right side of robot
-		if(prox[2] > 150){
+		if(prox[2] > DANGER_DISTANCE){
 			// Attacker is to our right. Turn left but not too quickly, we have time.
 			leftwheel =     -1 * MOTOR_INTENSITY;
 			rightwheel =     1 * MOTOR_INTENSITY;
 		}
-		if(prox[1] > 150){
+		if(prox[1] > DANGER_DISTANCE){
 			// Attacker is on the front-right. Turn left quickly!!
 			leftwheel =     -3 * MOTOR_INTENSITY;
 			rightwheel =     3 * MOTOR_INTENSITY;
 		}		
-		if(prox[0] > 150){
+		if(prox[0] > DANGER_DISTANCE){
 			// Attacker is right in front of us, on the right. Escape backwards, and also bend away from the attacker
 			leftwheel =     -3 * MOTOR_INTENSITY;
 			rightwheel =    -1 * MOTOR_INTENSITY;
@@ -98,17 +98,17 @@ void run_fear(){
 		
 
 		// Left side of robot
-		if(prox[5] > 150){
+		if(prox[5] > DANGER_DISTANCE){
 			// Attacker is on the left. Turn right but not too quickly, we have time.
 			leftwheel =      1 * MOTOR_INTENSITY;
 			rightwheel =    -1 * MOTOR_INTENSITY;
 		}
-		if(prox[6] > 150){
+		if(prox[6] > DANGER_DISTANCE){
 			// Attacker is on the front-left. Turn right quickly!!
 			leftwheel =      3 * MOTOR_INTENSITY;
 			rightwheel =    -3 * MOTOR_INTENSITY;
 		}
-		if(prox[7] > 175){
+		if(prox[7] > DANGER_DISTANCE){
 			// Attacker is right in front of us, on the left. Escape backwards, and also bend away from the attacker
 			leftwheel =     -1 * MOTOR_INTENSITY;
 			rightwheel =    -3 * MOTOR_INTENSITY;
@@ -117,7 +117,7 @@ void run_fear(){
 
 		/* Now for the rear sensors,
 		 * if we see something on these sensors, run forward */
-		if(prox[4] > 200 || prox[3] > 200){
+		if(prox[4] > (DANGER_DISTANCE + 50) || prox[3] > (DANGER_DISTANCE + 50)){
                         // The obstacle is behind us. Run forward.
 			leftwheel =     5 * MOTOR_INTENSITY;
 			rightwheel =    5 * MOTOR_INTENSITY;
