@@ -50,7 +50,7 @@ void run_fear(){
 			prox[i] = e_get_calibrated_prox(i);
 			sprintf(buffer, "Prox %i = %i\r\n", i, prox[i]);
                         e_send_uart1_char(buffer, strlen(buffer));
-			if(prox[i] > 150){
+			if(prox[i] > DANGER_DISTANCE){
 				e_set_led(i, 1);
 				sprintf(buffer, "Attacker at Prox %i !!!\r\n", i);
                                 e_send_uart1_char(buffer, strlen(buffer));
