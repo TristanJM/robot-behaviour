@@ -190,8 +190,8 @@ void run_custom() {
                 int frontR = e_get_prox(0);
                 int frontL = e_get_prox(7);
                 if (frontR < 400 && frontL < 400) followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
-//                else if (frontR > frontL) followsetSpeedGS(0, BIAS_SPEED);   // turn left slightly
-//                else if (frontL >= frontR) followsetSpeedGS(BIAS_SPEED, 0);  // turn right slightly
+                else if (frontR > frontL) followsetSpeedGS(0, BIAS_SPEED);   // turn left slightly
+                else if (frontL >= frontR) followsetSpeedGS(BIAS_SPEED, 0);  // turn right slightly
                 else followsetSpeedGS(0, 0);
                 wait(50000);
             } else {
@@ -205,12 +205,12 @@ void run_custom() {
         }
         
         // Shuffle averages arrays along
-        /*for(i=0; i<8; i++){
+        for(i=0; i<8; i++){
             distances_avg4[i] = distances_avg3[i];
             distances_avg3[i] = distances_avg2[i];
             distances_avg2[i] = distances_avg1[i];
             distances_avg1[i] = distances_avg0[i];
-        }*/
+        }
         
         // Read calibrated sensor values
         followGetSensorValuesGS(distances_avg0);
@@ -281,11 +281,11 @@ void run_custom() {
             // leftwheel  += sensor_difference * TURN_AGGRESSION;
 
             // Fix wallfollow headbutting a wall
-            if (distances[7] > 700 && distances[0] > 700) {
+            if (e_get_calibrated_prox(7) > 250 && e_get_calibrated_prox(0) > 250) {
                 // if we are almost facing wall head-on, still favouring direction of travel
                 // turn slightly
-                if (distances[7] > distances[0]) turn_to_direction(PI/8);   // Right slightly
-                if (distances[0] > distances[7]) turn_to_direction(-PI/8);  // Left slightly
+                if (e_get_calibrated_prox(7) > e_get_calibrated_prox(0)) { leftwheel *= 1.5; rightwheel *= 0.5; }; // Right slightly
+                if (e_get_calibrated_prox(0) > e_get_calibrated_prox(7)) { leftwheel *= 0.5; rightwheel *= 1.5; }; // Left slightly
             }
             
             // Follow the right wall
