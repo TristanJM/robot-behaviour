@@ -37,10 +37,10 @@
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
 #define SENSOR_DROPOFF_THRESHOLD   100    // How low a sensor needs to be before considering dropped off
-#define SENSOR_DROPOFF_TIME        8      // How many cycles a sensor needs to be dropped off for before turning
+#define SENSOR_DROPOFF_TIME        9      // How many cycles a sensor needs to be dropped off for before turning
 #define POWER_THROUGH_TIME         40     // Cycles to power forward and not check sensors/camera
 
-#define BIAS_SPEED      	300		// robot bias speed
+#define BIAS_SPEED      	350		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
 
