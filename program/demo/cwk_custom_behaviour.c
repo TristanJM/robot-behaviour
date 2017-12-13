@@ -36,9 +36,9 @@
 
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
-#define LEFT_SENSOR_DROPOFF_THRESHOLD    100    // How low left sensor needs to be before considering dropped off
-#define RIGHT_SENSOR_DROPOFF_THRESHOLD    75    // How low right sensor needs to be before considering dropped off
-#define LEFT_SENSOR_DROPOFF_TIME    12    // How many cycles the left sensor needs to be dropped off for before turning
+#define LEFT_SENSOR_DROPOFF_THRESHOLD    75    // How low left sensor needs to be before considering dropped off
+#define RIGHT_SENSOR_DROPOFF_THRESHOLD   75    // How low right sensor needs to be before considering dropped off
+#define LEFT_SENSOR_DROPOFF_TIME    10    // How many cycles the left sensor needs to be dropped off for before turning
 #define RIGHT_SENSOR_DROPOFF_TIME    3    // How many cycles the right sensor needs to be dropped off for before turning
 #define POWER_THROUGH_TIME         200     // Cycles to power forward and not check sensors/camera
 
@@ -181,6 +181,8 @@ void run_custom() {
         rightwheel = 0;  
 
         if (state == POWER_THROUGH) {
+            left_sensor_drop_cycles = 0;
+            right_sensor_drop_cycles = 0;
             e_set_body_led(1);
             if (power_through_cycles <= POWER_THROUGH_TIME) {
                 if (power_through_cycles == 0) {
@@ -219,7 +221,7 @@ void run_custom() {
         
         // Update the distances[] array used by wall follow to actually be an average of the last 5 readings (with the most recent readings more weighted)
         for(i=0; i<8; i++){
-            distances[i] = (distances_avg4[i] + distances_avg3[i] + distances_avg2[i] + (2 * distances_avg1[i]) + (3 * distances_avg0[i]) ) / 8;
+            distances[i] = (distances_avg4[i] + distances_avg3[i] + distances_avg2[i] + (2 * distances_avg1[i]) + (15 * distances_avg0[i]) ) / 20;
         }
 
         // Read non-calibrated Left/Right sensors
