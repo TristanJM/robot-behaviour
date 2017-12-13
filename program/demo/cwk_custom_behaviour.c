@@ -36,11 +36,11 @@
 
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
-#define SENSOR_DROPOFF_THRESHOLD   100     // How low a sensor needs to be before considering dropped off
-#define SENSOR_DROPOFF_TIME        10      // How many cycles a sensor needs to be dropped off for before turning
-#define POWER_THROUGH_TIME         40      // Cycles to power forward and not check sensors/camera
+#define SENSOR_DROPOFF_THRESHOLD   100    // How low a sensor needs to be before considering dropped off
+#define SENSOR_DROPOFF_TIME        8      // How many cycles a sensor needs to be dropped off for before turning
+#define POWER_THROUGH_TIME         40     // Cycles to power forward and not check sensors/camera
 
-#define BIAS_SPEED      	400		// robot bias speed
+#define BIAS_SPEED      	300		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
 #define MAXSPEED 			800		// maximum robot speed
 
@@ -226,8 +226,7 @@ void run_custom() {
             state = TURN_NEXT;   // temp
         } else {
             // NO COLOUR (DEBUG ONLY)
-        }
-        
+        }  
         
         // sprintf(debug, "left side: %i, right side: %i.\r\n", distances[5], distances[2]);
         // e_send_uart1_char(debug, strlen(debug));
@@ -256,6 +255,14 @@ void run_custom() {
             // rightwheel -= sensor_difference * TURN_AGGRESSION;
             // leftwheel  += sensor_difference * TURN_AGGRESSION;
 
+            // Fix wallfollow headbutting a wall
+            if (distances[7] > 700 && distances[0] > 700) {
+                // if we are almost facing wall head-on, still favouring direction of travel
+                // turn slightly
+                if (distances[7] > distances[0]) turn_to_direction(PI/8);   // Right slightly
+                if (distances[0] > distances[7]) turn_to_direction(-PI/8);  // Left slightly
+            }
+            
             // Follow the right wall
             follow_weightleftCustom[0] = -10;
             follow_weightleftCustom[7] = -10;
