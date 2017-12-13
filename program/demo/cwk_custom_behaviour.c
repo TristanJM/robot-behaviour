@@ -186,7 +186,9 @@ void run_custom() {
                     e_send_uart1_char(debug, strlen(debug));
                 }
                 power_through_cycles++;
-                followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
+                // Only go forwards if there's nothing directly in front
+                if (e_get_prox(0) < 500 && e_get_prox(7) < 500) followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
+                else followsetSpeedGS(0, 0);
                 wait(50000);
             } else {
                 power_through_cycles = 0;
@@ -199,12 +201,12 @@ void run_custom() {
         }
         
         // Shuffle averages arrays along
-        for(i=0; i<8; i++){
+        /*for(i=0; i<8; i++){
             distances_avg4[i] = distances_avg3[i];
             distances_avg3[i] = distances_avg2[i];
             distances_avg2[i] = distances_avg1[i];
             distances_avg1[i] = distances_avg0[i];
-        }
+        }*/
         
         // Read calibrated sensor values
         followGetSensorValuesGS(distances_avg0);
