@@ -40,7 +40,7 @@
 #define RIGHT_SENSOR_DROPOFF_THRESHOLD    75    // How low right sensor needs to be before considering dropped off
 #define LEFT_SENSOR_DROPOFF_TIME    12    // How many cycles the left sensor needs to be dropped off for before turning
 #define RIGHT_SENSOR_DROPOFF_TIME    3    // How many cycles the right sensor needs to be dropped off for before turning
-#define POWER_THROUGH_TIME         40     // Cycles to power forward and not check sensors/camera
+#define POWER_THROUGH_TIME         200     // Cycles to power forward and not check sensors/camera
 
 #define BIAS_SPEED      	350		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
@@ -195,7 +195,7 @@ void run_custom() {
                 else if (frontR > frontL) followsetSpeedGS(0, BIAS_SPEED);   // turn left slightly
                 else if (frontL >= frontR) followsetSpeedGS(BIAS_SPEED, 0);  // turn right slightly
                 else followsetSpeedGS(0, 0);
-                wait(50000);
+                wait(10000);
             } else {
                 power_through_cycles = 0;
                 state = FOLLOW_BOTH_WALLS;
