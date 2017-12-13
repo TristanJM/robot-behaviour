@@ -187,8 +187,15 @@ void run_custom() {
                 }
                 power_through_cycles++;
                 // Only go forwards if there's nothing directly in front
-                if (e_get_prox(0) < 500 && e_get_prox(7) < 500) followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
-                else followsetSpeedGS(0, 0);
+                if (e_get_calibrated_prox(0) > 500 && e_get_calibrated_prox(7) > 500){
+                    followsetSpeedGS(0, 0);
+                } else if (e_get_calibrated_prox(0) > 150 && e_get_calibrated_prox(7) > 150){
+                    if (e_get_calibrated_prox(7) > e_get_calibrated_prox(0)) { leftwheel *= 1.5; rightwheel *= 0.5; }; // Right slightly
+                    if (e_get_calibrated_prox(0) > e_get_calibrated_prox(7)) t{ leftwheel *= 0.5; rightwheel *= 1.5; }; // Left slightly
+                    followsetSpeedGS(leftwheel, rightwheel);
+                } else {
+                    followsetSpeedGS(BIAS_SPEED, BIAS_SPEED);
+                }
                 wait(50000);
             } else {
                 power_through_cycles = 0;
@@ -277,11 +284,11 @@ void run_custom() {
             // leftwheel  += sensor_difference * TURN_AGGRESSION;
 
             // Fix wallfollow headbutting a wall
-            if (distances[7] > 700 && distances[0] > 700) {
+            if (e_get_calibrated_prox(7) > 250 && e_get_calibrated_prox(0) > 250) {
                 // if we are almost facing wall head-on, still favouring direction of travel
                 // turn slightly
-                if (distances[7] > distances[0]) turn_to_direction(PI/8);   // Right slightly
-                if (distances[0] > distances[7]) turn_to_direction(-PI/8);  // Left slightly
+                if (e_get_calibrated_prox(7) > e_get_calibrated_prox(0)) { leftwheel *= 1.5; rightwheel *= 0.5; }; // Right slightly
+                if (e_get_calibrated_prox(0) > e_get_calibrated_prox(7)) t{ leftwheel *= 0.5; rightwheel *= 1.5; }; // Left slightly
             }
             
             // Follow the right wall
