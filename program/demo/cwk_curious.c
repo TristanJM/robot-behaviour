@@ -19,16 +19,18 @@
 #define SENSORS     8
 #define LEDS        8
 
-#define MOTOR_BIAS_SPEED    200     // <= 500 [lt/e 500]
+#define MOTOR_BIAS_SPEED    250     // <= 500 [lt/e 500]
 #define MOTOR_MAX_SPEED     500     // <= 500 [lt/e 500]
 
-#define CONF_CURIOUS_MODE         0             // Uses Prox sensors if set to 1.
-#define CONF_DEBUG_MODE             1             // Uses Prox sensors if set to 1.
+#define CONF_CURIOUS_MODE         1             // Uses Prox sensors if set to 1.
+#define CONF_DEBUG_MODE           0             // Uses debug LED's if set to 1.
+#define CONF_DEBUG_MODE_2         1             // Uses debug LED's if set to 1.
 #define CONF_WAIT_TIME            50000         // Wait time for all operations
 #define CONF_TURN_WAIT            500           // Time needed to complete the turn
 #define CONF_ANIMATELED_WAIT      10000         // Wait time for LED Animations /// 1 Second
-#define CONF_CAL_IR_ACTIVATION    100           // Assumed Range 0-100
-#define CONF_PROXIMITY_THRESHOLD  0.9
+#define CONF_CAL_IR_ACTIVATION    75            // Assumed Range 0-1000
+#define CONF_MAX_IR_ACTIVATION    1000          // Assumed Range 0-1000
+#define CONF_PROXIMITY_THRESHOLD  0.7
 #define CONF_WALLFOLLOW_TIMER     10000
 
 int rand_range(int min, int max) {
@@ -67,47 +69,62 @@ void epuck_creep(int max_ir_index, int current_ir_activation) {
 
     /* Flags */
     int proximity_alert = 0;
-    int prox_detected = max_ir_index < 8;
 
-    // Set global linear speed; Max if object detected, random out of half otherwise
-    linear_speed = (prox_detected) ? MOTOR_MAX_SPEED : rand_range(MOTOR_MAX_SPEED * 0.5, MOTOR_MAX_SPEED * 0.8);
+    // Set global linear speed; Max if object detected, random otherwise
+    linear_speed = (max_ir_index < SENSORS) ? MOTOR_MAX_SPEED : rand_range(MOTOR_MAX_SPEED * 0.5, MOTOR_MAX_SPEED * 0.8);
 
     // Override linear_speed as a proximity based multiplier - Logarithmic Decrease
-    speed_multiplier = log(current_ir_activation + 1) / log(CONF_CAL_IR_ACTIVATION + 1);
+    speed_multiplier = 1 - (log((current_ir_activation / 100) + 1) / log((CONF_MAX_IR_ACTIVATION / 100) + 1));
 
-    if (speed_multiplier < CONF_PROXIMITY_THRESHOLD) {
-        linear_speed = speed_multiplier * linear_speed;
+    if (speed_multiplier < (CONF_PROXIMITY_THRESHOLD)) {
+        linear_speed = (max_ir_index < SENSORS) ? speed_multiplier * linear_speed: linear_speed;
     } else {
         proximity_alert = 1;
     }
 
     switch (max_ir_index) {
         case 0: // -3
-            angular_speed = (int) floor((120 / 2) * (-1));
+            if (CONF_DEBUG_MODE_2) e_led_clear();
+            if (CONF_DEBUG_MODE_2) e_set_led(0, 1);
+            angular_speed = (int) floor(MOTOR_BIAS_SPEED / 2 * 0);
             break;
         case 1: // -2
-            angular_speed = (int) floor((120 / 2) * (-2 / 3));
+            if (CONF_DEBUG_MODE_2) e_led_clear();
+            if (CONF_DEBUG_MODE_2) e_set_led(1, 1);
+            angular_speed = (int) floor(MOTOR_BIAS_SPEED / 2 * -0.25);
             break;
         case 2: // -1
-            angular_speed = (int) floor((120 / 2) * (-1 / 3));
+            if (CONF_DEBUG_MODE_2) e_led_clear();
+            if (CONF_DEBUG_MODE_2) e_set_led(2, 1);
+            angular_speed = (int) floor(MOTOR_BIAS_SPEED / 2 * -0.5);
             break;
         case 3: // +4
-            angular_speed = (int) floor((120 / 2) * 0);
+            if (CONF_DEBUG_MODE_2) e_led_clear();
+            if (CONF_DEBUG_MODE_2) e_set_led(3, 1);
+            angular_speed = (int) floor(MOTOR_BIAS_SPEED / 2 * -0.8);
             break;
         case 4: // +4
-            angular_speed = (int) floor((120 / 2) * 0);
+            if (CONF_DEBUG_MODE_2) e_led_clear();
+            if (CONF_DEBUG_MODE_2) e_set_led(4, 1);
+            angular_speed = (int) floor(MOTOR_BIAS_SPEED / 2 * 0.8);
             break;
         case 5: // +1
-            angular_speed = (int) floor((120 / 2) * (1 / 3));
+            if (CONF_DEBUG_MODE_2) e_led_clear();
+            if (CONF_DEBUG_MODE_2) e_set_led(5, 1);
+            angular_speed = (int) floor(MOTOR_BIAS_SPEED / 2 * (0.5));
             break;
         case 6: // +2
-            angular_speed = (int) floor((120 / 2) * (2 / 3));
+            if (CONF_DEBUG_MODE_2) e_led_clear();
+            if (CONF_DEBUG_MODE_2) e_set_led(6, 1);
+            angular_speed = (int) floor(MOTOR_BIAS_SPEED / 2 * (0.25));
             break;
         case 7: // +3
-            angular_speed = (int) floor((120 / 2) * (1));
+            if (CONF_DEBUG_MODE_2) e_led_clear();
+            if (CONF_DEBUG_MODE_2) e_set_led(7, 1);
+            angular_speed = (int) floor(MOTOR_BIAS_SPEED / 2 * (0));
             break;
         default:
-            angular_speed = (rand() % 2 * 120) - 120;
+            angular_speed = (rand() % MOTOR_BIAS_SPEED) - (MOTOR_BIAS_SPEED / 2);
             break;
     }
 
@@ -115,7 +132,6 @@ void epuck_creep(int max_ir_index, int current_ir_activation) {
     if (proximity_alert) {
         linear_speed = 0;
         angular_speed = 0;
-
     }
 
     e_set_speed(linear_speed, angular_speed);
@@ -130,7 +146,7 @@ void epuck_led_wait(int led_wait) {
 #pragma ide diagnostic ignored "OCDFAInspection"
 
 void run_curious() {
-    /* Initialisations */
+    /* Initializations */
     e_init_port();
     e_init_ad_scan(ALL_ADC);
     e_init_motors();
@@ -152,7 +168,7 @@ void run_curious() {
             //update_sensor_array(state_prox);
 
             for (i = 0; i < SENSORS; i++) {
-                state_prox[i] = e_get_prox(i);
+                state_prox[i] = e_get_calibrated_prox(i);
             }
 
             int max_ir_index = 8;
@@ -171,7 +187,7 @@ void run_curious() {
             // TODO: Timed Wall Follow. Use: @CONF_WALLFOLLOW_TIMER
 
             // Repeat
-            for (i = 0; i < 50000; i++) { asm("nop"); }
+            for (i = 0; i < 10000; i++) { asm("nop"); }
         }
 
     } else {
