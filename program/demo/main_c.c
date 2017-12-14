@@ -1,26 +1,7 @@
 
 /*! \file
- * \brief The main file of the demo.
- *
- * This file regroups all the programmes demo. You can choose the one you
- * want to try by moving the selector.
- * \n \n Here is the the demo corresponding to the selector position:
- * - Selector position 0: Show the ground direction. Look at rungrounddirection.h for more information.
- * - Selector position 1: Shock detection. Look at runaccelerometer.h for more information.
- * - Selector position 2: Locate the sound source. Look at runlocatesound.h for more information.
- * - Selector position 3: Follow the wall. Look at runwallfollow.h for more information.
- * - Selector position 4: Follow what is detected by the two front proximities detectors. Look at runbreitenberg_adv.h for more information.
- * - Selector position 5: Avoid the obstacles. Look at runbreitenberg_adv.h for more information.
- * - Selector position 6: Follow all balls. Look at runfollowball.h for more information.
- * - Selector position 7: Follow the red ball. Look at runfollowball.h for more information.
- * - Selector position 8: Follow the green ball. Look at runfollowball.h for more information.
- * - Other selector position: Command the e-puck with the sound. Look at runfftlistener.h for more information.
- *
- * \warning When you have made your selection with the selector, YOU MUST reset
- * the e-puck (the blue button near the selector) to make your choice effective.
- * \section sect_selector_pos The selector position:
- * \image html selector.gif
- * \author Code: Michael Bonani, Jonathan Besuchet \n Doc: Jonathan Besuchet
+ * Robotics Coursework - Loughborough University
+ * \author Brandon Randle, Tristan Murfitt, Tarun Iyer, Joshua Dando, Tino Aranjani, Sarthak Gupta
  */
 
 #include "p30f6014A.h"
@@ -30,11 +11,12 @@
 #include "uart/e_uart_char.h"
 #include "motor_led/e_init_port.h"
 
-#include "followGreen.h"
-#include "findRed.h"
 #include "cwk_aggressive.h"
 #include "cwk_fear.h"
 #include "cwk_goal_seek.h"
+#include "cwk_curious.h"
+#include "cwk_love.h"
+#include "cwk_custom_behaviour.h"
 
 #include "ComModule.h"
 #include "runcollaboration.h"
@@ -45,7 +27,6 @@
 #include "runfollowball.h"
 #include "runfftlistener.h"
 #include "rungrounddirection.h"
-#include "cwk_curious.h"
 #include "utility.h"
 
 #define PI 3.14159265358979
