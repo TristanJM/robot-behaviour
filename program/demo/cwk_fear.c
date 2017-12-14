@@ -14,21 +14,19 @@
 #include "a_d/advance_ad_scan/e_prox.h"
 #include "utility.h"
 
-
 /* Settings */
 #define MOTOR_INTENSITY 500    // Increase or decrease this to make the robot move & turn quicker.
 #define WAIT_TIME 250000       // Decrease this to update quicker / move smaller amounts between checks.
 #define DANGER_DISTANCE 175    // How close an object has to be before its considered dangerous
 
+// When an object ("attacker") appears in the sensors, the robot should turn and retreat in the
+// opposite direction.
 void run_fear(){
-
 	int i;                              // Used in loops.
 	int leftwheel;                      // Speed we'll set our left wheel to.
 	int rightwheel;                     // Wpeed we'll set our right wheel to.
 	int prox[8] = {0,0,0,0,0,0,0,0};    // Holds the values of all the proximity sensors.
 	char buffer[80];
-
-	
 
 	/* Initialise the library stuff */
 	e_init_port();
@@ -37,13 +35,7 @@ void run_fear(){
 	e_start_agendas_processing();
 	e_calibrate_ir();
 
-
-	//e_set_speed_left(100);
-
-
-	while(1)
-	{
-	
+	while(1) {
 
 		/* Update Proximity Sensor value array, also turn on LEDs if detected */
 		for(i=0; i<8; i++){
@@ -57,19 +49,13 @@ void run_fear(){
 			} else {
 				e_set_led(i, 0);
 			}
-		}
-
-		;	
-
+		};
 
 		/* Set our wheel speeds to 0 to start with.
 		 * If there's anything in the proximity sensors though, this will be overridden
 		 */
 		leftwheel =   0;       // Set left wheel to whatever we just got
 		rightwheel =  0;       //Set right wheel to opposite of whatever left is
-
-
-
 
 		/* For all sensors except the back two sensors,
 		 * if we see something on this sensor, turn away from it.
@@ -96,7 +82,6 @@ void run_fear(){
 		}
 		
 		
-
 		// Left side of robot
 		if(prox[5] > DANGER_DISTANCE){
 			// Attacker is on the left. Turn right but not too quickly, we have time.
@@ -114,7 +99,6 @@ void run_fear(){
 			rightwheel =    -3 * MOTOR_INTENSITY;
 		}
 
-
 		/* Now for the rear sensors,
 		 * if we see something on these sensors, run forward */
 		if(prox[4] > (DANGER_DISTANCE + 50) || prox[3] > (DANGER_DISTANCE + 50)){
@@ -123,16 +107,11 @@ void run_fear(){
 			rightwheel =    5 * MOTOR_INTENSITY;
 		}
 
-
 		/* Now actually set the motor speeds */
 		e_set_speed_left(leftwheel);
 		e_set_speed_right(rightwheel);
                 
-                // Wait for a set amount of time (makes the behaviour appear smoother)
+        // Wait for a set amount of time (makes the behaviour appear smoother)
 		wait(WAIT_TIME);
-
-
 	}
-
-
 }

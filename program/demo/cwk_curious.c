@@ -25,7 +25,7 @@
 #define CONF_CURIOUS_MODE         1             // Uses Prox sensors if set to 1.
 #define CONF_DEBUG_MODE           0             // Uses debug LED's if set to 1.
 #define CONF_DEBUG_MODE_2         0             // Uses debug LED's if set to 1.
-#define CONF_WAIT_TIME            50000         // Wait time for all operations
+#define CONF_WAIT_TIME            10000         // Wait time for all operations
 #define CONF_TURN_WAIT            500           // Time needed to complete the turn
 #define CONF_ANIMATELED_WAIT      10000         // Wait time for LED Animations /// 1 Second
 #define CONF_CAL_IR_ACTIVATION    10            // Assumed Range 0-1000
@@ -148,6 +148,8 @@ void epuck_led_wait(int led_wait) {
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCDFAInspection"
 
+// Creep forwards, rotate to scan the environment, choose a random forwards direction
+// and explore new areas.
 void run_curious() {
     /* Initializations */
     e_init_port();
@@ -194,19 +196,14 @@ void run_curious() {
     } else {
         while (1) {
             // Basic Movement Code
-            e_activate_agenda(e_blink_led, CONF_ANIMATELED_WAIT * 2.5);
-            e_pause_agenda(e_blink_led);
             // Move Forward - Random
             e_set_speed(rand_range(350, 400), rand_range(-80, 80));
             wait(CONF_WAIT_TIME * 4);
             // Shake
             epuck_shake(500, CONF_TURN_WAIT, 1);
             // Flash Lights
-            e_activate_agenda(e_blink_led, CONF_ANIMATELED_WAIT * 2.5);
-            e_pause_agenda(e_blink_led);
         }
     }
 }
 
 #pragma clang diagnostic pop
-// Copyright - Very Disgruntled Students [VDS]

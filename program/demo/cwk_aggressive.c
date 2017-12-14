@@ -33,12 +33,10 @@ void follow_red1(unsigned char *buf, int size);
  * \param buf The array containing the image
  * \param size The size of the array
  */
-void follow_red1(unsigned char *buf, int size)
-{
+void follow_red1(unsigned char *buf, int size) {
 	int i;
 	unsigned char green;
-	for(i=0; i<size/2; i++)
-	{
+	for(i=0; i<size/2; i++) {
 		green = (((buf[2*i] & 0x07) << 5) | ((buf[2*i+1] & 0xE0) >> 3));
 		//blue = ((buf[2*i+1] & 0x1F) << 3);
 		buf[i] = green;
@@ -46,101 +44,73 @@ void follow_red1(unsigned char *buf, int size)
 }
 
 void getSensorDistances(int *distances){
-
 	unsigned int i;
 	for (i = 0; i < NUMsensors; i++){
-		
 		distances[i] = e_get_calibrated_prox(i);
-			///e_set_led(i, 1);
-	//	sprintf(uartBuffer, "distance: %d \n\r", distance);
-	//	e_send_uart1_char(uartBuffer, strlen(uartBuffer));
-
 	}
-
 }
 
-void aggressive(){
-
+// Find an object and move towards it in an angry fashion. Shake violently in front
+// of the object and flash lights aggressively.
+void aggressive() {
 	int distances[NUMsensors];
 	getSensorDistances(distances);
-		int ang_speed;
-		int lin_speed;
-	//	lin_speed = lin_speed_calc( ((distances[7] + distances[0]) /2) + 100 , 6);	//actually avoids
-		lin_speed = lin_speed_calc( (distances[7] + distances[0]) /2, 0);
-		ang_speed = angle_speed_calc( (distances[0] + distances[1]) - (distances[7] + distances[6]) , 4); 
-		//if the distance on the left side is closer to obj we turn left to face
+    
+    int ang_speed;
+    int lin_speed;
+    lin_speed = lin_speed_calc( (distances[7] + distances[0]) /2, 0);
+    ang_speed = angle_speed_calc( (distances[0] + distances[1]) - (distances[7] + distances[6]) , 4); 
+    //if the distance on the left side is closer to obj we turn left to face
 
-		/*TODO: 
-			
-			needs to ram object, not stop when close
-			currently only uses the front sensors to detect obj -> use all
-			only move forward if found an obj?
-			need to define what the target is e.g. the colour red
-			how to do obstacle avoidance while trying to find target??
-				- use follow wall to get around objs 
+    //vice versa
+    if (ang_speed > 0){
+        e_set_led(6, 1);
+        e_set_led(1,0);
+    } else {
+        e_set_led(1, 1);
+        e_set_led(6,0);
+    }
+    
+    int lSpeed, rSpeed;
+    lSpeed = (lin_speed - ang_speed);
+    rSpeed = (lin_speed + ang_speed);
+    
+    if(lSpeed < -maxSpeed){
+        lSpeed = -maxSpeed;
+    }
+    if (lSpeed > maxSpeed){
+        lSpeed = maxSpeed;
+    }
+    if(rSpeed < -maxSpeed){
+        rSpeed = -maxSpeed;
+    }
+    if(rSpeed > maxSpeed){
+        rSpeed = maxSpeed;
+    }
 
+    /*
+    IF Lspeed < 100 and Rspeed < 100 i.e. robot is nearly still => Lspeed + 100, Rspeed + 100
+    to move the robot forward i.e. aggressive
+    */
+    if(lSpeed < 100 && rSpeed < 100){
+        lSpeed = maxSpeed;
+        rSpeed = maxSpeed;
+    }
 
-		*/
-		//vice versa
-		if (ang_speed > 0){
-			e_set_led(6, 1);
-			e_set_led(1,0);
-		}
-		else {
-			e_set_led(1, 1);
-			e_set_led(6,0);
-		}
-		int lSpeed, rSpeed;
-		lSpeed = (lin_speed - ang_speed);
-		rSpeed = (lin_speed + ang_speed);
-		if(lSpeed < -maxSpeed){
-			lSpeed = -maxSpeed;
-		}
-		if (lSpeed > maxSpeed){
-			lSpeed = maxSpeed;
-		}
-		if(rSpeed < -maxSpeed){
-			rSpeed = -maxSpeed;
-		}
-		if(rSpeed > maxSpeed){
-			rSpeed = maxSpeed;
-		}
+    int loopCount = 20;
+    if( loops % loopCount == 0){
+        sprintf(uartBuffer, "lSpeed = %d, rSpeed = %d \n\r", lSpeed, rSpeed);
+        e_send_uart1_char(uartBuffer, strlen(uartBuffer));
+    }
 
-		
+    e_set_speed_left(lSpeed);
+    e_set_speed_right(rSpeed);
 
-		/*
-
-		IF Lspeed < 50 and Rspeed < 50 i.e. robot is nearly still => Lspeed + 100, Rspeed + 100
-		to move the robot forward i.e. aggressive
-
-		*/
-
-		if(lSpeed < 100 && rSpeed < 100){
-			
-			lSpeed = maxSpeed;
-			rSpeed = maxSpeed;
-			
-		}
-
-
-		int loopCount = 20;
-		if( loops % loopCount == 0){
-			sprintf(uartBuffer, "lSpeed = %d, rSpeed = %d \n\r", lSpeed, rSpeed);
-			e_send_uart1_char(uartBuffer, strlen(uartBuffer));
-		}
-
-		e_set_speed_left(lSpeed);
-		e_set_speed_right(rSpeed);
-		
-		loops++;
+    loops++;
 }
 
-void run_aggressive(void){
-
-	//int lMotor, rMotor;
-	//int maxSpeed = 800;
-	//int initSpeed = 300;
-	
+// Main handler for aggressive behaviour
+void run_aggressive(void) {
 	e_init_port();
 	
 	e_init_motors();
@@ -150,9 +120,6 @@ void run_aggressive(void){
 	e_init_uart1();
 	e_calibrate_ir();
 
-
-	
-//	unsigned char *tab_start = buffer2;
 	e_activate_agenda(aggressive, 650);
 	e_start_agendas_processing();
 	while(1);

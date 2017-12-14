@@ -23,7 +23,6 @@
 	and will start following it.
 */
 
-
 // function used to calculate the linear speed to set on 
 // each wheel depending on the information from the
 // front sensors - IR 0 & 7 
