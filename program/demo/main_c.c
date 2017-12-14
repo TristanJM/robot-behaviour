@@ -45,6 +45,7 @@
 #include "runfollowball.h"
 #include "runfftlistener.h"
 #include "rungrounddirection.h"
+#include "cwk_curious.h"
 #include "utility.h"
 
 #define PI 3.14159265358979
@@ -83,21 +84,17 @@ int main() {
 	} else if (selector==2) {
 		run_locatesound();
 	} else if (selector==3) {
-        // run_wallfollow();
-        run_goal_seek_basic();
+        run_custom();               // custom
 	} else if (selector==4) {
-		run_breitenberg_follower();
+		run_curious();                // curious
 	} else if (selector==5) {
-		run_love();
+		run_love();                 // love
 	} else if (selector==6) {
-//		run_follow_ball();
-        run_fear();
+        run_fear();                 // fear
 	} else if (selector==7) {
-//		run_follow_ball_red();
-        run_aggressive();
+        run_aggressive();           // aggressive
 	} else if (selector==8) {
-//		run_follow_ball_green();
-        run_goal_seek();
+        run_goal_seek();            // goal seek
 	} else
 		run_fft_listener();
 	

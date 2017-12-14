@@ -16,4 +16,5 @@ build/default/production/_ext/1472/main_c.o:  \
 ../runfollowball.h  \
  ../runfftlistener.h  \
 ../rungrounddirection.h  \
-../utility.h 
+../cwk_curious.h  \
+ ../utility.h 
