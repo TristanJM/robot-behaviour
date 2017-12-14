@@ -36,11 +36,11 @@
 
 #define TURN_AGGRESSION       0.1     // Changes how quickly the robot turns to get back on track when wall following
 
-#define LEFT_SENSOR_DROPOFF_THRESHOLD    100    // How low left sensor needs to be before considering dropped off
-#define RIGHT_SENSOR_DROPOFF_THRESHOLD    75    // How low right sensor needs to be before considering dropped off
-#define LEFT_SENSOR_DROPOFF_TIME    12    // How many cycles the left sensor needs to be dropped off for before turning
-#define RIGHT_SENSOR_DROPOFF_TIME    3    // How many cycles the right sensor needs to be dropped off for before turning
-#define POWER_THROUGH_TIME         40     // Cycles to power forward and not check sensors/camera
+#define LEFT_SENSOR_DROPOFF_THRESHOLD    70    // How low left sensor needs to be before considering dropped off
+#define RIGHT_SENSOR_DROPOFF_THRESHOLD   70    // How low right sensor needs to be before considering dropped off
+#define LEFT_SENSOR_DROPOFF_TIME    15    // How many cycles the left sensor needs to be dropped off for before turning
+#define RIGHT_SENSOR_DROPOFF_TIME    5    // How many cycles the right sensor needs to be dropped off for before turning
+#define POWER_THROUGH_TIME         200     // Cycles to power forward and not check sensors/camera
 
 #define BIAS_SPEED      	350		// robot bias speed
 #define SENSOR_THRESHOLD	300		// discount sensor noise below threshold
@@ -181,6 +181,8 @@ void run_custom() {
         rightwheel = 0;  
 
         if (state == POWER_THROUGH) {
+            left_sensor_drop_cycles = 0;
+            right_sensor_drop_cycles = 0;
             e_set_body_led(1);
             if (power_through_cycles <= POWER_THROUGH_TIME) {
                 if (power_through_cycles == 0) {
@@ -195,7 +197,7 @@ void run_custom() {
                 else if (frontR > frontL) followsetSpeedGS(0, BIAS_SPEED);   // turn left slightly
                 else if (frontL >= frontR) followsetSpeedGS(BIAS_SPEED, 0);  // turn right slightly
                 else followsetSpeedGS(0, 0);
-                wait(50000);
+                wait(10000);
             } else {
                 power_through_cycles = 0;
                 state = FOLLOW_BOTH_WALLS;
@@ -219,7 +221,7 @@ void run_custom() {
         
         // Update the distances[] array used by wall follow to actually be an average of the last 5 readings (with the most recent readings more weighted)
         for(i=0; i<8; i++){
-            distances[i] = (distances_avg4[i] + distances_avg3[i] + distances_avg2[i] + (2 * distances_avg1[i]) + (3 * distances_avg0[i]) ) / 8;
+            distances[i] = (distances_avg4[i] + distances_avg3[i] + distances_avg2[i] + (2 * distances_avg1[i]) + (15 * distances_avg0[i]) ) / 20;
         }
 
         // Read non-calibrated Left/Right sensors
@@ -290,15 +292,31 @@ void run_custom() {
                 if (e_get_calibrated_prox(0) > e_get_calibrated_prox(7)) { leftwheel *= 0.5; rightwheel *= 1.5; }; // Left slightly
             }
             
-            // Follow the right wall
-            follow_weightleftCustom[0] = -10;
-            follow_weightleftCustom[7] = -10;
-            follow_weightrightCustom[0] = 10;
-            follow_weightrightCustom[7] = 10;
-            if (distances[2] > 300) {   // right side sensor?
-                distances[1] -= 200;
-                distances[2] -= 600;
-                distances[3] -= 100;
+            
+            if(state == TURN_NEXT){
+                // Follow the right wall
+                follow_weightleftCustom[0] = -10;
+                follow_weightleftCustom[7] = -10;
+                follow_weightrightCustom[0] = 10;
+                follow_weightrightCustom[7] = 10;
+                if (distances[2] > 300) {   // right side sensor?
+                    distances[1] -= 200;
+                    distances[2] -= 600;
+                    distances[3] -= 100;
+                }
+            }
+            
+            if(state == FOLLOW_BOTH_WALLS){
+                // If we're supposed to be following both walls, make sure IR6 and IR1 are similar
+                leftwheel = MAXSPEED;
+                rightwheel = MAXSPEED;
+                
+                // - difference means facing too far right, + too far left 
+               sensor_difference = e_get_calibrated_prox(6) - e_get_calibrated_prox(1);
+                
+                // Adjust wheel speeds to correct for difference in sensor value
+                rightwheel -= sensor_difference * TURN_AGGRESSION;
+                leftwheel  += sensor_difference * TURN_AGGRESSION;
             }
 
             for (i = 0; i < 8; i++) {
@@ -306,11 +324,6 @@ void run_custom() {
                 rightwheel += follow_weightrightCustom[i]*(distances[i] >> 4);
             }
             
-            // Check if back is facing the left wall, if we're pointing away from the left wall, and if we're close to the right wall,    and then correct for that
-            if(e_get_calibrated_prox(4) > e_get_calibrated_prox(3) && e_get_calibrated_prox(4) > e_get_calibrated_prox(5) && e_get_calibrated_prox(2) > e_get_calibrated_prox(5)){
-                leftwheel *= .5;
-                rightwheel += 1.25;
-            }
             
 
             // Check if the LEFT/RIGHT side sensors are dropped off (indicating a corner)
@@ -336,6 +349,9 @@ void run_custom() {
                     if (state == TURN_NEXT) {
                         sprintf(debug, "TURNING LEFT (L Avg:%i).\r\n", left_sensor_avg);
                         e_send_uart1_char(debug, strlen(debug));
+                        //Power forward a little before turning
+                        followsetSpeedGS(MAXSPEED, MAXSPEED);
+                        wait(20000);
                         turn_to_direction(3*(PI/2)); // Turn left
                         wait(50000);
                         state = POWER_THROUGH; // Move forward
