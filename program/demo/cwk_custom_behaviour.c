@@ -67,7 +67,7 @@ int follow_weightrightCustom[8] = {10, 10, 5, 0, 0, -5, -10, -10};
 // Follows corridor/road straight, ignoring any right angle turnings (using side IR sensors
 // to control distance between walls).
 // If it sees red ahead, stop and wait.
-// If it sees green ahead, carry on through paper.
+// If it sees green ahead, power-through.
 // If it sees blue ahead, rotate 180 and follow road back, make first 90 degree turning off.
 void run_custom() {
     int distances[8]; // Will store the average of all the distances
@@ -122,8 +122,6 @@ void run_custom() {
     while( camera_calibrated == 0 ){
         // Set the gain
         e_poxxxx_set_rgb_gain(red_gain, 0, blue_gain);
-        // <<There is a chance we might have to call e_poxxx_write_cam_registers() again here? >>
-        
         // Grab a frame
         update_levels();
         
@@ -175,6 +173,7 @@ void run_custom() {
         }    
     } 
 
+    // Main loop of program
     while (1) {
         e_led_clear();
         leftwheel = 0;
@@ -230,10 +229,6 @@ void run_custom() {
         front_l_distance = e_get_prox(7);
         front_r_distance = e_get_prox(0);
         
-        
-        // Check camera if there is something in front
-        // we need this because otherwise the robot always detects colours and gets it wrong
-        // if (front_l_distance > 200 || front_r_distance > 200) {
         // Get levels from camera
         update_levels();
 
@@ -255,10 +250,7 @@ void run_custom() {
             state = TURN_NEXT;   // temp
         } else {
             // NO COLOUR (DEBUG ONLY)
-        }  
-        
-        // sprintf(debug, "left side: %i, right side: %i.\r\n", distances[5], distances[2]);
-        // e_send_uart1_char(debug, strlen(debug));
+        }
 
         // Left/Right LEDs if walls detected (5 == left)
         if (distances[5] > 50) e_set_led(6, 1);
@@ -266,23 +258,13 @@ void run_custom() {
         if (distances[2] > 50) e_set_led(2, 1);
         else e_set_led(2, 0);
 
-        if (state == STOP_MOVING) {
-            e_set_led(4, 1);
-        }
+        if (state == STOP_MOVING) e_set_led(4, 1);
         
-        if (state == TURN_NEXT) {
-            e_set_led(1, 1);
-        } 
+        if (state == TURN_NEXT) e_set_led(1, 1);
         
         if (state == FOLLOW_BOTH_WALLS || state == TURN_NEXT) {
             leftwheel = BIAS_SPEED;
             rightwheel = BIAS_SPEED;
-
-            // // positive means left wall is closer than right
-            // // negative means right wall is closer than left
-            // sensor_difference = (int) (left_distance - right_distance);
-            // rightwheel -= sensor_difference * TURN_AGGRESSION;
-            // leftwheel  += sensor_difference * TURN_AGGRESSION;
 
             // Fix wallfollow headbutting a wall
             if (e_get_calibrated_prox(7) > 250 && e_get_calibrated_prox(0) > 250) {
@@ -291,9 +273,8 @@ void run_custom() {
                 if (e_get_calibrated_prox(7) > e_get_calibrated_prox(0)) { leftwheel *= 1.5; rightwheel *= 0.5; }; // Right slightly
                 if (e_get_calibrated_prox(0) > e_get_calibrated_prox(7)) { leftwheel *= 0.5; rightwheel *= 1.5; }; // Left slightly
             }
-            
-            
-            if(state == TURN_NEXT){
+               
+            if (state == TURN_NEXT) {
                 // Follow the right wall
                 follow_weightleftCustom[0] = -10;
                 follow_weightleftCustom[7] = -10;
@@ -312,7 +293,7 @@ void run_custom() {
                 rightwheel = MAXSPEED;
                 
                 // - difference means facing too far right, + too far left 
-               sensor_difference = e_get_calibrated_prox(6) - e_get_calibrated_prox(1);
+                sensor_difference = e_get_calibrated_prox(6) - e_get_calibrated_prox(1);
                 
                 // Adjust wheel speeds to correct for difference in sensor value
                 rightwheel -= sensor_difference * TURN_AGGRESSION;
@@ -323,8 +304,6 @@ void run_custom() {
                 leftwheel += follow_weightleftCustom[i]*(distances[i] >> 4);
                 rightwheel += follow_weightrightCustom[i]*(distances[i] >> 4);
             }
-            
-            
 
             // Check if the LEFT/RIGHT side sensors are dropped off (indicating a corner)
             left_sensor_avg = ( 2*e_get_calibrated_prox(5) + e_get_calibrated_prox(6) ) / 3;
@@ -384,9 +363,7 @@ void run_custom() {
             } else {
                 left_sensor_drop_cycles = 0;
                 right_sensor_drop_cycles = 0;         
-            }
-
-            
+            }    
         }
         
         followsetSpeedGS(leftwheel, rightwheel);    // sets motor speed, within max limits (from cwk_goal_seek.c)

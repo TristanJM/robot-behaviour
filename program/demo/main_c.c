@@ -51,12 +51,6 @@
 #define PI 3.14159265358979
 
 /*! \brief The main function of the application
- *
- * The main function launch one of the following self-governing function
- * depending of the selector position: run_accelerometer(); run_locatesound();
- * run_wallfollow(); run_grounddirection(); run_breitenberg_follower();
- * run_breitenberg_shocker(); run_follow_ball_green(); run_follow_ball_red();
- * run_follow_ball(); run_fft_listener();
  */
 int main() {
 	char buffer[80];
@@ -86,7 +80,7 @@ int main() {
 	} else if (selector==3) {
         run_custom();               // custom
 	} else if (selector==4) {
-		run_curious();                // curious
+		run_curious();              // curious
 	} else if (selector==5) {
 		run_love();                 // love
 	} else if (selector==6) {

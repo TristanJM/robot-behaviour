@@ -17,10 +17,10 @@
 #include "runfollowball.h"
 
 /*
- * Goal: Cross green finish line, directly in front of the start point (eg. start y=0, end y=1000).
- * Follow the wall of obstacles in the way, favouring the direction of positive distance (y, towards finish).
- * If obstacle no longer exists, correct back to original straight line trajectory.
- * Movement in x axis does not contribute to distance.
+ * Goal Seeking: Traverse through a maze by favouring the right walls until the
+ * camera detects the goal colour (Green). The program uses the close proximity
+ * IR sensors to explore the map, and uses longer distance sensors to detect for
+ * suitable moments to read in the camera image data.
  */
 
 #define LEFT_FOLLOW			0		// behaviors IDs	
@@ -148,10 +148,6 @@ void run_goal_seek() {
         wallfollow = 0;
         goforward = 1;
         
-        // turned off pulsing lights - affected red detection
-        // e_pause_agenda(left_led);
-        // e_restart_agenda(right_led);
-        
         // check detection from any of the 8 IR sensors
         for (short_sensors = 0; short_sensors < 8; short_sensors++) {
             if (distances[short_sensors] > 50) { break; }
@@ -215,11 +211,10 @@ void run_goal_seek() {
     }
 }
 
-// Goes straight and stops when detecting a red object
+// Basic goal seek function - used for development and testing purposes.
+// Goes straight and stops when detecting a green object
 // Also has example for detecting objects in IR
 void run_goal_seek_basic() {
-    //int distances[NB_SENSORS]; // array keeping the distance sensor readings
-    //int i; // FOR-loop counters
     int loopcount = 0;
 
     e_init_port();
@@ -255,21 +250,6 @@ void run_goal_seek_basic() {
             e_set_speed_left(BIAS_SPEED);
             e_set_speed_right(BIAS_SPEED);
         }
-
-        /*
-        // This code stopped the bot if it detected an object in any of the 8 IR sensors
-
-        followGetSensorValuesGS(distances); // read sensor values
-        for (i=0; i<8; i++) {
-            if (distances[i]>50) { break; }
-        }
-        if (i == 8) {
-            e_set_speed_left(BIAS_SPEED);
-            e_set_speed_right(BIAS_SPEED);
-        } else {
-            e_set_speed_left(0);
-            e_set_speed_right(0);
-        }*/
 
         loopcount++;
     }
